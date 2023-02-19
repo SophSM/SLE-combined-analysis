@@ -1,0 +1,395 @@
+---
+title: "Combined meta-analysis"
+author: "Sofia Salazar"
+date: "2023-02-15"
+output: html_document
+---
+
+
+```{bash}
+qlogin
+cd /mnt/Citosina/amedina/ssalazar/meta/out
+module load r/4.0.2
+R
+```
+
+```{r}
+library(tidyverse)
+```
+
+# Annotate gene symbol
+
+```{r}
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+load(file = "LRT-dds.RData")
+DGE <- res2
+# annotate genes with symbol
+
+df <- as.data.frame(DGE)
+df <- tibble::rownames_to_column(df, "ID")
+name_short<-function(table){
+  table$ID <- gsub("\\..*","", table$ID)
+  return(table)
+}
+
+df <- name_short(df)
+
+library("biomaRt")
+mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+genes <- getBM(attributes = c("ensembl_gene_id", "hgnc_symbol","transcript_biotype"),
+                          filters = c("ensembl_gene_id"), 
+                          values = df$ID,
+                          mart = mart)
+names(genes)[1] <- "ID"
+names(genes)[2] <- "gene_name"
+
+protein_coding<-subset(genes, transcript_biotype =="protein_coding")
+dim(protein_coding[unique(protein_coding$gene_name),])
+non.dup <- protein_coding[!duplicated(protein_coding$gene_name),]
+
+non.dup <- non.dup[!(is.na(non.dup$gene_name)),]
+
+df_names <- list(df, non.dup) %>% purrr::reduce(inner_join, by = "ID")
+
+write.csv(df_names, file = paste0(outdir,"DGElist_withNames.csv"))
+```
+
+```{r}
+save.image(file = paste0(outdir,"namedDGElist.RData"))
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
+```
+
+# Downregulated and upregulated genes
+
+```{r}
+upGenes <- subset(df_names, padj < 0.05 & log2FoldChange >= 1)
+veryUP <- subset(df_names, padj < 0.05 & log2FoldChange >= 2)
+
+downGenes <- subset(df_names, padj < 0.05 & log2FoldChange <= -0.5)
+veryDOWN <- subset(df_names, padj < 0.05 & log2FoldChange <= -2)
+```
+
+
+# Volcano Plot
+
+```{r}
+data <- df_names %>% 
+  mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
+                                log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
+                                TRUE ~ "Unchanged"))
+head(data) %>% 
+  knitr::kable()
+
+library(ggplot2)
+volcanoplot <- ggplot(data, aes(log2FoldChange, -log(padj,10))) +
+  geom_point(aes(color = Expression), size = 2/5) +
+  xlab(expression("log"[2]*"FC")) + 
+  ylab(expression("-log"[10]*"p-adj")) +
+  scale_color_manual(values = c("dodgerblue3", "gray50", "firebrick3")) +
+  guides(colour = guide_legend(override.aes = list(size=1.5))) 
+
+data %>% 
+  count(Expression) %>% 
+  knitr::kable()
+
+
+top <- 10
+top_genes <- bind_rows(data %>% 
+    filter(Expression == 'Up-regulated') %>% 
+    arrange(padj, desc(abs(log2FoldChange))) %>% 
+    head(top),
+  data %>% 
+    filter(Expression == 'Down-regulated') %>% 
+    arrange(padj, desc(abs(log2FoldChange))) %>% 
+    head(top)
+)
+top_genes %>% 
+  knitr::kable()
+
+volcanoplot_names <-  volcanoplot +
+  ggrepel::geom_label_repel(data = top_genes,
+                   mapping = aes(log2FoldChange, -log(padj,10), label = gene_name),
+                   size = 2)
+
+ggsave(paste0(outdir,"volcanoPlotWithTopGenes.png"),
+       plot = p3, dpi = 300)
+dev.off()
+```
+
+# GO terms
+
+```{r}
+library(gprofiler2)
+library(enrichplot)
+library(DOSE)
+library(clusterProfiler)
+library(ggplot2)
+
+up <- data %>%filter(Expression == 'Up-regulated') %>% 
+  arrange(padj, desc(abs(log2FoldChange)))
+
+down <- data %>%filter(Expression == 'Down-regulated') %>% 
+  arrange(padj, desc(abs(log2FoldChange)))
+
+# up_ordered <- head(upGenes[order(upGenes$log2FoldChange, decreasing = TRUE),],15)
+# down_ordered <- head(downGenes[order(downGenes$log2FoldChange, decreasing = TRUE),],15)
+
+
+multi_gp <- gost(list("Upregulated" = up$gene_name, "Downregulated" = down$gene_name), correction_method = "fdr", multi_query = F, ordered_query = T, organism = 'hsapiens')
+
+
+gostp1 <- gostplot(multi_gp, interactive = FALSE)
+ggsave(paste0(outdir,"manhattanGO.png"),
+       plot = gostp1, dpi = 300)
+dev.off()
+
+# gostp1
+
+gost_query <- as.data.frame(multi_gp$result)
+
+plot_data <- data.frame("term" = as.factor(gost_query$term_name), "condition" = gost_query$query, "GeneRatio" = gost_query$intersection_size / gost_query$query_size, "p.adjust" = gost_query$p_value, 'category' = as.factor(gost_query$source))
+
+plot_data_up <- subset(plot_data, condition == 'Upregulated')
+plot_data_up <- head(plot_data_up[order(plot_data_up$p.adjust),],15)
+
+plot_data_down <- subset(plot_data, condition == 'Downregulated')
+plot_data_down <- head(plot_data_down[order(plot_data_down$p.adjust),],15)
+
+plot_data_reduced <- rbind(plot_data_up, plot_data_down)
+
+# Dotplot
+dotplot <- ggplot(data = plot_data_reduced, aes(x = condition, y = term,
+                        color = p.adjust, size = GeneRatio)) +
+  geom_point(aes(shape = category)) +
+  scale_color_gradient(low = "#EF769C", high = "#EFD09C") +
+  theme_gray() + 
+  ylab("") + 
+  xlab("") + 
+  ggtitle("GO enrichment analysis")
+
+ggsave(paste0(outdir,"dotplotGO.png"),
+       plot = dotplot, dpi = 300)
+dev.off()
+
+# Barplot
+df2=data.frame(class=sample(c("BP","MF","CC"), 30, replace=T), "GO Term"=paste0("term_", sample(1:30, 30, replace = F)), count=sample(10:30, 30, replace = T), comparison=sample(c("A","B","C"), 30, replace = T))
+
+bar_data <- data.frame("term" = as.factor(gost_query$term_name), "condition" = gost_query$query, "count" = gost_query$term_size, "p.adjust" = gost_query$p_value, 'category' = as.factor(gost_query$source))
+
+
+bar_data_up <- subset(bar_data, condition == 'Upregulated')
+bar_data_up <- head(bar_data_up[order(bar_data_up$p.adjust),],15)
+
+bar_data_down <- subset(bar_data, condition == 'Downregulated')
+bar_data_down <- head(bar_data_down[order(bar_data_down$p.adjust),],15)
+
+bar_data_reduced <- rbind(bar_data_up, bar_data_down)
+
+bar_data_ordered <- bar_data_reduced[order(bar_data_reduced$count),] # order by count
+bar_data_ordered<- bar_data_ordered[order(bar_data_ordered$category),] # order by category
+bar_data_ordered$num <- seq(1:nrow(bar_data_ordered)) # num category for plot
+
+g <- ggplot(bar_data_ordered, aes(count, reorder(term, -num), fill = category)) +
+    geom_bar(stat = "identity") +
+    geom_text(
+        aes(label = count),
+        color = "black",
+        hjust = -0.1,
+        size = 4,
+        position = position_dodge(0.9)
+    ) +
+  labs(x = "Gene counts" ) +
+  scale_fill_manual(name='Category', labels = c('Biological Process', 'Cellular Component',
+                                                  'Molecular Function', 'REAC'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
+  theme(
+        legend.position = "right",
+        # panel.grid = element_blank(),
+        # axis.text.x = element_blank(),
+        # axis.ticks = element_blank(),
+        axis.title.y = element_blank(),
+        strip.text.x = element_text(size = 14, face = "bold"),
+        strip.background = element_blank()
+    )
+
+ggsave(paste0(outdir,"barplotGO.png"),
+       plot = g, dpi = 300, width = 20, height = 10)
+dev.off()
+
+## barplot only upregulated
+
+bar_data_up <- subset(bar_data, condition == 'Upregulated')
+bar_data_up <-head(bar_data_up[order(bar_data_up$p.adjust),],40) # order by pvalue
+bar_data_up_ordered <- bar_data_up[order(bar_data_up$count),] # order by count
+bar_data_up_ordered<- bar_data_up_ordered[order(bar_data_up_ordered$category),] # order by category
+bar_data_up_ordered$num <- seq(1:nrow(bar_data_up_ordered)) # num category for plot
+
+g.up <- ggplot(bar_data_up_ordered, aes(count, reorder(term, -num), fill = category)) +
+    geom_bar(stat = "identity") +
+    geom_text(
+        aes(label = count),
+        color = "black",
+        hjust = -0.1,
+        size = 4,
+        position = position_dodge(0.9)
+    ) +
+  labs(x = "Gene counts" ) +
+ scale_fill_manual(name='Category', labels = c('Biological Process', 'REAC', 'TF'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
+  theme(
+        legend.position = "right",
+        # panel.grid = element_blank(),
+        # axis.text.x = element_blank(),
+        # axis.ticks = element_blank(),
+        axis.title.y = element_blank(),
+        strip.text.x = element_text(size = 14, face = "bold"),
+        strip.background = element_blank()
+    )
+
+ggsave(paste0(outdir,"barplotUP_GO.png"),
+       plot = g.up, dpi = 300, width = 20, height = 10)
+dev.off()
+
+## barplot only downregulated
+
+bar_data_down <- subset(bar_data, condition == 'Downregulated')
+bar_data_down <-head(bar_data_down[order(bar_data_down$p.adjust),],40) # order by pvalue
+bar_data_down_ordered <- bar_data_down[order(bar_data_down$count),] # order by count
+bar_data_down_ordered<- bar_data_down_ordered[order(bar_data_down_ordered$category),] # order by category
+bar_data_down_ordered$num <- seq(1:nrow(bar_data_down_ordered)) # num category for plot
+
+g.down <- ggplot(bar_data_down_ordered, aes(count, reorder(term, -num), fill = category)) +
+    geom_bar(stat = "identity") +
+    geom_text(
+        aes(label = count),
+        color = "black",
+        hjust = -0.1,
+        size = 4,
+        position = position_dodge(0.9)
+    ) +
+  labs(x = "Gene counts" ) +
+ scale_fill_manual(name='Category', labels = c('CORUM', 'Biological Process', 'Cellular Component', 'Molecular Function'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
+  theme(
+        legend.position = "right",
+        # panel.grid = element_blank(),
+        # axis.text.x = element_blank(),
+        # axis.ticks = element_blank(),
+        axis.title.y = element_blank(),
+        strip.text.x = element_text(size = 14, face = "bold"),
+        strip.background = element_blank()
+    )
+
+ggsave(paste0(outdir,"barplotDOWN_GO.png"),
+       plot = g.down, dpi = 300, width = 20, height = 10)
+dev.off()
+```
+
+# Heatmap
+
+```{r}
+library(DESeq2)
+library(tidyverse)
+library(ComplexHeatmap)
+library(RColorBrewer)
+library(circlize)
+load("/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
+vsd2 <- vst(dds2, blind=FALSE)
+mat <- assay(vsd2)
+mm <- model.matrix(~DISEASE, colData(vsd2))
+mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
+assay(vsd2) <- mat
+
+
+
+DGE <- as.data.frame(results(dds2))
+dim(DGE)
+
+DGE_names <- merge(df_names, DGE, by = c('log2FoldChange', 'pvalue', 'padj')) # getting gene names
+dim(DGE_names)
+DGE_names<-DGE_names[,-c(10,11,12)]
+
+
+norm_counts <- as.data.frame(assay(vsd2))
+dim(norm_counts)
+
+# order dataframes
+
+DGE_names <- DGE_names[order(DGE_names$log2FoldChange, decreasing = TRUE),]
+ordered_norm <- norm_counts[ order(match(rownames(norm_counts), rownames(DGE_names))), ]
+
+# get top genes rows
+DGE.top <- DGE_names[ (DGE_names$baseMean.x > 50) & (DGE_names$padj < 0.05) & (abs(DGE_names$log2FoldChange) > 0.5), ] # 721
+base_mean <- rowMeans(ordered_norm)
+mat_scaled <- t(apply(ordered_norm, 1, scale)) # get Z score value for normalized counts
+colnames(mat_scaled) <- colnames(ordered_norm)
+
+num_keep <- 10 # keep top n genes
+rows_keep <- c(seq(1:num_keep), seq(((nrow(DGE.top)+1)-(num_keep)), nrow(DGE.top)))
+
+rownames(DGE.top) <- DGE.top$ID
+rownames(mat_scaled) <- gsub("\\..*","", rownames(mat_scaled))
+df.list <- list(DGE.top, mat_scaled)
+common_names = Reduce(intersect, lapply(df.list, row.names))
+df.list = lapply(df.list, function(x) { x[row.names(x) %in% common_names,] })
+
+DGE.top <- df.list[[1]]
+mat_scaled <- df.list[[2]]
+
+mat_scaled <- mat_scaled[ order(match(rownames(mat_scaled), rownames(DGE.top))), ]
+
+# getting log2 value for each gene we are keeping
+l2_val <- as.matrix(DGE.top[rows_keep,]$log2FoldChange)
+colnames(l2_val)<- "logFC"
+mean <- as.matrix(DGE.top[rows_keep,]$baseMean)
+colnames(mean) <- 'AveExpr'
+
+# color map for expression
+
+col_logFC <- colorRamp2(c(min(l2_val),0, max(l2_val)), c('blue','white','red'))
+# col_AveExpr <- colorRamp2(c(quantile(mean)[1], quantile(mean)[4]), c('white', 'red'))
+
+# ha <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm')))
+
+colnames(mat_scaled) <- NULL
+
+
+ha <- HeatmapAnnotation(Samples = all_data$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+col_fun = colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
+row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
+
+h1 <- Heatmap(mat_scaled[rows_keep,], cluster_rows = F, name = 'Z-score',
+              cluster_columns = T, row_labels = DGE.top[rows_keep,]$gene_name, top_annotation = ha, column_km = 2,
+              border = TRUE, col = col_fun, right_annotation = row_ha)
+
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+
+# with 8 genes
+png(paste0(outdir,'heatmap.png'), width = 2000, height  = 1000, res = 300)
+  h1
+dev.off()
+
+# with 20  genes
+
+png(paste0(outdir,'heatmap20.png'), width = 2000, height  = 2000, res = 300)
+  h1
+dev.off()
+
+# with 40 genes
+
+png(paste0(outdir,'heatmap40.png'), width = 2000, height  = 2000, res = 300)
+  h1
+dev.off()
+
+# ha2 <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm'), width = unit(10, 'cm')))
+# h2 <- Heatmap(l2_val, row_labels = DGE.top[rows_keep,]$gene_name, cluster_rows = F,
+             # name = 'logFC', top_annotation = ha2, col = col_logFC, cell_fun = function(j, i, x, y, w,h,col){
+               # grid.text(round(l2_val[i,j],2), x,y)
+              #})
+#h3 <- Heatmap(mean, row_labels = DGE.top[rows_keep,]$gene_name, cluster_rows = F,
+              #name = 'AveExpr', col = col_AveExpr, cell_fun = function(j, i, x, y, w,h,col){
+               # grid.text(round(mean[i,j],2), x,y)
+             # })
+# h <- h1+h2
+
+```
+

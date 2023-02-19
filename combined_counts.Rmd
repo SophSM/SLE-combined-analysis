@@ -1,0 +1,294 @@
+---
+title: "Meta RNA-seq"
+author: "Sofia Salazar"
+date: "2023-02-06"
+output: html_document
+---
+
+```{bash}
+qlogin
+module load r/4.0.2
+R
+```
+
+# Libraries
+
+```{r}
+library(tidyverse)
+library(SummarizedExperiment)
+library(ggplot2)
+```
+
+
+```{r}
+# load counts
+
+counts_file <- readRDS("/mnt/Citosina/amedina/ssalazar/meta/out/curated_rse.xz")
+all_counts <- list()
+for (i in 1:length(counts_file)){
+  counts<-as.matrix(assays(counts_file[[i]])$counts) # with transformed counts
+  # filtering low counts
+  # keep<-rowSums(counts)>10
+  # counts <- counts[keep,]
+  # keep <- rowSums(counts >= 10) >= 3
+  # counts <- counts[keep,]
+  all_counts[[i]]<-as.data.frame(counts)
+  all_counts[[i]] <- tibble::rownames_to_column(all_counts[[i]], 'ID')
+}
+```
+
+
+```{r}
+# Combining counts in one data frame
+full_counts <- all_counts %>% 
+  purrr::reduce(full_join, by = 'ID')
+```
+
+
+```{r}
+# batch - sample relation dataframe
+studies <- names(counts_file)
+data <- list()
+for (i in 1:length(studies)){
+  samples <- colnames(counts_file[[i]])
+  DISEASE <- counts_file[[i]]$DISEASE
+  study <- rep(studies[i], length(samples))
+  data[[i]] <- data.frame(samples, DISEASE, study)
+}
+
+all_data <- do.call("rbind", data)
+```
+
+# PCA for raw counts
+# Normalization
+
+```{r}
+library(edgeR)
+count_matrix <- as.matrix(full_counts[,-1])
+dge <- DGEList(counts = count_matrix, genes = full_counts$ID, remove.zeros = T)
+design <- model.matrix(~ DISEASE+ study, data = all_data)
+keep <- filterByExpr(dge, design)
+dge <- dge[keep,,keep.lib.sizes=FALSE]
+# normalizing
+dge <- calcNormFactors(dge)
+```
+
+# PCA
+
+```{r}
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/out/"
+pca_matrix <- t(dge$counts) # rows = samples, columns = genes
+pc <- prcomp(pca_matrix)
+dtp <- data.frame('study' = all_data$study, 'DISEASE' = all_data$DISEASE, pc$x[,1:2]) # the first two componets are selected
+pov <- pc$sdev^2 / sum(pc$sdev^2)
+p <- ggplot(data = dtp, group = DISEASE) + 
+    geom_point(aes(x = PC1, y = PC2, col = study, shape = DISEASE, size = 3)) +
+    theme_gray()
+png(file = paste0(outdir, "allStudiesNormalized-pca.png"), width = 800, height = 800)
+  p + ggtitle("PCA for normalized counts") +
+    xlab(paste0("PC1 (", round(pov[1]*100,2), "%)")) + ylab(paste0("PC2 (", round(pov[2]*100,2),"%)"))
+  dev.off()
+```
+
+# batch correction with comBat
+
+```{r}
+library('sva')
+batch <- as.numeric(as.factor(all_data$study))
+count_matrix <- as.matrix(full_counts[,-1])
+corrected <- ComBat_seq(counts = count_matrix, batch = batch, group = all_data$DISEASE)
+```
+
+# normalizing batch corrected data
+
+```{r}
+dge <- DGEList(counts = corrected, genes = full_counts$ID, remove.zeros = T)
+design <- model.matrix(~ DISEASE, data = all_data)
+keep <- filterByExpr(dge, design)
+dge <- dge[keep,,keep.lib.sizes=FALSE]
+# normalizing
+dge <- calcNormFactors(dge)
+```
+
+# PCA
+
+```{r}
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/out/"
+pca_matrix <- t(dge$counts) # rows = samples, columns = genes
+pc <- prcomp(pca_matrix)
+dtp <- data.frame('study' = all_data$study, 'DISEASE' = all_data$DISEASE, pc$x[,1:2]) # the first two components are selected
+pov <- pc$sdev^2 / sum(pc$sdev^2)
+p <- ggplot(data = dtp, group = DISEASE) + 
+    geom_point(aes(x = PC1, y = PC2, col = study, shape = DISEASE, size = 3)) +
+    theme_gray()
+png(file = paste0(outdir, "allStudiesNormalized-pca-batch.png"), width = 800, height = 800)
+  p + ggtitle("PCA for normalized counts") +
+    xlab(paste0("PC1 (", round(pov[1]*100,2), "%)")) + ylab(paste0("PC2 (", round(pov[2]*100,2),"%)"))
+dev.off()
+```
+
+# excluding SRP136102
+
+
+
+```{r}
+reduced <- all_counts[-c(6,8)]
+full_counts <- reduced %>% 
+  purrr::reduce(full_join, by = 'ID')
+# batch - sample relation dataframe
+
+counts_file <- counts_file[-c(6,8)]
+studies <- names(counts_file)
+
+data <- list()
+for (i in 1:length(studies)){
+  samples <- colnames(counts_file[[i]])
+  DISEASE <- counts_file[[i]]$DISEASE
+  study <- rep(studies[i], length(samples))
+  data[[i]] <- data.frame(samples, DISEASE, study)
+}
+
+all_data <- do.call("rbind", data)
+
+batch <- as.numeric(as.factor(all_data$study))
+count_matrix <- as.matrix(full_counts[,-1])
+corrected <- ComBat_seq(counts = count_matrix, batch = batch, group = all_data$DISEASE)
+
+dge <- DGEList(counts = corrected, genes = full_counts$ID, remove.zeros = T)
+design <- model.matrix(~ DISEASE, data = all_data)
+keep <- filterByExpr(dge, design)
+dge <- dge[keep,,keep.lib.sizes=FALSE]
+# normalizing
+dge <- calcNormFactors(dge)
+
+pca_matrix <- t(dge$counts) # rows = samples, columns = genes
+pc <- prcomp(pca_matrix)
+dtp <- data.frame('study' = all_data$study, 'DISEASE' = all_data$DISEASE, pc$x[,1:2]) # the first two components are selected
+pov <- pc$sdev^2 / sum(pc$sdev^2)
+p <- ggplot(data = dtp, group = DISEASE) + 
+    geom_point(aes(x = PC1, y = PC2, col = study, shape = DISEASE, size = 3)) +
+    theme_gray()
+png(file = paste0(outdir, "reducedStudiesNormalized-pca-batch.png"), width = 800, height = 800)
+  p + ggtitle("PCA for normalized counts") +
+    xlab(paste0("PC1 (", round(pov[1]*100,2), "%)")) + ylab(paste0("PC2 (", round(pov[2]*100,2),"%)"))
+dev.off()
+```
+
+# With DESeq
+
+```{r}
+library("DESeq2")
+count_matrix <- as.matrix(full_counts[,-1])
+rownames(count_matrix)<-full_counts$ID
+batch <- as.numeric(as.factor(all_data$study))
+design <- model.matrix(~ DISEASE + batch, data = all_data)
+dds <- DESeqDataSetFromMatrix(countData = count_matrix, colData=all_data, design= design)
+# featureData <- data.frame(gene=full_counts$ID)
+# mcols(dds) <- DataFrame(mcols(dds), featureData)
+dds <- DESeq(dds)
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+res <- results(dds)
+
+# vst transformation
+
+vsd <- vst(dds, blind=FALSE)
+
+
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/out/"
+png(file = paste0(outdir, "DESeq-pca-reduced2-study.png"), width = 800, height = 800)
+ plotPCA(vsd, "study")
+dev.off()
+```
+
+
+# DEseq with batch corrected counts
+
+```{r}
+rownames(corrected)<-full_counts$ID 
+design <- model.matrix(~ DISEASE, data = all_data)
+dds <- DESeqDataSetFromMatrix(countData = corrected, colData=all_data, design= design)
+# featureData <- data.frame(gene=full_counts$ID)
+# mcols(dds) <- DataFrame(mcols(dds), featureData)
+dds <- DESeq(dds)
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+res <- results(dds)
+
+# vst transformation
+
+vsd <- vst(dds, blind=FALSE)
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/out/"
+png(file = paste0(outdir, "DESeq-batch2-pca.png"), width = 800, height = 800)
+ plotPCA(vsd, intgroup=c("study"))
+dev.off()
+```
+
+
+
+```{r}
+mat <- assay(vsd)
+mm <- model.matrix(~DISEASE, colData(vsd))
+mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
+assay(vsd) <- mat
+png(file = paste0(outdir, "DESeq-batch-limma-pca.png"), width = 800, height = 800)
+  plotPCA(vsd, 'DISEASE')
+dev.off()
+```
+
+
+## limma batch correct
+
+```{r}
+library(DESeq2)
+batch <- as.numeric(as.factor(all_data$study))
+count_matrix <- as.matrix(full_counts[,-1])
+rownames(count_matrix)<-full_counts$ID
+design <- model.matrix(~ study+DISEASE, data = all_data) # including batch as a covariate
+dds <- DESeqDataSetFromMatrix(countData = count_matrix, colData=all_data, design= design)
+dds <- DESeq(dds)
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+res <- results(dds) # DEG accounting for batch
+
+# PCA
+vsd <- vst(dds, blind=FALSE)
+
+mat <- assay(vsd)
+mm <- model.matrix(~DISEASE, colData(vsd))
+mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
+assay(vsd) <- mat
+counts_batch_corrected <- assay(vsd)
+
+png(file = paste0(outdir, "design-limma-batch-pca.png"), width = 800, height = 800)
+  plotPCA(vsd, 'DISEASE')
+dev.off()
+```
+
+```{r}
+all_data$batch <- as.factor(as.numeric(as.factor(all_data$study)))
+dds2 <- DESeqDataSetFromMatrix(countData = count_matrix, colData=all_data, design= ~batch+DISEASE)
+dds2 <- DESeq(dds2, test="LRT", reduced=~batch)
+keep <- rowSums(counts(dds2)) >= 10
+dds2 <- dds2[keep,]
+res2 <- results(dds2) # DGE accounting for batch
+
+# PCA
+vsd2 <- vst(dds2, blind=FALSE)
+
+mat <- assay(vsd2)
+mm <- model.matrix(~DISEASE, colData(vsd2))
+mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
+assay(vsd2) <- mat
+counts_batch_corrected <- assay(vsd2)
+
+png(file = paste0(outdir, "LRT-batch-pca.png"), width = 800, height = 800)
+  plotPCA(vsd, 'DISEASE')
+dev.off()
+```
+
+
+```{r}
+save.image(file = paste0(outdir,"LRT-dds.RData"))
+```
+
