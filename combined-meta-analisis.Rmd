@@ -298,7 +298,7 @@ mm <- model.matrix(~DISEASE, colData(vsd2))
 mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
 assay(vsd2) <- mat
 
-
+# save(vsd2, file=paste0(outdir, "vsd2.RData"))
 
 DGE <- as.data.frame(results(dds2))
 dim(DGE)
@@ -318,23 +318,20 @@ ordered_norm <- norm_counts[ order(match(rownames(norm_counts), rownames(DGE_nam
 
 # get top genes rows
 DGE.top <- DGE_names[ (DGE_names$baseMean.x > 50) & (DGE_names$padj < 0.05) & (abs(DGE_names$log2FoldChange) > 0.5), ] # 721
-base_mean <- rowMeans(ordered_norm)
-mat_scaled <- t(apply(ordered_norm, 1, scale)) # get Z score value for normalized counts
-colnames(mat_scaled) <- colnames(ordered_norm)
 
-num_keep <- 10 # keep top n genes
+num_keep <- 20 # keep top n genes
 rows_keep <- c(seq(1:num_keep), seq(((nrow(DGE.top)+1)-(num_keep)), nrow(DGE.top)))
 
 rownames(DGE.top) <- DGE.top$ID
-rownames(mat_scaled) <- gsub("\\..*","", rownames(mat_scaled))
-df.list <- list(DGE.top, mat_scaled)
+rownames(ordered_norm) <- gsub("\\..*","", rownames(ordered_norm))
+df.list <- list(DGE.top, ordered_norm)
 common_names = Reduce(intersect, lapply(df.list, row.names))
 df.list = lapply(df.list, function(x) { x[row.names(x) %in% common_names,] })
 
 DGE.top <- df.list[[1]]
-mat_scaled <- df.list[[2]]
+ordered_norm <- df.list[[2]]
 
-mat_scaled <- mat_scaled[ order(match(rownames(mat_scaled), rownames(DGE.top))), ]
+ordered_norm <- ordered_norm[ order(match(rownames(ordered_norm), rownames(DGE.top))), ]
 
 # getting log2 value for each gene we are keeping
 l2_val <- as.matrix(DGE.top[rows_keep,]$log2FoldChange)
@@ -344,23 +341,21 @@ colnames(mean) <- 'AveExpr'
 
 # color map for expression
 
-col_logFC <- colorRamp2(c(min(l2_val),0, max(l2_val)), c('blue','white','red'))
+col_logFC <- colorRamp2(c(min(l2_val),0, max(l2_val)), c('#34a624','white','#a709eb'))
 # col_AveExpr <- colorRamp2(c(quantile(mean)[1], quantile(mean)[4]), c('white', 'red'))
 
 # ha <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm')))
 
-colnames(mat_scaled) <- NULL
-
+colnames(ordered_norm) <- NULL
+mat <- as.matrix(ordered_norm)
 
 ha <- HeatmapAnnotation(Samples = all_data$DISEASE,
                         col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
-col_fun = colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
+# col_fun = colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
 row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
 
-h1 <- Heatmap(mat_scaled[rows_keep,], cluster_rows = F, name = 'Z-score',
-              cluster_columns = T, row_labels = DGE.top[rows_keep,]$gene_name, top_annotation = ha, column_km = 2,
-              border = TRUE, col = col_fun, right_annotation = row_ha)
 
+h1 <-Heatmap(mat[rows_keep,], cluster_rows = F, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Norm counts', right_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
 
 # with 8 genes
@@ -378,6 +373,17 @@ dev.off()
 
 png(paste0(outdir,'heatmap40.png'), width = 2000, height  = 2000, res = 300)
   h1
+dev.off()
+
+# all genes
+rownames(mat) <- NULL
+l2_val <- as.matrix(DGE.top$log2FoldChange)
+row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
+h2 <-Heatmap(mat, cluster_rows = F, name = 'Norm counts', right_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+
+png(paste0(outdir,'heatmapAll.png'), width = 5000, height  = 10000, res = 300)
+  h2
 dev.off()
 
 # ha2 <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm'), width = unit(10, 'cm')))
