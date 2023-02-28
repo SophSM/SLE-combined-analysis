@@ -137,6 +137,7 @@ down <- data %>%filter(Expression == 'Down-regulated') %>%
 
 multi_gp <- gost(list("Upregulated" = up$gene_name, "Downregulated" = down$gene_name), correction_method = "fdr", multi_query = F, ordered_query = T, organism = 'hsapiens')
 
+# save(multi_gp, file = paste0(outdir,'GO_query.RData'))
 
 gostp1 <- gostplot(multi_gp, interactive = FALSE)
 ggsave(paste0(outdir,"manhattanGO.png"),
@@ -266,7 +267,7 @@ g.down <- ggplot(bar_data_down_ordered, aes(count, reorder(term, -num), fill = c
         position = position_dodge(0.9)
     ) +
   labs(x = "Gene counts" ) +
- scale_fill_manual(name='Category', labels = c('CORUM', 'Biological Process', 'Cellular Component', 'Molecular Function'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
+ scale_fill_manual(name='Category', labels = c('CORUM', 'Biological Process', 'Cellular Component', 'Molecular Function'), values = c('#e810cb', '#3C6997','#d9c621','#b30039')) +
   theme(
         legend.position = "right",
         # panel.grid = element_blank(),
@@ -375,16 +376,31 @@ png(paste0(outdir,'heatmap40.png'), width = 2000, height  = 2000, res = 300)
   h1
 dev.off()
 
+
+# with study annotation
+
+study_ha <-HeatmapAnnotation(Study = all_data$study,
+                        col = list(Study = c('SRP062966' = '#f5a142', 'SRP073191' = '#f5ef42', 'SRP111941' = '#2ef0e9', 'SRP136102' = '#f02eb3', 'SRP168421' = '#a1645c', 'SRP296987'='#599163', 'SRP311059'='#755c91','SRP322015'='#e68a8a')))
+
+h1 <-Heatmap(mat[rows_keep,], cluster_rows = F, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Norm counts', right_annotation = row_ha, bottom_annotation = study_ha, top_annotation = ha, column_km = 2, border = T)
+
+png(paste0(outdir,'heatmap40_study.png'), width = 2000, height  = 2000, res = 300)
+  h1
+dev.off()
+
 # all genes
+  
 rownames(mat) <- NULL
 l2_val <- as.matrix(DGE.top$log2FoldChange)
 row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
-h2 <-Heatmap(mat, cluster_rows = F, name = 'Norm counts', right_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
+h2 <-Heatmap(mat, cluster_rows = F, name = 'Norm counts', bottom_annotation=study_ha, right_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
 
-png(paste0(outdir,'heatmapAll.png'), width = 5000, height  = 10000, res = 300)
+png(paste0(outdir,'heatmapAll_studies.png'), width = 5000, height  = 10000, res = 300)
   h2
 dev.off()
+
+
 
 # ha2 <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm'), width = unit(10, 'cm')))
 # h2 <- Heatmap(l2_val, row_labels = DGE.top[rows_keep,]$gene_name, cluster_rows = F,
@@ -397,5 +413,278 @@ dev.off()
              # })
 # h <- h1+h2
 
+```
+
+
+# heatmap row (gene) clustering
+
+```{r}
+ha <- HeatmapAnnotation(Samples = all_data$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+rownames(mat) <- NULL
+colnames(mat) <- NULL
+
+col_fun = colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
+h3 <-Heatmap(mat, name = 'Norm counts', top_annotation = ha, column_km = 2, border = T,
+             col = col_fun)
+
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+
+png(paste0(outdir,'heatmapAll_Rows.png'), width = 5000, height  = 10000, res = 300)
+  h3
+dev.off()
+
+h3 <-Heatmap(mat[rows_keep,], name = 'Norm counts', top_annotation = ha, column_km = 2, border = T)
+png(paste0(outdir,'heatmap_Rows.png'), width = 5000, height  = 10000, res = 300)
+  h3
+dev.off()
+```
+
+# heatmap of GO results
+
+```{r}
+library(enrichplot)
+library(DOSE)
+library(clusterProfiler)
+library(ggplot2)
+library(tidyverse)
+library(org.Hs.eg.db)
+
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData")
+
+data <- df_names %>% 
+  mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
+                                log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
+                                TRUE ~ "Unchanged"))
+
+
+keytypes(org.Hs.eg.db)
+original_gene_list = data$log2FoldChange
+names(original_gene_list) <- data$ID
+ids <- bitr(names(original_gene_list), fromType = 'ENSEMBL', toType = 'ENTREZID', OrgDb = 'org.Hs.eg.db')
+
+
+
+dedup_ids = ids[!duplicated(ids[c("ENSEMBL")]),]
+data <- data[!duplicated(data$ID),]
+data2 = data[data$ID %in% dedup_ids$ENSEMBL,]
+data2$Y = dedup_ids$ENTREZID
+names(kegg_gene_list) <- data2$Y
+kegg_gene_list<-na.omit(kegg_gene_list)
+kegg_gene_list = sort(kegg_gene_list, decreasing = TRUE)
+
+# Enrichment analysis
+
+
+gseK <- gseKEGG(geneList = kegg_gene_list,
+                #nPerm = 10000,
+                organism = "hsa",
+                nPerm = 10000,
+                minGSSize = 2,
+                maxGSSize = 500,
+                pvalueCutoff = 0.05,
+                pAdjustMethod = "fdr",
+                keyType = 'kegg')
+save(gseK, file = paste0(outdir, 'gseKEGG.RData'))
+
+gseK2 <- gseKEGG(geneList = kegg_gene_list,
+                #nPerm = 10000,
+                organism = "hsa",
+                nPerm = 10000,
+                minGSSize = 10,
+                maxGSSize = 500,
+                pvalueCutoff = 0.05,
+                pAdjustMethod = "fdr",
+                keyType = 'kegg', 
+                by = 'DOSE')
+save(gseK2, file = paste0(outdir, 'gseKEGG2.RData'))
+
+gseK3 <- gseKEGG(geneList = kegg_gene_list,
+                #nPerm = 10000,
+                organism = "hsa",
+                nPerm = 10000,
+                minGSSize = 3,
+                maxGSSize = 500,
+                pvalueCutoff = 0.05,
+                pAdjustMethod = "fdr",
+                keyType = 'ncbi-geneid')
+
+save(gseK3, file = '/mnt/Citosina/amedina/ssalazar/meta/out/combined/gseKEGG3.RData')
+load('/mnt/Citosina/amedina/ssalazar/meta/combined/gseKEGG3.RData')
+
+
+symbolKEGG_results <- setReadable(gseK3, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+
+
+# create a new data-frame that has '1' for when a gene is part of a term, and '0' when not
+
+gse.df <- as.data.frame(symbolKEGG_results@result)
+gseSubset <- subset(gse.df, p.adjust <= 0.05 )
+gseSubset <- gseSubset[grep('^hsa', gseSubset$ID),] # enriched KEGG pathways
+
+top <- 70
+top_genes <- bind_rows(data %>% 
+    filter(Expression == 'Up-regulated') %>% 
+    arrange(padj, desc(abs(log2FoldChange))) %>% 
+    head(top),
+  data %>% 
+    filter(Expression == 'Down-regulated') %>% 
+    arrange(padj, desc(abs(log2FoldChange))) %>% 
+    head(top)
+)
+
+sigGenes <- top_genes$gene_name
+original_gene_list <- top_genes$log2FoldChange
+names(original_gene_list) <- top_genes$ID
+ids <- bitr(names(original_gene_list), fromType = 'ENSEMBL', toType = 'ENTREZID', OrgDb = 'org.Hs.eg.db')
+dedup_ids = ids[!duplicated(ids[c("ENSEMBL")]),]
+top_genes <- top_genes[!duplicated(top_genes$ID),]
+data2 = top_genes[top_genes$ID %in% dedup_ids$ENSEMBL,]
+data2$Y = dedup_ids$ENTREZID
+names(original_gene_list) <- data2$Y
+
+#### 
+# GO
+go_gene_list<-na.omit(original_gene_list)
+go_gene_list = sort(go_gene_list, decreasing = TRUE)
+
+gseGO_res <- gseGO(geneList = go_gene_list,
+                ont = 'ALL',
+                OrgDb = org.Hs.eg.db,
+                minGSSize = 3,
+                maxGSSize = 500,
+                pvalueCutoff = 0.05,
+                pAdjustMethod = "fdr",
+                keyType = 'ENTREZID')
+
+symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+symbolGO_results <- symbolGO_results@result
+
+gseSubset <- subset(symbolGO_results, p.adjust <= 0.05 )
+# gseSubset <- gseSubset[grep('^hsa', gseSubset$ID),]
+annGSEA <- data.frame(row.names = sigGenes)
+for (j in 1:length(sigGenes)) {
+  # create a matching pattern to ensure genes match exactly
+    #  '^GENE,'  --> Match at beginning of matching string
+    #  ', GENE$'  --> Match at end of matching string
+    #  'GENE,'  --> Match between first and last gene in matching string
+  gene <- sigGenes[j]
+  pattern <- gene
+  for (k in 1:nrow(gseSubset)){ # parse through KEGG terms 
+    if (any(grepl(pattern, gseSubset$core_enrichment[k]))) {
+      annGSEA[j,k] <- 1
+    } else {
+      annGSEA[j,k] <- 0
+    }
+  }
+}
+colnames(annGSEA) <- gseSubset[,3]
+# remove terms with no overlapping genes
+annGSEA <- annGSEA[,apply(annGSEA, 2, mean)!=0]
+
+# remove genes with no overlapping terms
+annGSEA <- annGSEA[apply(annGSEA, 1, mean)!=0,]
+
+annGSEA[1:5,1:5]
+
+save(annGSEA, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/annGSEA_GO.RData')
+```
+
+```{r}
+# match the order of rownames in top_genes with annGSEA
+rownames(top_genes) <- top_genes$gene_name
+topTableAligned <- top_genes[which(rownames(top_genes) %in% rownames(annGSEA)),]
+topTableAligned <- topTableAligned[match(rownames(annGSEA), rownames(topTableAligned)),]
+all(rownames(topTableAligned) == rownames(annGSEA)) # TRUE
+
+```
+
+# Heatmap
+
+```{r}
+require(ComplexHeatmap)
+require(circlize)
+
+# colour bar for -log10(adjusted p-value) for sigGenes
+dfMinusLog10FDRGenes <- data.frame(-log10(
+  topTableAligned[which(rownames(topTableAligned) %in% rownames(annGSEA)), 'padj']))
+dfMinusLog10FDRGenes[dfMinusLog10FDRGenes == 'Inf'] <- 0
+
+# colour bar for fold changes for sigGenes
+dfFoldChangeGenes <- data.frame(
+  topTableAligned[which(rownames(topTableAligned) %in% rownames(annGSEA)), 'log2FoldChange'])
+
+# merge both
+dfGeneAnno <- data.frame(dfMinusLog10FDRGenes, dfFoldChangeGenes)
+colnames(dfGeneAnno) <- c('Gene score', 'Log2FC')
+
+colours <- colorRamp2(c(min(dfGeneAnno$Log2FC),0, max(dfGeneAnno$Log2FC)), c('royalblue','white','yellow'))
+
+haGenes <- rowAnnotation(
+  df = dfGeneAnno,
+  col = list(Log2FC =colours),
+  width = unit(1,'cm'),
+  annotation_name_side = 'top')
+
+# colour bar for -log10(enrichment Q value) for DAVID results
+dfMinusLog10Enrichment <- data.frame(-log10(
+  symbolGO_results[which(symbolGO_results$Description %in% colnames(annGSEA)), 'qvalues']))
+colnames(dfMinusLog10Enrichment) <- 'Enrichment\nterm score'
+haTerms <- HeatmapAnnotation(
+  df = dfMinusLog10Enrichment,
+  Term = anno_text(
+    colnames(annGSEA),
+    rot = 45,
+    just = 'right',
+    gp = gpar(fontsize = 12)),
+  annotation_height = unit.c(unit(1, 'cm'), unit(8, 'cm')),
+  annotation_name_side = 'left')
+
+
+# HEATMAP
+
+annGSEA <- as.matrix(annGSEA)
+hmapGSEA <- Heatmap(annGSEA,
+  name = 'GO enrichment',
+  split = dfGeneAnno[,2],
+
+  col = c('0' = 'white', '1' = 'forestgreen'),
+
+  rect_gp = gpar(col = 'grey85'),
+
+  cluster_rows = TRUE,
+  show_row_dend = TRUE,
+  row_title = 'Top Genes',
+  row_title_side = 'left',
+  row_title_gp = gpar(fontsize = 11, fontface = 'bold'),
+  row_title_rot = 90,
+  show_row_names = TRUE,
+  row_names_gp = gpar(fontsize = 11, fontface = 'bold'),
+  row_names_side = 'left',
+  row_dend_width = unit(35, 'mm'),
+
+  cluster_columns = TRUE,
+  show_column_dend = TRUE,
+  column_title = 'Enriched terms',
+  column_title_side = 'top',
+  column_title_gp = gpar(fontsize = 12, fontface = 'bold'),
+  column_title_rot = 0,
+  show_column_names = FALSE,
+
+  show_heatmap_legend = FALSE,
+
+  clustering_distance_columns = 'euclidean',
+  clustering_method_columns = 'ward.D2',
+  clustering_distance_rows = 'euclidean',
+  clustering_method_rows = 'ward.D2',
+
+  bottom_annotation = haTerms)
+
+png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/GOenriched_HMap.png", width = 5000, height = 5000, res = 300)
+  draw(hmapGSEA + haGenes,
+    heatmap_legend_side = 'right',
+    annotation_legend_side = 'right')
+dev.off()
 ```
 
