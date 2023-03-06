@@ -337,22 +337,18 @@ ordered_norm <- ordered_norm[ order(match(rownames(ordered_norm), rownames(DGE.t
 # getting log2 value for each gene we are keeping
 l2_val <- as.matrix(DGE.top[rows_keep,]$log2FoldChange)
 colnames(l2_val)<- "logFC"
-mean <- as.matrix(DGE.top[rows_keep,]$baseMean)
-colnames(mean) <- 'AveExpr'
 
 # color map for expression
 
 col_logFC <- colorRamp2(c(min(l2_val),0, max(l2_val)), c('#34a624','white','#a709eb'))
-# col_AveExpr <- colorRamp2(c(quantile(mean)[1], quantile(mean)[4]), c('white', 'red'))
 
-# ha <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm')))
 
 colnames(ordered_norm) <- NULL
 mat <- as.matrix(ordered_norm)
 
 ha <- HeatmapAnnotation(Samples = all_data$DISEASE,
                         col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
-# col_fun = colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
+
 row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
 
 
@@ -400,18 +396,24 @@ png(paste0(outdir,'heatmapAll_studies.png'), width = 5000, height  = 10000, res 
   h2
 dev.off()
 
+#####
+# heatmap with top samples ordered
 
+ordered_samples <- all_data[order(all_data$DISEASE),] # reorder all_data
+ordered_samples$number <- rownames(ordered_samples)
 
-# ha2 <- HeatmapAnnotation(summary = anno_summary(gp = gpar(fill = 2), height = unit(2, 'cm'), width = unit(10, 'cm')))
-# h2 <- Heatmap(l2_val, row_labels = DGE.top[rows_keep,]$gene_name, cluster_rows = F,
-             # name = 'logFC', top_annotation = ha2, col = col_logFC, cell_fun = function(j, i, x, y, w,h,col){
-               # grid.text(round(l2_val[i,j],2), x,y)
-              #})
-#h3 <- Heatmap(mean, row_labels = DGE.top[rows_keep,]$gene_name, cluster_rows = F,
-              #name = 'AveExpr', col = col_AveExpr, cell_fun = function(j, i, x, y, w,h,col){
-               # grid.text(round(mean[i,j],2), x,y)
-             # })
-# h <- h1+h2
+# order count matrix
+colnames(mat) <- seq(1:318)
+ordered_norm <- mat[,order(match(colnames(mat), ordered_samples$number)) ]
+colnames(ordered_norm) <- NULL
+
+ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+h1 <-Heatmap(mat[rows_keep,], cluster_rows = F, cluster_columns = F, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Norm counts', right_annotation = row_ha, bottom_annotation = study_ha, top_annotation = ha)
+
+png(paste0(outdir,'heatmap_ordered40.png'), width = 2000, height  = 2000, res = 300)
+  h1
+dev.off()
 
 ```
 
@@ -523,6 +525,10 @@ gse.df <- as.data.frame(symbolKEGG_results@result)
 gseSubset <- subset(gse.df, p.adjust <= 0.05 )
 gseSubset <- gseSubset[grep('^hsa', gseSubset$ID),] # enriched KEGG pathways
 
+#######
+
+# GET TOP GENES
+
 top <- 70
 top_genes <- bind_rows(data %>% 
     filter(Expression == 'Up-regulated') %>% 
@@ -533,6 +539,25 @@ top_genes <- bind_rows(data %>%
     arrange(padj, desc(abs(log2FoldChange))) %>% 
     head(top)
 )
+
+DGE_genes <- data[data$Expression != 'Unchanged',]
+
+
+list_lab <- DGE_genes[,c(8,10,3)]
+write.csv(list_lab, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/topGenes_list.csv')
+
+list_lab_up <- list_lab[list_lab$Expression == 'Up-regulated',]
+list_lab_up <- list_lab_up[order(-list_lab_up$log2FoldChange), ]
+rownames(list_lab_up) <- seq(1:nrow(list_lab_up))
+
+list_lab_down <- list_lab[list_lab$Expression == 'Down-regulated',]
+list_lab_down <- list_lab_down[order(list_lab_down$log2FoldChange), ]
+rownames(list_lab_down) <- seq(1:nrow(list_lab_down))
+
+write.csv(list_lab_up, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/topGenesUp_list.csv')
+write.csv(list_lab_down, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/topGenesDown_list.csv')
+
+######
 
 sigGenes <- top_genes$gene_name
 original_gene_list <- top_genes$log2FoldChange
@@ -557,21 +582,17 @@ gseGO_res <- gseGO(geneList = go_gene_list,
                 pvalueCutoff = 0.05,
                 pAdjustMethod = "fdr",
                 keyType = 'ENTREZID')
+save(gseGO_res, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/GO_results.RData")
 
 symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
 symbolGO_results <- symbolGO_results@result
 
 gseSubset <- subset(symbolGO_results, p.adjust <= 0.05 )
-# gseSubset <- gseSubset[grep('^hsa', gseSubset$ID),]
+
 annGSEA <- data.frame(row.names = sigGenes)
 for (j in 1:length(sigGenes)) {
-  # create a matching pattern to ensure genes match exactly
-    #  '^GENE,'  --> Match at beginning of matching string
-    #  ', GENE$'  --> Match at end of matching string
-    #  'GENE,'  --> Match between first and last gene in matching string
-  gene <- sigGenes[j]
   pattern <- gene
-  for (k in 1:nrow(gseSubset)){ # parse through KEGG terms 
+  for (k in 1:nrow(gseSubset)){ # parse through GO terms 
     if (any(grepl(pattern, gseSubset$core_enrichment[k]))) {
       annGSEA[j,k] <- 1
     } else {
@@ -686,5 +707,29 @@ png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/GOenriched_HMap.png
     heatmap_legend_side = 'right',
     annotation_legend_side = 'right')
 dev.off()
+```
+
+# directed acyclic graph
+
+```{r}
+gseBP_res <- gseGO(geneList = go_gene_list,
+                ont = 'BP',
+                OrgDb = org.Hs.eg.db,
+                minGSSize = 3,
+                maxGSSize = 500,
+                pvalueCutoff = 0.05,
+                pAdjustMethod = "fdr",
+                keyType = 'ENTREZID')
+
+symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+p1 <- enrichplot::cnetplot(symbolGO_results, foldChange=go_gene_list)
+
+gopt <- goplot(
+  gseBP_res,
+  showCategory = 10,
+  color = "p.adjust",
+  layout = "sugiyama",
+  geom = "text"
+)
 ```
 
