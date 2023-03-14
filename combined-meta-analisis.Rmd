@@ -13,13 +13,11 @@ module load r/4.0.2
 R
 ```
 
-```{r}
-library(tidyverse)
-```
 
 # Annotate gene symbol
 
-```{r}
+```{r gene symbol}
+library(tidyverse)
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
 load(file = "LRT-dds.RData")
 DGE <- res2
@@ -61,7 +59,7 @@ load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 
 # Downregulated and upregulated genes
 
-```{r}
+```{r Down and Up genes}
 upGenes <- subset(df_names, padj < 0.05 & log2FoldChange >= 1)
 veryUP <- subset(df_names, padj < 0.05 & log2FoldChange >= 2)
 
@@ -72,7 +70,8 @@ veryDOWN <- subset(df_names, padj < 0.05 & log2FoldChange <= -2)
 
 # Volcano Plot
 
-```{r}
+```{r Volcano Plot}
+library(ggplot2)
 data <- df_names %>% 
   mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
                                 log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
@@ -80,7 +79,6 @@ data <- df_names %>%
 head(data) %>% 
   knitr::kable()
 
-library(ggplot2)
 volcanoplot <- ggplot(data, aes(log2FoldChange, -log(padj,10))) +
   geom_point(aes(color = Expression), size = 2/5) +
   xlab(expression("log"[2]*"FC")) + 
@@ -118,7 +116,7 @@ dev.off()
 
 # GO terms
 
-```{r}
+```{r GO terms}
 library(gprofiler2)
 library(enrichplot)
 library(DOSE)
@@ -285,7 +283,7 @@ dev.off()
 
 # Heatmap
 
-```{r}
+```{r heatmap}
 library(DESeq2)
 library(tidyverse)
 library(ComplexHeatmap)
@@ -444,7 +442,7 @@ dev.off()
 
 # heatmap of GO results
 
-```{r}
+```{r heatmap GO terms}
 library(enrichplot)
 library(DOSE)
 library(clusterProfiler)
@@ -609,7 +607,7 @@ annGSEA[1:5,1:5]
 save(annGSEA, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/annGSEA_GO.RData')
 ```
 
-```{r}
+```{r annGSEA}
 # match the order of rownames in top_genes with annGSEA
 rownames(top_genes) <- top_genes$gene_name
 topTableAligned <- top_genes[which(rownames(top_genes) %in% rownames(annGSEA)),]
@@ -620,7 +618,7 @@ all(rownames(topTableAligned) == rownames(annGSEA)) # TRUE
 
 # Heatmap
 
-```{r}
+```{r heatmap expression}
 require(ComplexHeatmap)
 require(circlize)
 
@@ -708,7 +706,7 @@ dev.off()
 
 # directed acyclic graph
 
-```{r}
+```{r GO terms graph}
 library('DOSE')
 library('DESeq2')
 library('enrichplot')
@@ -731,9 +729,9 @@ ggsave(paste0(outdir,"cnt_circle_enrichmentUP.png"), width = 3000, height = 5000
 dev.off()
 ```
 
-## PCA
+# PCA
 
-```{r}
+```{r PCA with ellipse}
 library(DESeq2)
 library(ggplot2)
 load('/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData')
