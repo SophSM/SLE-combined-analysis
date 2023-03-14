@@ -299,7 +299,7 @@ mm <- model.matrix(~DISEASE, colData(vsd2))
 mat <- limma::removeBatchEffect(mat, batch=batch, design=mm)
 assay(vsd2) <- mat
 
-# save(vsd2, file=paste0(outdir, "vsd2.RData"))
+save(vsd2, file=paste0(outdir, "vsd2.RData"))
 
 DGE <- as.data.frame(results(dds2))
 dim(DGE)
@@ -468,27 +468,27 @@ ids <- bitr(names(original_gene_list), fromType = 'ENSEMBL', toType = 'ENTREZID'
 
 
 
-dedup_ids = ids[!duplicated(ids[c("ENSEMBL")]),]
-data <- data[!duplicated(data$ID),]
-data2 = data[data$ID %in% dedup_ids$ENSEMBL,]
-data2$Y = dedup_ids$ENTREZID
-names(kegg_gene_list) <- data2$Y
-kegg_gene_list<-na.omit(kegg_gene_list)
-kegg_gene_list = sort(kegg_gene_list, decreasing = TRUE)
+#dedup_ids = ids[!duplicated(ids[c("ENSEMBL")]),]
+#data <- data[!duplicated(data$ID),]
+#data2 = data[data$ID %in% dedup_ids$ENSEMBL,]
+#data2$Y = dedup_ids$ENTREZID
+#names(kegg_gene_list) <- data2$Y
+#kegg_gene_list<-na.omit(kegg_gene_list)
+#kegg_gene_list = sort(kegg_gene_list, decreasing = TRUE)
 
 # Enrichment analysis
 
 
-gseK <- gseKEGG(geneList = kegg_gene_list,
+#gseK <- gseKEGG(geneList = kegg_gene_list,
                 #nPerm = 10000,
-                organism = "hsa",
-                nPerm = 10000,
-                minGSSize = 2,
-                maxGSSize = 500,
-                pvalueCutoff = 0.05,
-                pAdjustMethod = "fdr",
-                keyType = 'kegg')
-save(gseK, file = paste0(outdir, 'gseKEGG.RData'))
+               # organism = "hsa",
+                #nPerm = 10000,
+                #minGSSize = 2,
+                #maxGSSize = 500,
+                #pvalueCutoff = 0.05,
+                #pAdjustMethod = "fdr",
+                #keyType = 'kegg')
+#save(gseK, file = paste0(outdir, 'gseKEGG.RData'))
 
 gseK2 <- gseKEGG(geneList = kegg_gene_list,
                 #nPerm = 10000,
@@ -500,30 +500,25 @@ gseK2 <- gseKEGG(geneList = kegg_gene_list,
                 pAdjustMethod = "fdr",
                 keyType = 'kegg', 
                 by = 'DOSE')
-save(gseK2, file = paste0(outdir, 'gseKEGG2.RData'))
+#save(gseK2, file = paste0(outdir, 'gseKEGG2.RData'))
 
-gseK3 <- gseKEGG(geneList = kegg_gene_list,
+#gseK3 <- gseKEGG(geneList = kegg_gene_list,
                 #nPerm = 10000,
-                organism = "hsa",
-                nPerm = 10000,
-                minGSSize = 3,
-                maxGSSize = 500,
-                pvalueCutoff = 0.05,
-                pAdjustMethod = "fdr",
-                keyType = 'ncbi-geneid')
+                #organism = "hsa",
+                #nPerm = 10000,
+                #minGSSize = 3,
+                #maxGSSize = 500,
+                #pvalueCutoff = 0.05,
+                #pAdjustMethod = "fdr",
+                #keyType = 'ncbi-geneid')
 
-save(gseK3, file = '/mnt/Citosina/amedina/ssalazar/meta/out/combined/gseKEGG3.RData')
-load('/mnt/Citosina/amedina/ssalazar/meta/combined/gseKEGG3.RData')
-
-
-symbolKEGG_results <- setReadable(gseK3, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+#save(gseK3, file = '/mnt/Citosina/amedina/ssalazar/meta/out/combined/gseKEGG3.RData')
+#load('/mnt/Citosina/amedina/ssalazar/meta/combined/gseKEGG3.RData')
 
 
-# create a new data-frame that has '1' for when a gene is part of a term, and '0' when not
+#symbolKEGG_results <- setReadable(gseK3, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
 
-gse.df <- as.data.frame(symbolKEGG_results@result)
-gseSubset <- subset(gse.df, p.adjust <= 0.05 )
-gseSubset <- gseSubset[grep('^hsa', gseSubset$ID),] # enriched KEGG pathways
+
 
 #######
 
@@ -562,6 +557,7 @@ write.csv(list_lab_down, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/to
 sigGenes <- top_genes$gene_name
 original_gene_list <- top_genes$log2FoldChange
 names(original_gene_list) <- top_genes$ID
+# names(original_gene_list) <- top_genes$gene_name
 ids <- bitr(names(original_gene_list), fromType = 'ENSEMBL', toType = 'ENTREZID', OrgDb = 'org.Hs.eg.db')
 dedup_ids = ids[!duplicated(ids[c("ENSEMBL")]),]
 top_genes <- top_genes[!duplicated(top_genes$ID),]
@@ -573,6 +569,7 @@ names(original_gene_list) <- data2$Y
 # GO
 go_gene_list<-na.omit(original_gene_list)
 go_gene_list = sort(go_gene_list, decreasing = TRUE)
+save(go_gene_list, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/GO_gene_list.RData')
 
 gseGO_res <- gseGO(geneList = go_gene_list,
                 ont = 'ALL',
@@ -712,24 +709,52 @@ dev.off()
 # directed acyclic graph
 
 ```{r}
-gseBP_res <- gseGO(geneList = go_gene_list,
-                ont = 'BP',
-                OrgDb = org.Hs.eg.db,
-                minGSSize = 3,
-                maxGSSize = 500,
-                pvalueCutoff = 0.05,
-                pAdjustMethod = "fdr",
-                keyType = 'ENTREZID')
+library('DOSE')
+library('DESeq2')
+library('enrichplot')
+library('ggnewscale')
+load("/Users/sofiasalazar/clusterliigh/meta/combined/namedDGElist.RData")
+load("/Users/sofiasalazar/clusterliigh/meta/combined/GO_gene_list.RData")
+
 
 symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
-p1 <- enrichplot::cnetplot(symbolGO_results, foldChange=go_gene_list)
 
-gopt <- goplot(
-  gseBP_res,
-  showCategory = 10,
-  color = "p.adjust",
-  layout = "sugiyama",
-  geom = "text"
-)
+cnt_enrichment <- cnetplot(symbolGO_results, showCategory = 5, categorySize="geneNum", foldChange = go_gene_list, colorEdge = TRUE)
+
+outdir = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/"
+
+ggsave(paste0(outdir,"cnt_enrichmentUP.png"), width = 3000, height = 5000, units = 'px', dpi = 300, bg = "white", plot = cnt_enrichment)
+dev.off()
+
+p3 <- cnetplot(symbolGO_results, foldChange=go_gene_list, circular = TRUE, colorEdge = TRUE) 
+ggsave(paste0(outdir,"cnt_circle_enrichmentUP.png"), width = 3000, height = 5000, units = 'px', dpi = 300, bg = "white", plot = p3)
+dev.off()
+```
+
+## PCA
+
+```{r}
+library(DESeq2)
+library(ggplot2)
+load('/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData')
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/vsd2.RData")
+mat <- as.matrix(assay(vsd2))
+pc <- prcomp(t(mat))
+dtp <- data.frame('DISEASE' = all_data$DISEASE, pc$x[,1:2])
+
+pcaData <- plotPCA(vsd2, 'DISEASE', returnData = TRUE)
+
+pcaData <- tibble::rownames_to_column(pcaData, "study")
+
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+pca_plot <- ggplot(pcaData, aes(PC1, PC2, color=group, group = group)) +
+  geom_point(size=3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  stat_ellipse()
+
+png(file = '/mnt/Citosina/amedina/ssalazar/meta/combined/PCA-ellipse.png')
+  pca_plot
+dev.off()
 ```
 

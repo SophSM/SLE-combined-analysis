@@ -60,18 +60,7 @@ all_data <- do.call("rbind", data)
 ```
 
 # PCA for raw counts
-# Normalization
 
-```{r}
-library(edgeR)
-count_matrix <- as.matrix(full_counts[,-1])
-dge <- DGEList(counts = count_matrix, genes = full_counts$ID, remove.zeros = T)
-design <- model.matrix(~ DISEASE+ study, data = all_data)
-keep <- filterByExpr(dge, design)
-dge <- dge[keep,,keep.lib.sizes=FALSE]
-# normalizing
-dge <- calcNormFactors(dge)
-```
 
 # PCA
 
