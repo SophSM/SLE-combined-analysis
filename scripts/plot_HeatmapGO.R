@@ -12,7 +12,7 @@ library(circlize)
 ######
 
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
-load("/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData")
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 data <- df_names %>% 
@@ -41,9 +41,11 @@ top_genes <- bind_rows(data %>%
 
 DGE_genes <- data[data$Expression != 'Unchanged',]
 
-
+### lista para el lab
 list_lab <- DGE_genes[,c(8,10,3)]
 write.csv(list_lab, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/topGenes_list.csv')
+
+
 
 list_lab_up <- list_lab[list_lab$Expression == 'Up-regulated',]
 list_lab_up <- list_lab_up[order(-list_lab_up$log2FoldChange), ]
@@ -115,6 +117,10 @@ gseGO_res <- gseGO(geneList = go_gene_list,
 save(gseGO_res, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/GO_allDEG_results.RData")
 
 #########
+# load
+
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/GO_allDEG_results.RData")
+
 ########
 
 symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
@@ -186,6 +192,14 @@ haTerms <- HeatmapAnnotation(
   annotation_height = unit(8, 'cm'),
   annotation_name_side = 'left')
 
+# bottom annotation with GO source for each term
+
+term_source <- symbolGO_results %>% dplyr::select(ONTOLOGY)
+ 
+sourceTermsha <- HeatmapAnnotation(
+  Source = term_source$ONTOLOGY,
+  col = list(Source = c('BP' = '#3C6997', 'CC' = '#d9c621', "MF" = '#b30039'))
+)
 
 # HEATMAP
 
@@ -224,10 +238,16 @@ hmapGSEA <- Heatmap(annGSEA,
                     clustering_distance_rows = 'euclidean',
                     clustering_method_rows = 'ward.D2',
                     
-                    bottom_annotation = haTerms
+                    bottom_annotation = c(sourceTermsha, haTerms)
 )
 
-png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/GOenriched_allDEG_HMap.png", width = 5000, height = 5000, res = 300)
+png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/GOenriched_allDEG_HMap_wTerm.png", width = 5000, height = 5000, res = 300)
+draw(hmapGSEA + haGenes,
+     heatmap_legend_side = 'right',
+     annotation_legend_side = 'right')
+dev.off()
+
+png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/GOenriched_allDEG_HMap.png", width = 5000, height = 5000, res = 300)
 draw(hmapGSEA + haGenes,
      heatmap_legend_side = 'right',
      annotation_legend_side = 'right')

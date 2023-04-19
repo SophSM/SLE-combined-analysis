@@ -3,6 +3,7 @@
 #####
 
 library(ggplot2)
+library(tidyverse)
 
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
@@ -12,7 +13,7 @@ outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 upGenes <- subset(df_names, padj < 0.05 & log2FoldChange >= 1)
 veryUP <- subset(df_names, padj < 0.05 & log2FoldChange >= 2)
 
-downGenes <- subset(df_names, padj < 0.05 & log2FoldChange <= -0.5)
+downGenes <- subset(df_names, padj < 0.05 & log2FoldChange <= -1)
 veryDOWN <- subset(df_names, padj < 0.05 & log2FoldChange <= -2)
 
 data <- df_names %>% 
@@ -34,7 +35,7 @@ data %>%
   knitr::kable()
 
 
-top <- 10 # no. of highlighted genes in plot
+top <- 20 # no. of highlighted genes in plot
 top_genes <- bind_rows(data %>% 
                          filter(Expression == 'Up-regulated') %>% 
                          arrange(padj, desc(abs(log2FoldChange))) %>% 
@@ -44,14 +45,20 @@ top_genes <- bind_rows(data %>%
                          arrange(padj, desc(abs(log2FoldChange))) %>% 
                          head(top)
 )
+
+dim(data[data$Expression == 'Up-regulated',])
+dim(data[data$Expression == 'Down-regulated',])
+
 top_genes %>% 
   knitr::kable()
 
 volcanoplot_names <-  volcanoplot +
   ggrepel::geom_label_repel(data = top_genes,
                             mapping = aes(log2FoldChange, -log(padj,10), label = gene_name),
-                            size = 2)
+                            size = 2) + theme_classic()
+
+save(volcanoplot_names, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
 
 ggsave(paste0(outdir,"volcanoPlotWithTopGenes.png"),
-       plot = p3, dpi = 300)
+       plot = volcanoplot_names, dpi = 300)
 dev.off()

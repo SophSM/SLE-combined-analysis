@@ -7,12 +7,19 @@ library(enrichplot)
 library(DOSE)
 library(clusterProfiler)
 library(ggplot2)
+library(tidyverse)
 
+df_names <- read.csv("/mnt/Citosina/amedina/ssalazar/meta/combined/DGElist_withNames.csv")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 #####
+
+data <- df_names %>% 
+  mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
+                                log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
+                                TRUE ~ "Unchanged"))
 
 up <- data %>%filter(Expression == 'Up-regulated') %>% 
   arrange(padj, desc(abs(log2FoldChange)))
@@ -25,7 +32,7 @@ down <- data %>%filter(Expression == 'Down-regulated') %>%
 multi_gp <- gost(list("Upregulated" = up$gene_name, "Downregulated" = down$gene_name), 
                  correction_method = "fdr", multi_query = F, ordered_query = T, 
                  organism = 'hsapiens')
-
+gost_query <- as.data.frame(multi_gp$result)
 # manhattan plot
 
 gostp1 <- gostplot(multi_gp, interactive = FALSE)
@@ -104,11 +111,10 @@ g.up <- ggplot(bar_data_up_ordered, aes(count, reorder(term, -num), fill = categ
     # axis.ticks = element_blank(),
     axis.title.y = element_blank(),
     strip.text.x = element_text(size = 14, face = "bold"),
-    strip.background = element_blank()
-  )
-
+    strip.background = element_blank() 
+  ) + theme_classic()
 ggsave(paste0(outdir,"barplotUP_GO.png"),
-       plot = g.up, dpi = 300, width = 20, height = 10)
+       plot = g.up + theme_classic(), dpi = 300, width = 20, height = 10)
 dev.off()
 
 ## barplot only downregulated
@@ -132,16 +138,13 @@ g.down <- ggplot(bar_data_down_ordered, aes(count, reorder(term, -num), fill = c
   scale_fill_manual(name='Category', labels = c('CORUM', 'Biological Process', 'Cellular Component', 'Molecular Function'), values = c('#e810cb', '#3C6997','#d9c621','#b30039')) +
   theme(
     legend.position = "right",
-    # panel.grid = element_blank(),
-    # axis.text.x = element_blank(),
-    # axis.ticks = element_blank(),
     axis.title.y = element_blank(),
     strip.text.x = element_text(size = 14, face = "bold"),
     strip.background = element_blank()
   )
 
 ggsave(paste0(outdir,"barplotDOWN_GO.png"),
-       plot = g.down, dpi = 300, width = 20, height = 10)
+       plot = g.down + theme_classic(), dpi = 300, width = 20, height = 10)
 dev.off()
 
 #####

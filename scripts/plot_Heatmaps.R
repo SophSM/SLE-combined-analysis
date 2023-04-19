@@ -7,7 +7,7 @@ library(tidyverse)
 library(ComplexHeatmap)
 library(RColorBrewer)
 library(circlize)
-load("/mnt/Citosina/amedina/ssalazar/meta/out/LRT-dds.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
@@ -109,8 +109,9 @@ dev.off()
 rownames(mat) <- NULL
 l2_val <- as.matrix(DGE.top$log2FoldChange)
 row_ha <- rowAnnotation(logFC = l2_val, col = list(logFC =col_logFC))
-h2 <-Heatmap(mat, cluster_rows = F, name = 'Norm counts', bottom_annotation=study_ha, right_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
-outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+h2 <-Heatmap(mat, cluster_rows = F, name = 'Norm counts', bottom_annotation=study_ha, left_annotation = row_ha, top_annotation = ha, column_km = 2, border = T)
+
+save(h2, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/heatmap_all_object.RData") 
 
 png(paste0(outdir,'heatmapAll_studies.png'), width = 5000, height  = 10000, res = 300)
 h2

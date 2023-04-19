@@ -966,7 +966,7 @@ for (i in 1:length(rep.gene)){
 }
 mixed.genes <- unlist(gwas.genes)
 mixed.genes.df <- as.data.frame(table(mixed.genes))
-top.mixed <- subset(mixed.genes.df, Freq > 3)
+top.mixed <- subset(mixed.genes.df, Freq >= 4)
 top.mixed
 
 ## nat american
@@ -993,7 +993,7 @@ for (i in 1:length(rep.gene)){
 }
 eu.genes <- unlist(gwas.genes)
 eu.genes.df <- as.data.frame(table(eu.genes))
-top.eu <- subset(eu.genes.df, Freq > 4)
+top.eu <- subset(eu.genes.df, Freq >= 4)
 top.eu
 
 ## asian
@@ -1007,7 +1007,7 @@ for (i in 1:length(rep.gene)){
 }
 a.genes <- unlist(gwas.genes)
 a.genes.df <- as.data.frame(table(a.genes))
-top.a <- subset(a.genes.df, Freq > 4)
+top.a <- subset(a.genes.df, Freq >= 4)
 top.a
 ```
 
