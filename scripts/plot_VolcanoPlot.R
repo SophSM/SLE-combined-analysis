@@ -55,7 +55,7 @@ top_genes %>%
 volcanoplot_names <-  volcanoplot +
   ggrepel::geom_label_repel(data = top_genes,
                             mapping = aes(log2FoldChange, -log(padj,10), label = gene_name),
-                            size = 2) + theme_classic()
+                            size = 2) + theme_classic() + theme(legend.position = 'bottom')
 
 save(volcanoplot_names, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
 

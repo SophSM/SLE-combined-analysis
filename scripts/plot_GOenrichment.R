@@ -68,7 +68,7 @@ g <- ggplot(bar_data_ordered, aes(count, reorder(term, -num), fill = category)) 
     size = 4,
     position = position_dodge(0.9)
   ) +
-  labs(x = "Gene counts" ) +
+  labs(x = "Gene counts" , y = NULL) +
   scale_fill_manual(name='Category', labels = c('Biological Process', 'Cellular Component',
                                                 'Molecular Function', 'REAC'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
   theme(
@@ -85,6 +85,8 @@ ggsave(paste0(outdir,"barplotGO.png"),
        plot = g, dpi = 300, width = 20, height = 10)
 dev.off()
 
+
+
 ## barplot only upregulated
 
 bar_data_up <- subset(bar_data, condition == 'Upregulated')
@@ -98,11 +100,11 @@ g.up <- ggplot(bar_data_up_ordered, aes(count, reorder(term, -num), fill = categ
   geom_text(
     aes(label = count),
     color = "black",
-    hjust = -0.1,
-    size = 4,
-    position = position_dodge(0.9)
+    hjust = 0,
+    size = 2.2,
+    position = position_dodge(0)
   ) +
-  labs(x = "Gene counts" ) +
+  labs(x = "Gene counts" , y = NULL) +
   scale_fill_manual(name='Category', labels = c('Biological Process', 'REAC', 'TF'), values = c('#3C6997', '#DD7230','#B4DC7F','#25ced1')) +
   theme(
     legend.position = "right",
@@ -110,12 +112,17 @@ g.up <- ggplot(bar_data_up_ordered, aes(count, reorder(term, -num), fill = categ
     # axis.text.x = element_blank(),
     # axis.ticks = element_blank(),
     axis.title.y = element_blank(),
-    strip.text.x = element_text(size = 14, face = "bold"),
+    strip.text.x = element_text(size = 11, face = "bold"),
     strip.background = element_blank() 
   ) + theme_classic()
-ggsave(paste0(outdir,"barplotUP_GO.png"),
-       plot = g.up + theme_classic(), dpi = 300, width = 20, height = 10)
-dev.off()
+
+# ggsave(paste0(outdir,"barplotUP_GO.png"),
+       # plot = g.up + theme_classic(), dpi = 300, width = 20, height = 10)
+# dev.off()
+
+
+save(g.up, file = paste0(outdir, "barplotGO_UP.RData"))
+
 
 ## barplot only downregulated
 
@@ -130,21 +137,24 @@ g.down <- ggplot(bar_data_down_ordered, aes(count, reorder(term, -num), fill = c
   geom_text(
     aes(label = count),
     color = "black",
-    hjust = -0.1,
-    size = 4,
-    position = position_dodge(0.9)
+    hjust = 0,
+    size = 2.2,
+    position = position_dodge(0)
   ) +
-  labs(x = "Gene counts" ) +
+  labs(x = "Gene counts" , y = NULL) +
   scale_fill_manual(name='Category', labels = c('CORUM', 'Biological Process', 'Cellular Component', 'Molecular Function'), values = c('#e810cb', '#3C6997','#d9c621','#b30039')) +
   theme(
     legend.position = "right",
     axis.title.y = element_blank(),
-    strip.text.x = element_text(size = 14, face = "bold"),
+    strip.text.x = element_text(size = 11, face = "bold"),
     strip.background = element_blank()
-  )
+  )+ theme_classic()
 
-ggsave(paste0(outdir,"barplotDOWN_GO.png"),
-       plot = g.down + theme_classic(), dpi = 300, width = 20, height = 10)
-dev.off()
+# ggsave(paste0(outdir,"barplotDOWN_GO.png"),
+  #     plot = g.down + theme_classic(), dpi = 300, width = 20, height = 10)
+# dev.off()
+
+save(g.down, file = paste0(outdir, "barplotGO_DOWN.RData"))
+
 
 #####

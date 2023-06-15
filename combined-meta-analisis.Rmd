@@ -958,7 +958,7 @@ ggsave(paste0(outdir, "biotypes_barplot_2.png"), plot = p2, dpi = 300)
 library(tidyverse)
 # mixed populations
 GWAS.catalog.df <- read.csv("/Users/sofiasalazar/Desktop/LAB/GWASCathalogSLE-Mixed\ populations.csv")
-rep.gene <- GWAS.catalog.df$MAPPED_GENE
+rep.gene <- GWAS.Xcatalog.df$MAPPED_GENE
 gwas.genes <- list()
 for (i in 1:length(rep.gene)){
   entry <- rep.gene[i]
@@ -969,18 +969,8 @@ mixed.genes.df <- as.data.frame(table(mixed.genes))
 top.mixed <- subset(mixed.genes.df, Freq >= 4)
 top.mixed
 
-## nat american
-GWAS.catalog.df <- read.csv("/Users/sofiasalazar/Desktop/LAB/GWASCathalogSLE-NatAm.csv")
-  rep.gene <- GWAS.catalog.df$MAPPED_GENE
-gwas.genes <- list()
-for (i in 1:length(rep.gene)){
-  entry <- rep.gene[i]
-  gwas.genes[i] <- str_split(entry, " - ")
-}
-natam.genes <- unlist(gwas.genes)
-natam.genes.df <- as.data.frame(table(natam.genes))
-top.natam <- subset(natam.genes.df, Freq > 1)
-top.natam
+a <- unique(GWAS.catalog.df[str_detect(GWAS.catalog.df$MAPPED_GENE, 'ATG5'),]$PUBMEDID)
+
 
 ## european
 
@@ -994,7 +984,9 @@ for (i in 1:length(rep.gene)){
 eu.genes <- unlist(gwas.genes)
 eu.genes.df <- as.data.frame(table(eu.genes))
 top.eu <- subset(eu.genes.df, Freq >= 4)
-top.eu
+(top.eu)
+
+b <- unique(GWAS.catalog.df[str_detect(GWAS.catalog.df$MAPPED_GENE, 'ATG5'),]$PUBMEDID)
 
 ## asian
 
@@ -1009,6 +1001,22 @@ a.genes <- unlist(gwas.genes)
 a.genes.df <- as.data.frame(table(a.genes))
 top.a <- subset(a.genes.df, Freq >= 4)
 top.a
+c <- unique(GWAS.catalog.df[str_detect(GWAS.catalog.df$MAPPED_GENE, 'ATG5'),]$PUBMEDID)
+
+unique(c(a,b,c))
+
+## nat american
+#GWAS.catalog.df <- read.csv("/Users/sofiasalazar/Desktop/LAB/GWASCathalogSLE-NatAm.csv")
+  #rep.gene <- GWAS.catalog.df$MAPPED_GENE
+#gwas.genes <- list()
+#for (i in 1:length(rep.gene)){
+  #entry <- rep.gene[i]
+  #gwas.genes[i] <- str_split(entry, " - ")
+#}
+#natam.genes <- unlist(gwas.genes)
+#natam.genes.df <- as.data.frame(table(natam.genes))
+#top.natam <- subset(natam.genes.df, Freq > 1)
+#top.natam
 ```
 
 # Gene functional categories

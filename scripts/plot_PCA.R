@@ -6,8 +6,8 @@ load('/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData')
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/vsd2.RData")
 outdir = '/mnt/Citosina/amedina/ssalazar/meta/combined/figures/'
 ######
-mat <- as.matrix(assay(vsd2))
-pc <- prcomp(t(mat))
+mat <- as.matrix(assay(vsd2)) # col = samples, rows  = genes
+pc <- prcomp(t(mat)) # col = genes , rows = samples
 dtp <- data.frame('DISEASE' = all_data$DISEASE, pc$x[,1:2])
 
 pcaData <- plotPCA(vsd2, 'DISEASE', returnData = TRUE)
