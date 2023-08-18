@@ -10,12 +10,6 @@ outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 #####
 
-upGenes <- subset(df_names, padj < 0.05 & log2FoldChange >= 1)
-veryUP <- subset(df_names, padj < 0.05 & log2FoldChange >= 2)
-
-downGenes <- subset(df_names, padj < 0.05 & log2FoldChange <= -1)
-veryDOWN <- subset(df_names, padj < 0.05 & log2FoldChange <= -2)
-
 data <- df_names %>% 
   mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
                                 log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",

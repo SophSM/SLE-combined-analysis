@@ -87,7 +87,7 @@ gseGO_res <- gseGO(geneList = go_gene_list,
 save(gseGO_res, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/GO_results.RData")
 
 ########
-
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/GO_results.RData")
 # GO with all DE genes
 
 sigGenes <- DGE_genes$gene_name
@@ -126,7 +126,10 @@ load("/mnt/Citosina/amedina/ssalazar/meta/combined/GO_allDEG_results.RData")
 symbolGO_results <- setReadable(gseGO_res, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
 symbolGO_results <- symbolGO_results@result
 
+# order symbolGO_results by p.value
+symbolGO_results <- symbolGO_results[order(symbolGO_results$p.adjust),]
 gseSubset <- subset(symbolGO_results, p.adjust <= 0.05 )
+
 
 annGSEA <- data.frame(row.names = sigGenes)
 for (j in 1:length(sigGenes)) {
@@ -151,6 +154,7 @@ annGSEA[1:5,1:5]
 
 save(annGSEA, file = '/mnt/Citosina/amedina/ssalazar/meta/combined/annGSEA_allDEG_GO.RData')
 ########
+load('/mnt/Citosina/amedina/ssalazar/meta/combined/annGSEA_allDEG_GO.RData')
 
 # match the order of rownames in top_genes with annGSEA
 rownames(top_genes) <- top_genes$gene_name
@@ -201,6 +205,13 @@ sourceTermsha <- HeatmapAnnotation(
   col = list(Source = c('BP' = '#3C6997', 'CC' = '#d9c621', "MF" = '#b30039'))
 )
 
+# bottom annotation with p.value of each term
+df.pvals <- data.frame(gseSubset$p.adjust)
+colnames(df.pvals) <- c('p.value')
+
+pvalHa <- HeatmapAnnotation(
+  p.value = df.pvals$p.value,
+  col = list(p.value = colorRamp2(c(min(df.pvals$p.value), median(df.pvals$p.value), max(df.pvals$p.value)), c('purple4','purple', '#fcd7f6'))))
 # HEATMAP
 
 annGSEA <- as.matrix(annGSEA)
@@ -223,7 +234,7 @@ hmapGSEA <- Heatmap(annGSEA,
                     row_names_side = 'left',
                     row_dend_width = unit(35, 'mm'),
                     
-                    cluster_columns = TRUE,
+                    cluster_columns = FALSE,
                     show_column_dend = TRUE,
                     column_title = 'Enriched terms',
                     column_title_side = 'top',
@@ -233,12 +244,12 @@ hmapGSEA <- Heatmap(annGSEA,
                     
                     show_heatmap_legend = FALSE,
                     
-                    clustering_distance_columns = 'euclidean',
-                    clustering_method_columns = 'ward.D2',
+                    # clustering_distance_columns = 'euclidean',
+                    # clustering_method_columns = 'ward.D2',
                     clustering_distance_rows = 'euclidean',
                     clustering_method_rows = 'ward.D2',
                     
-                    bottom_annotation = c(sourceTermsha, haTerms)
+                    bottom_annotation = c(sourceTermsha, pvalHa, haTerms)
 )
 
 png(filename = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/GOenriched_allDEG_HMap_wTerm.png", width = 5000, height = 5000, res = 300)

@@ -34,134 +34,89 @@ ggsave(dpi  = 300 , paste0(outdir, "figure1_ordered.png"), plot = p1, width = 40
 
 # FIG 2
 
-list.genes <- c("BANK1", "BLK", "C2","IRF5", "ITGAM", "STAT4", "TNFAIP3", "TNFSF4")
-
+list.genes <- c("TREX1" , "LBH" ,   "C2" ,    "C1QC"  , "C1QB"  , "IRF5" ,  "PHRF1" , "FCGR2A")
 # in local
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-BANK1.RData")
-bank1 <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-TREX1.RData")
+trex1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-BLK.RData")
-blk <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-LBH.RData")
+lbh <- p3
 
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C2.RData")
 c2 <- p3
 
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C1QC.RData")
+c1qc <- p3
+
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C1QB.RData")
+c1qb <- p3
+
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IRF5.RData")
 irf5 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-ITGAM.RData")
-itgam <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-PHRF1.RData")
+phrf1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-STAT4.RData")
-stat4 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-TNFAIP3.RData")
-tnfaip3 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-TNFSF4.RData")
-tnfsf4 <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-FCGR2A.RData")
+fcgr2a <- p3
 
 
-fig2_A <- plot_grid(bank1, blk, c2, irf5, itgam, stat4, tnfaip3, tnfsf4, labels = NULL, ncol = 2)
+fig2_A <- plot_grid(trex1, lbh, c2, c1qc, c1qb, irf5, phrf1, fcgr2a, labels = NULL, ncol = 2)
 
-####
-
-# boxplots
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-BANK1.RData")
-bank1 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-BLK.RData")
-blk <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-C2.RData")
-c2 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-IRF5.RData")
-irf5 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-ITGAM.RData")
-itgam <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-STAT4.RData")
-stat4 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-TNFAIP3.RData")
-tnfaip3 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-TNFSF4.RData")
-tnfsf4 <- p3
-
-
-fig2_A <- plot_grid(bank1, blk, c2, irf5, itgam, stat4, tnfaip3, tnfsf4, labels = NULL, ncol = 4)
-ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "boxplots1.png"), plot = fig2_A, width = 4000, height = 2000, units = 'px')
 
 ##
 
-list.genes_new <- c("IFI27", "OTOF", "USP18", "IFI44L", "IFI44", "RSAD2", "ISG15", "IFIT1")
+list.genes <- c("IFI27", "OTOF", "IFI44L","SIGLEC1","USP18", "IFI44", "IFIT1", "SPATS2L")
 
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI27.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI27.RData")
+
 ifi27 <- p3
 
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-OTOF.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-OTOF.RData")
+
 otof <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-USP18.RData")
-usp18 <- p3
 
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI44L.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI44L.RData")
+
 ifi44l <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-RSAD2.RData")
-rsad2 <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-SIGLEC1.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-SIGLEC1.RData")
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-ISG15.RData")
-isg15 <- p3
+siglec1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFIT1.RData")
-ifit1 <- p3
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-USP18.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-USP18.RData")
+usp18 <- p3
 
 load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI44.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI44.RData")
+
 ifi44 <- p3
 
-fig2_B <- plot_grid(ifi27, otof, usp18, ifi44l, ifi44, rsad2,isg15,ifit1, labels = NULL, ncol = 2)
+
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFIT1.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFIT1.RData")
+
+ifit1 <- p3
+
+load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-SPATS2L.RData")
+# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-SPATS2L.RData")
+
+spats2l <- p3
+
+fig2_B <- plot_grid(ifi27, otof, ifi44l, siglec1, usp18, ifi44,ifit1,spats2l, labels = NULL, ncol = 2)
 
 
 
-fig2 <- plot_grid(fig2_A, NULL, fig2_B, labels = c("A","","B"), ncol = 3, nrow = 1,
+fig2 <- plot_grid(fig2_B, NULL, fig2_A, labels = c("A","","B"), ncol = 3, nrow = 1,
                   rel_widths = c(1, 0.3, 1))
 
 ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "figure2.png"), plot = fig2, width = 5000, height = 4000, units = 'px')
-
-# 
-# boxplot
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-IFI27.RData")
-ifi27 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-OTOF.RData")
-otof <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-USP18.RData")
-usp18 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-IFI44L.RData")
-ifi44l <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-RSAD2.RData")
-rsad2 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-ISG15.RData")
-isg15 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-IFIT1.RData")
-ifit1 <- p3
-
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/boxplot-IFI44.RData")
-ifi44 <- p3
-
-fig2_B <- plot_grid(ifi27, otof, usp18, ifi44l, ifi44, rsad2,isg15,ifit1, labels = NULL, ncol = 4)
-ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "boxplots2.png"), plot = fig2_B, width = 4000, height = 2000, units = 'px')
 
 ######
 
@@ -199,9 +154,12 @@ load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/cnt_enr
 
 cnt <- cnt_enrichment + theme(plot.background = element_rect(color = 'white'))
 top_row <-plot_grid(g.down, g.up, labels= c('A', 'B'), align = 'h')
-bottom_row <- plot_grid(cnt, labels = 'C')
+bottom_row <- plot_grid(cnt_enrichment, ncol = 1, labels = 'C')
 
-fig3 <- plot_grid(top_row, bottom_row, ncol = 1, align = 'v', axis = 'l',rel_heights = c(1.3,1))
+ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "figure3A.png"), plot = top_row, width = 6000, height = 3000, units = 'px')
+
+
+fig3 <- plot_grid(top_row, cnt, ncol = 1, align = 'v', axis = 'l',rel_heights = c(1.3,1))
 
 ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "figure3.png"), plot = fig3, width = 6000, height = 6000, units = 'px')
 
