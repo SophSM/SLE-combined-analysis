@@ -36,13 +36,12 @@ write.csv(norm_counts_name, "/mnt/Citosina/amedina/ssalazar/meta/combined/normco
 
 ## In local
 
-# Boxplots
 norm_counts_name <- read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/normcounts_name.csv')
 all_data <-  read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/all_data.csv')
 
 rownames(norm_counts_name) <- norm_counts_name$X
 norm_counts_name<-norm_counts_name[,-c(1)]
-
+all_pvalues <- list()
 list.genes <- c("IFI27", "OTOF", "IFI44L","SIGLEC1","USP18", "IFI44", "IFIT1", "SPATS2L")
 for (i in 1:length(list.genes)){
   gene <- list.genes[i]
@@ -57,64 +56,28 @@ for (i in 1:length(list.genes)){
   control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
   sle.e<- df.gene[df.gene$sample=='SLE',]$expression
   test <- permTS(control.e, sle.e)
+  pval <- (test$p.value)
+  print(gene)
+  all_pvalues[i] <- pval
   
-  # wilcox.test(x = control.e, y = sle.e, alternative = "two.sided", mu = 0,
-  # paired = FALSE, conf.int = 0.95)
-  if(test$p.value < 0.05){
-    print(gene)
-    # plot
-    df_mean <- df.gene %>%
-      group_by(sample) %>%
-      summarize(average = mean(expression)) %>%
-      ungroup()
-    
-    p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
-      geom_violin(trim=FALSE) +
-      labs(title=gene,x = NULL, y="Normalized counts") +
-      ylim(0,21)
-    
-    p1 <- p + geom_boxplot(width=0.15, color = 'black', fill=NA) +
-      # geom_jitter(shape=16, position=position_jitter(0.2)) +
-      scale_fill_manual(values=c("#e65a5a", "#4d80c4")) +
-      geom_point(df_mean, mapping = aes(x = sample, y = average), color = 'white', shape = 18, size = 3) +
-      geom_line(df_mean, mapping = aes(x = sample, y = average, group = 1), linetype = "dashed")  +
-      theme_classic()
-    
-    p2 <- p1 + theme(legend.position="none") +
-      annotate("text",
-               x = 1:length(table(df.gene$sample)),
-               y = 19,
-               label = paste0('n = ', table(df.gene$sample)),
-               col = "black",
-               vjust = - 1)
-    
-    p3 <- p2 + annotate("text",
-                        x = 1,
-                        y = 17,
-                        label = paste0('p-value = ', signif(test$p.value, digits = 4)),
-                        col = "black",
-                        vjust = - 1)
-    
-    # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
-    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-",gene,'.RData'))
-  }
 }
 
-
+l <- length(all_pvalues)
+l
+#######
 
 
 # table genes
 list.genes_tab <- c("ATG5", "BANK1","BLK","C1QA","C1QB","C1QC","C2", "C4A","C4B",
-                    "CRP", "DRB10301","DRB11501","ETS1","FAM167A", "FCGR2A", 
-                    "GTF2I", "GTF2IRD1","HIP1","HLA-DQA1","HLA-DQB1","HLA-DQB3",
-                    "HLA-DRB1","HLA-DRB9", "IKZF1", "IL12RB2","IRAK1","IRF5", 
-                    "ITGAM","JAZF1","KCP","LBH","LINC02132", "LYN","MIR3142HG",
-                    "MTCO3P1","PHRF1","PRDX6-AS1", "PTPN22","RASGRP3","SLC15A4", 
+                    "CRP","ETS1","FAM167A", "FCGR2A", 
+                    "GTF2I", "GTF2IRD1","HIP1","HLA-DQA1","HLA-DQB1",
+                    "HLA-DRB1", "IKZF1", "IL12RB2","IRAK1","IRF5", 
+                    "ITGAM","JAZF1","KCP","LBH", "LYN",
+                    "PHRF1", "PTPN22","RASGRP3","SLC15A4", 
                     "SPATA48","STAT4","TNFAIP3","TNFSF4","TNIP1", "TNPO3","TREX1",
-                    "TYK2","UBE2L3","UHRF1BP1","WDFY4")
+                    "TYK2","UBE2L3","WDFY4")
 
-g <- list()
-pvals <- list()
+
 for (i in 1:length(list.genes_tab)){
   gene <- list.genes_tab[i]
   counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
@@ -130,45 +93,112 @@ for (i in 1:length(list.genes_tab)){
   control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
   sle.e<- df.gene[df.gene$sample=='SLE',]$expression
   test <- permTS(control.e, sle.e)
+  p <- (test$p.value)
+  all_pvalues[l+i] <- p
+  print(gene)
+  }
   
-  # wilcox.test(x = control.e, y = sle.e, alternative = "two.sided", mu = 0,
-  # paired = FALSE, conf.int = 0.95)
-  if(test$p.value < 0.05){
-    print(gene)
-    g[[i]] <- gene
-    pvals[[i]] <- test$p.value
-  }
-  }
 }
+length(all_pvalues)
+#####
+# Adjust p values
 
-g <- g[-which(sapply(g, is.null))]
-pvals <- pvals[-which(sapply(pvals, is.null))]
+adj_pvalues <- p.adjust(unlist(all_pvalues), method = "fdr", n = length(all_pvalues))
+length(adj_pvalues)
+#####
 
-table <- data.frame(as.character(g), as.numeric(pvals))
-colnames(table) <- c("Gene", "p.value")
-write.csv(table, file = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/FIG2A-genes-pvals.csv")
 
-list.genes_new <- head(table %>% arrange(p.value),8)$Gene
+# VIOLIN PLOTS PANEL A
 
-####
-# Volcano plots
-for (i in 1:length(list.genes_new)){
-  gene <- list.genes_new[i]
+for (i in 1:length(list.genes)){
+  gene <- list.genes[i]
   counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
   counts.gene<- as.data.frame(t(counts.gene))
-  
-  # test
   expression = counts.gene[,1]
   sample = all_data$DISEASE
   df.gene <- data.frame(expression, sample)
   
   control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
   sle.e<- df.gene[df.gene$sample=='SLE',]$expression
-  test <- permTS(control.e, sle.e)
   
-  # wilcox.test(x = control.e, y = sle.e, alternative = "two.sided", mu = 0,
-  # paired = FALSE, conf.int = 0.95)
-  if(test$p.value < 0.05){
+  pval <- adj_pvalues[i]
+  if(pval < 0.05){
+    print(gene)
+    # plot
+    df_mean <- df.gene %>%
+      group_by(sample) %>%
+      summarize(average = mean(expression)) %>%
+      ungroup()
+  
+    p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
+      geom_violin(trim=FALSE) +
+      labs(title=gene,x = NULL, y="Normalized counts") +
+      ylim(0,21)
+  
+    p1 <- p + geom_boxplot(width=0.15, color = 'black', fill=NA) +
+      # geom_jitter(shape=16, position=position_jitter(0.2)) +
+      scale_fill_manual(values=c("#e65a5a", "#4d80c4")) +
+      geom_point(df_mean, mapping = aes(x = sample, y = average), color = 'white', shape = 18, size = 3) +
+      geom_line(df_mean, mapping = aes(x = sample, y = average, group = 1), linetype = "dashed")  +
+      theme_classic()
+  
+    p2 <- p1 + theme(legend.position="none") +
+      annotate("text",
+             x = 1:length(table(df.gene$sample)),
+             y = 19,
+             label = paste0('n = ', table(df.gene$sample)),
+             col = "black",
+             vjust = - 1)
+  
+    p3 <- p2 + annotate("text",
+                      x = 1,
+                      y = 17,
+                      label = paste0('p-value = ', signif(pval, digits = 4)),
+                      col = "black",
+                      vjust = - 1)
+  
+  # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
+    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-",gene,'.RData'))
+  }
+
+}
+######
+g <- list()
+pvals <- list()
+for (i in 1:length(list.genes_tab)){
+  gene <- list.genes_tab[i]
+  p <- adj_pvalues[length(list.genes)+i]
+  if(p < 0.05){
+    print(gene)
+    g[i] <- gene
+    pvals[i] <- p
+  }
+}
+
+g <- unlist(g)
+pvals <- unlist(pvals)
+
+table <- data.frame(as.character(g), as.numeric(pvals))
+colnames(table) <- c("Gene", "p.value")
+write.csv(table, file = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/FIG2A-genes-pvals.csv")
+
+list.genes_new <- head(table %>% arrange(p.value),8)$Gene
+arr_pvalues <- head(table %>% arrange(p.value),8)$p.value
+####
+# Volcano plots PANEL B
+for (i in 1:length(list.genes_new)){
+  gene <- list.genes_new[i]
+  counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
+  counts.gene<- as.data.frame(t(counts.gene))
+  
+  expression = counts.gene[,1]
+  sample = all_data$DISEASE
+  df.gene <- data.frame(expression, sample)
+  
+  control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
+  sle.e<- df.gene[df.gene$sample=='SLE',]$expression
+  pvalue <- arr_pvalues[i]
+  if(pvalue < 0.05){
     print(gene)
     # plot
     df_mean <- df.gene %>%
@@ -198,7 +228,7 @@ for (i in 1:length(list.genes_new)){
     p3 <- p2 + annotate("text",
                         x = 1,
                         y = 14.5,
-                        label = paste0('p-value = ', signif(test$p.value, digits = 4)),
+                        label = paste0('p-value = ', signif(pvalue, digits = 4)),
                         col = "black",
                         vjust = - 1)
     
@@ -206,3 +236,4 @@ for (i in 1:length(list.genes_new)){
     save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-",gene,'.RData'))
   }
 }
+
