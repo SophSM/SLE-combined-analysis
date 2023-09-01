@@ -263,3 +263,69 @@ draw(hmapGSEA + haGenes,
      heatmap_legend_side = 'right',
      annotation_legend_side = 'right')
 dev.off()
+
+#######
+sessionInfo()
+
+# R version 4.0.2 (2020-06-22)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: CentOS Linux 7 (Core)
+
+# Matrix products: default
+# BLAS:   /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRblas.so
+# LAPACK: /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRlapack.so
+
+# locale:
+#   [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+# [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+# [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+# [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+# [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+# attached base packages:
+#   [1] grid      parallel  stats4    stats     graphics  grDevices utils    
+# [8] datasets  methods   base     
+
+# other attached packages:
+#   [1] circlize_0.4.14        ComplexHeatmap_2.9.3   org.Hs.eg.db_3.12.0   
+# [4] AnnotationDbi_1.52.0   IRanges_2.24.1         S4Vectors_0.28.1      
+# [7] Biobase_2.50.0         BiocGenerics_0.36.1    forcats_0.5.1         
+# [10] stringr_1.4.0          dplyr_1.0.10           purrr_0.3.4           
+# [13] readr_1.4.0            tidyr_1.2.1            tibble_3.1.3          
+# [16] tidyverse_1.3.0        ggplot2_3.3.5          clusterProfiler_3.18.1
+# [19] DOSE_3.16.0            enrichplot_1.10.2     
+
+# loaded via a namespace (and not attached):
+#   [1] fgsea_1.16.0        colorspace_2.0-2    rjson_0.2.20       
+# [4] ellipsis_0.3.2      qvalue_2.22.0       GlobalOptions_0.1.2
+# [7] fs_1.5.0            clue_0.3-59         rstudioapi_0.13    
+# [10] farver_2.1.0        graphlayouts_0.7.1  ggrepel_0.9.1      
+# [13] bit64_4.0.5         fansi_0.5.0         scatterpie_0.1.6   
+# [16] lubridate_1.7.9.2   xml2_1.3.2          codetools_0.2-18   
+# [19] splines_4.0.2       doParallel_1.0.17   cachem_1.0.5       
+# [22] GOSemSim_2.16.1     polyclip_1.10-0     jsonlite_1.7.2     
+# [25] broom_0.7.9         cluster_2.1.0       GO.db_3.12.1       
+# [28] dbplyr_2.2.1        png_0.1-7           ggforce_0.3.3      
+# [31] BiocManager_1.30.21 compiler_4.0.2      httr_1.4.2         
+# [34] rvcheck_0.1.8       backports_1.2.1     assertthat_0.2.1   
+# [37] Matrix_1.3-4        fastmap_1.1.0       cli_3.6.0          
+# [40] tweenr_1.0.2        tools_4.0.2         igraph_1.2.8       
+# [43] gtable_0.3.0        glue_1.4.2          reshape2_1.4.4     
+# [46] DO.db_2.9           fastmatch_1.1-0     Rcpp_1.0.7         
+# [49] cellranger_1.1.0    vctrs_0.5.1         iterators_1.0.13   
+# [52] ggraph_2.0.5        rvest_0.3.6         lifecycle_1.0.3    
+# [55] MASS_7.3-53         scales_1.1.1        tidygraph_1.2.0    
+# [58] hms_1.1.0           RColorBrewer_1.1-2  memoise_2.0.0      
+# [61] gridExtra_2.3       downloader_0.4      stringi_1.6.2      
+# [64] RSQLite_2.2.7       foreach_1.5.2       BiocParallel_1.24.1
+# [67] shape_1.4.6         rlang_1.0.6         pkgconfig_2.0.3    
+# [70] matrixStats_1.0.0   lattice_0.20-41     cowplot_1.1.1      
+# [73] shadowtext_0.0.8    bit_4.0.4           tidyselect_1.2.0   
+# [76] plyr_1.8.6          magrittr_2.0.1      R6_2.5.0           
+# [79] generics_0.1.0      DBI_1.1.1           pillar_1.6.2       
+# [82] haven_2.3.1         withr_2.4.2         modelr_0.1.8       
+# [85] crayon_1.4.1        utf8_1.2.2          viridis_0.5.1      
+# [88] GetoptLong_1.0.5    readxl_1.3.1        data.table_1.14.0  
+# [91] blob_1.2.1          reprex_1.0.0        digest_0.6.27      
+# [94] munsell_0.5.0       viridisLite_0.4.0 

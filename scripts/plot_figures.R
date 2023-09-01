@@ -163,5 +163,47 @@ fig3 <- plot_grid(top_row, cnt, ncol = 1, align = 'v', axis = 'l',rel_heights = 
 
 ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "figure3.png"), plot = fig3, width = 6000, height = 6000, units = 'px')
 
+#####
+sessionInfo()
+
+# R version 4.0.2 (2020-06-22)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: CentOS Linux 7 (Core)
+
+# Matrix products: default
+# BLAS:   /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRblas.so
+# LAPACK: /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRlapack.so
+
+# locale:
+#   [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+# [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+# [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+# [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+# [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+# attached base packages:
+#   [1] grid      stats     graphics  grDevices utils     datasets  methods  
+# [8] base     
+
+# other attached packages:
+#   [1] ggplot2_3.3.5        ComplexHeatmap_2.9.3 cowplot_1.1.1       
+
+# loaded via a namespace (and not attached):
+#   [1] RColorBrewer_1.1-2  pillar_1.6.2        compiler_4.0.2     
+# [4] iterators_1.0.13    digest_0.6.27       clue_0.3-59        
+# [7] lifecycle_1.0.3     tibble_3.1.3        gtable_0.3.0       
+# [10] pkgconfig_2.0.3     png_0.1-7           rlang_1.0.6        
+# [13] foreach_1.5.2       DBI_1.1.1           cli_3.6.0          
+# [16] parallel_4.0.2      withr_2.4.2         cluster_2.1.0      
+# [19] dplyr_1.0.10        S4Vectors_0.28.1    generics_0.1.0     
+# [22] vctrs_0.5.1         GlobalOptions_0.1.2 IRanges_2.24.1     
+# [25] stats4_4.0.2        tidyselect_1.2.0    glue_1.4.2         
+# [28] R6_2.5.0            GetoptLong_1.0.5    fansi_0.5.0        
+# [31] magrittr_2.0.1      scales_1.1.1        codetools_0.2-18   
+# [34] ellipsis_0.3.2      matrixStats_1.0.0   BiocGenerics_0.36.1
+# [37] assertthat_0.2.1    shape_1.4.6         circlize_0.4.14    
+# [40] colorspace_2.0-2    utf8_1.2.2          doParallel_1.0.17  
+# [43] munsell_0.5.0       crayon_1.4.1        rjson_0.2.20     
 
 

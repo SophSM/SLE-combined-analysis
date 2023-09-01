@@ -180,3 +180,68 @@ h3 <-Heatmap(mat[rows_keep,], name = 'Norm counts', top_annotation = ha, column_
 png(paste0(outdir,'heatmap_Rows.png'), width = 5000, height  = 10000, res = 300)
 h3
 dev.off()
+
+#######
+sessionInfo()
+
+# R version 4.0.2 (2020-06-22)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: CentOS Linux 7 (Core)
+
+# Matrix products: default
+# BLAS:   /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRblas.so
+# LAPACK: /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRlapack.so
+
+# locale:
+#   [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+# [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+# [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+# [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+# [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+# attached base packages:
+#   [1] grid      parallel  stats4    stats     graphics  grDevices utils    
+# [8] datasets  methods   base     
+
+# other attached packages:
+#   [1] circlize_0.4.14             RColorBrewer_1.1-2         
+# [3] ComplexHeatmap_2.9.3        forcats_0.5.1              
+# [5] stringr_1.4.0               dplyr_1.0.10               
+# [7] purrr_0.3.4                 readr_1.4.0                
+# [9] tidyr_1.2.1                 tibble_3.1.3               
+# [11] ggplot2_3.3.5               tidyverse_1.3.0            
+# [13] DESeq2_1.30.1               SummarizedExperiment_1.20.0
+# [15] Biobase_2.50.0              MatrixGenerics_1.2.1       
+# [17] matrixStats_1.0.0           GenomicRanges_1.42.0       
+# [19] GenomeInfoDb_1.26.7         IRanges_2.24.1             
+# [21] S4Vectors_0.28.1            BiocGenerics_0.36.1        
+
+# loaded via a namespace (and not attached):
+#   [1] bitops_1.0-7           fs_1.5.0               lubridate_1.7.9.2     
+# [4] bit64_4.0.5            doParallel_1.0.17      httr_1.4.2            
+# [7] tools_4.0.2            backports_1.2.1        utf8_1.2.2            
+# [10] R6_2.5.0               DBI_1.1.1              colorspace_2.0-2      
+# [13] GetoptLong_1.0.5       withr_2.4.2            tidyselect_1.2.0      
+# [16] bit_4.0.4              compiler_4.0.2         cli_3.6.0             
+# [19] rvest_0.3.6            xml2_1.3.2             DelayedArray_0.16.3   
+# [22] scales_1.1.1           genefilter_1.72.1      digest_0.6.27         
+# [25] XVector_0.30.0         pkgconfig_2.0.3        dbplyr_2.2.1          
+# [28] fastmap_1.1.0          GlobalOptions_0.1.2    rlang_1.0.6           
+# [31] readxl_1.3.1           rstudioapi_0.13        RSQLite_2.2.7         
+# [34] shape_1.4.6            generics_0.1.0         jsonlite_1.7.2        
+# [37] BiocParallel_1.24.1    RCurl_1.98-1.3         magrittr_2.0.1        
+# [40] GenomeInfoDbData_1.2.4 Matrix_1.3-4           Rcpp_1.0.7            
+# [43] munsell_0.5.0          fansi_0.5.0            lifecycle_1.0.3       
+# [46] stringi_1.6.2          zlibbioc_1.36.0        blob_1.2.1            
+# [49] crayon_1.4.1           lattice_0.20-41        haven_2.3.1           
+# [52] splines_4.0.2          annotate_1.68.0        hms_1.1.0             
+# [55] locfit_1.5-9.4         pillar_1.6.2           rjson_0.2.20          
+# [58] geneplotter_1.68.0     codetools_0.2-18       reprex_1.0.0          
+# [61] XML_3.99-0.6           glue_1.4.2             modelr_0.1.8          
+# [64] png_0.1-7              vctrs_0.5.1            foreach_1.5.2         
+# [67] cellranger_1.1.0       gtable_0.3.0           clue_0.3-59           
+# [70] assertthat_0.2.1       cachem_1.0.5           xtable_1.8-4          
+# [73] broom_0.7.9            survival_3.5-5         iterators_1.0.13      
+# [76] AnnotationDbi_1.52.0   memoise_2.0.0          cluster_2.1.0         
+# [79] ellipsis_0.3.2   
