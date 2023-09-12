@@ -10,12 +10,15 @@ outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 #####
 
+
+dge <- dge[order(dge$log2FoldChange),]
+colnames(dge) <- c("GeneName", "log2FC", "pvalAdj", "Expression")
+write.csv(dge, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/DGE_list.csv")
+
 data <- df_names %>% 
   mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
                                 log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
                                 TRUE ~ "Unchanged"))
-head(data) %>% 
-  knitr::kable()
 
 volcanoplot <- ggplot(data, aes(log2FoldChange, -log(padj,10))) +
   geom_point(aes(color = Expression), size = 2/5) +
