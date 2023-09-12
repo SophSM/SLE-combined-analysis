@@ -9,12 +9,6 @@ load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 #####
-
-
-dge <- dge[order(dge$log2FoldChange),]
-colnames(dge) <- c("GeneName", "log2FC", "pvalAdj", "Expression")
-write.csv(dge, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/DGE_list.csv")
-
 data <- df_names %>% 
   mutate(Expression = case_when(log2FoldChange >= 1 & padj < 0.05 ~ "Up-regulated",
                                 log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
