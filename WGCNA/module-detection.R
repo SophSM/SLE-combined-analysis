@@ -3,13 +3,26 @@ library(DESeq2)
 library(WGCNA)
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/named-WGCNA-counts-df.RData")
 datExpr <- as.data.frame(t(as.matrix(reduced.vsd)))
-sampleTree = hclust(dist(datExpr), method = "average")
 all_data <- read.csv("/mnt/Citosina/amedina/ssalazar/meta/combined/all_data.csv")
+## 
+# REDUCED SAMPLES
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/less_samplesDatExpr.RData")
+all_data <- all_data[,c(2,3)]
+# create a dataframe analogous to expression data that will hold the clinical traits
+samples_ID <- rownames(datExpr)
+traitRows <- match(samples_ID, all_data$samples)
+datTraits = all_data[traitRows,]
+rownames(datTraits) = all_data[traitRows, 1]
+
+
+####
+# ALL SAMPLES
+sampleTree = hclust(dist(datExpr), method = "average")
 samples_ID <- rownames(datExpr)
 traitRows <- match(samples_ID, all_data$samples)
 datTraits = all_data[traitRows,-1]
 rownames(datTraits) = all_data[traitRows, 2]
-
+#####
 enableWGCNAThreads(30)
 
 print("Calculating adjacencies")

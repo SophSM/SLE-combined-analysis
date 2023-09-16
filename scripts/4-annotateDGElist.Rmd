@@ -1,0 +1,84 @@
+---
+title: "Annotate DGE list"
+author: "Sofia Salazar"
+date: "2023-02-15"
+output: html_document
+---
+
+# Introduction
+
+In this script we annotate the gene name for each transcript, and then filter out non-coding transcripts. Then we include some non-coding transcripts.
+
+```{bash}
+qlogin
+cd /mnt/Citosina/amedina/ssalazar/meta/combined
+module load r/4.0.2
+R
+```
+
+
+# Annotate gene symbol
+
+```{r gene symbol}
+library(tidyverse)
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+load(paste0(outdir, "LRT-dds.RData"))
+DGE <- res2
+# annotate genes with symbol
+
+df <- as.data.frame(DGE)
+df <- tibble::rownames_to_column(df, "ID")
+name_short<-function(table){
+  table$ID <- gsub("\\..*","", table$ID)
+  return(table)
+}
+
+df <- name_short(df)
+
+library("biomaRt")
+mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+genes <- getBM(attributes = c("ensembl_gene_id", "hgnc_symbol","transcript_biotype"),
+                          filters = c("ensembl_gene_id"), 
+                          values = df$ID,
+                          mart = mart)
+names(genes)[1] <- "ID"
+names(genes)[2] <- "gene_name"
+
+protein_coding<-subset(genes, transcript_biotype =="protein_coding")
+dim(protein_coding[unique(protein_coding$gene_name),])
+non.dup <- protein_coding[!duplicated(protein_coding$gene_name),]
+
+non.dup <- non.dup[!(is.na(non.dup$gene_name)),]
+
+df_names <- list(df, non.dup) %>% purrr::reduce(inner_join, by = "ID")
+
+write.csv(df_names, file = paste0(outdir,"DGElist_withNames.csv"))
+```
+
+```{r}
+save.image(file = paste0(outdir,"namedDGElist.RData"))
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
+```
+
+# with non-coding genes
+
+```{r}
+dim(dds2) # 49465
+dim(df) # 49465
+dim(genes[unique(genes$gene_name),]) # 35119
+dim(df[unique(df$ID),]) # 
+df_names_all <- list(df, genes) %>% purrr::reduce(inner_join, by = "ID")
+dim(df_names_all[unique(df_names_all$ID),])# 76982  
+write.csv(df_names_all, file = paste0(outdir,"DGElist_withNames_noncoding.csv"))
+```
+
+
+# Downregulated and upregulated genes
+
+```{r Down and Up genes}
+upGenes <- subset(df_names, padj < 0.05 & log2FoldChange >= 1)
+veryUP <- subset(df_names, padj < 0.05 & log2FoldChange >= 2)
+
+downGenes <- subset(df_names, padj < 0.05 & log2FoldChange <= -0.5)
+veryDOWN <- subset(df_names, padj < 0.05 & log2FoldChange <= -2)
+```
