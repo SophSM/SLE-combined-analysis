@@ -3,7 +3,10 @@
 library(DESeq2)
 library(WGCNA)
 ######
-load("/mnt/Citosina/amedina/ssalazar/meta/combined/named-WGCNA-counts-df.RData")
+
+# Get soft power threshold for module detection, clean samples.
+
+#load("/mnt/Citosina/amedina/ssalazar/meta/combined/named-WGCNA-counts-df.RData")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/named-sle.vsd.RData")
 reduced.vsd <- sle.vsd
 dim(reduced.vsd)

@@ -5,6 +5,8 @@ library(DESeq2)
 library(tidyverse)
 ########
 
+# Make a VSD count matrix with only SLE samples and desired transcript annotations
+
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/vsd2.RData")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData")
 DGE <- res2
