@@ -1,0 +1,38 @@
+---
+title: "Consensus module detection"
+author: "Sofia Salazar"
+date: "2023-10-19"
+output: html_document
+---
+```{r}
+library(WGCNA)
+indir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/"
+figdir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/figures/"
+
+load(paste0(indir, "Consensus-NetworkConstruction-auto.RData"))
+```
+
+
+```{r}
+plotColors <- labels2colors(bnet$colors)
+```
+
+```{r}
+sizeGrWindow(12,6)
+
+pdf(file = paste0(figdir, "consensus_BlockwiseGeneDendrosAndColors.pdf"), wi = 12, he = 6);
+# Use the layout function for more involved screen sectioning
+layout(matrix(c(1:4), 2, 2), heights = c(0.8, 0.2), widths = c(1,1))
+#layout.show(4);
+nBlocks = length(bnet$dendrograms)
+# Plot the dendrogram and the module colors underneath for each block
+for (block in 1:nBlocks)
+plotDendroAndColors(bnet$dendrograms[[block]], plotColors[bnet$blockGenes[[block]]],
+"Module colors",
+main = paste("Gene dendrogram and module colors in block", block),
+dendroLabels = FALSE, hang = 0.03,
+addGuide = TRUE, guideHang = 0.05,
+setLayout = FALSE)
+dev.off()
+```
+

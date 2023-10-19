@@ -1,0 +1,183 @@
+---
+title: "Consensus WGCNA"
+author: "Sofia Salazar"
+date: "2023-10-18"
+output: html_document
+---
+
+I will be following this [tutorial](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/Consensus-DataInput.pdf)
+
+## Libraries
+
+```{r}
+library(WGCNA)
+library(DESeq2)
+```
+
+## Define paths
+
+```{r}
+indir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+outdir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/figures/"
+```
+
+## Load data
+
+```{r}
+load(paste0(indir, "vsd2.RData")) # normalized counts vsd2
+all_data <- read.csv(paste0(indir, "all_data.csv")) # meta-data
+```
+
+## Analysis
+
+1. Sepparate control and SLE data to follow consensus documentation
+
+```{r}
+SLE_samples <- all_data[all_data$DISEASE == "SLE", ]$samples
+CONTROL_samples <- all_data[all_data$DISEASE == "CONTROL", ]$samples
+
+full_data <- as.data.frame(assay(vsd2))
+SLE_data <- full_data[SLE_samples]
+CONTROL_data <- full_data[CONTROL_samples]
+```
+
+2. Put the expression into a multy set format
+
+```{r}
+nSets = 2
+setLabels = c("SLE", "CONTROLS")
+shortLabels = c("S", "C")
+multiExpr = vector(mode = "list", length = nSets)
+
+multiExpr[[1]] = list(data = as.data.frame(t(SLE_data)))
+multiExpr[[2]] = list(data = as.data.frame(t(CONTROL_data)))
+exprSize = checkSets(multiExpr)
+```
+
+```
+>exprSize
+
+$nSets
+[1] 2
+
+$nGenes
+[1] 49465
+
+$nSamples
+[1] 214 104
+
+$structureOK
+[1] TRUE
+```
+
+3. Data cleaning and outlier removal
+
+```{r}
+# Check that all genes and samples have sufficiently low numbers of missing values.
+gsg = goodSamplesGenesMS(multiExpr, verbose = 3);
+gsg$allOK # TRUE
+```
+
+4. Cluster samples
+
+Plot sample clusterint
+
+```{r}
+sampleTrees = list()
+for (set in 1:nSets)
+{
+sampleTrees[[set]] = hclust(dist(multiExpr[[set]]$data), method = "average")
+}
+
+pdf(file = paste0(outdir, "cons_SampleClustering.pdf"), width = 12, height = 12);
+  par(mfrow=c(2,1))
+  par(mar = c(0, 4, 2, 0))
+  for (set in 1:nSets)
+    plot(sampleTrees[[set]], main = paste("Sample clustering on all genes in", setsetLabels[set]),
+xlab="", sub="", cex = 0.7)
+dev.off()
+```
+
+Plot with cut line in outliers
+
+```{r}
+cutHeights = c(200, 170)
+# Re-plot the dendrograms including the cut lines
+pdf(file = paste0(outdir, "cons_SampleClustering.pdf"), width = 12, height = 12);
+par(mfrow=c(2,1))
+par(mar = c(0, 4, 2, 0))
+for (set in 1:nSets)
+{
+plot(sampleTrees[[set]], main = paste("Sample clustering on all genes in", setLabels[set]),
+xlab="", sub="", cex = 0.7);
+abline(h=cutHeights[set], col = "red");
+}
+dev.off();
+```
+
+5. Outlier removal
+
+```{r}
+for (set in 1:nSets)
+{
+# Find clusters cut by the line
+labels = cutreeStatic(sampleTrees[[set]], cutHeight = cutHeights[set])
+# Keep the largest one (labeled by the number 1)
+keep = (labels==1)
+multiExpr[[set]]$data = multiExpr[[set]]$data[keep, ]
+}
+collectGarbage();
+# Check the size of the leftover data
+exprSize = checkSets(multiExpr)
+exprSize
+
+```
+
+```
+> exprSize
+$nSets
+[1] 2
+
+$nGenes
+[1] 49465
+
+$nSamples
+[1] 213  99
+
+$structureOK
+[1] TRUE
+
+```
+
+6. Add trait data (DISEASE variable)
+
+```{r}
+dim(all_data)
+names(all_data)
+# remove columns that hold information we do not need.
+allTraits = all_data[, -c(1, 5)] # leaving only DISEASE and study and sample ID
+# See how big the traits are and what are the trait and sample names
+dim(allTraits)
+names(allTraits)
+# Form a multi-set structure that will hold the clinical traits.
+Traits = vector(mode="list", length = nSets)
+for (set in 1:nSets)
+{
+setSamples = rownames(multiExpr[[set]]$data);
+traitRows = match(setSamples, allTraits$samples);
+Traits[[set]] = list(data = allTraits[traitRows, -1]);
+rownames(Traits[[set]]$data) = allTraits[traitRows, 1];
+}
+collectGarbage()
+# Define data set dimensions
+nGenes = exprSize$nGenes # 49465
+nSamples = exprSize$nSamples #  213  99
+```
+
+## Save
+
+```{r}
+save(multiExpr, Traits, nGenes, nSamples, setLabels, shortLabels, exprSize, 
+     file = paste0(indir, "coexpression/Consensus-dataInput.RData"))
+```
+
