@@ -1,0 +1,64 @@
+---
+title: "Visualization of consensus eigengene networks"
+author: "Sofia Salazar"
+date: "2023-10-31"
+output: html_document
+---
+
+```{bash}
+qlogin
+module load r/4.0.2
+R
+```
+
+```{r}
+library(WGCNA)
+library(tidyverse)
+indir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/"
+figdir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/figures/"
+
+lnames = load(paste0(indir, "Consensus-dataInput.RData"))
+lnames
+# [1] "multiExpr"   "Traits"      "nGenes"      "nSamples"    "setLabels"  
+# [6] "shortLabels" "exprSize"  
+
+lnames = load(paste0(indir, "Consensus-NetworkConstruction-auto.RData"))
+lnames
+# [1] "bnet"
+```
+
+In this section we compare the consensus eigengene networks in the CONTROL and SLE data sets
+
+```{r}
+weight = vector(mode = "list", length = nSets)
+for (set in 1:nSets)
+{
+weight[[set]] = list(data = as.data.frame(Traits[[set]]$data))
+names(weight[[set]]$data) = "weight"
+}
+```
+
+Get Module Eigengenes per cluster
+
+```{r}
+plotColors <- labels2colors(bnet$colors) # cluster colors
+consMEsC = multiSetMEs(multiExpr, universalColors = plotColors)
+```
+
+Reorder modules so similar modules are next to each other
+
+```{r}
+MET = consensusOrderMEs(consMEsC)
+```
+
+We now call the function plotEigengeneNetworks that performs the differential analysis:
+
+```{r}
+sizeGrWindow(8,10)
+  pdf(file = paste0(figdir, "EigengeneNetworks.pdf"), width= 8, height = 10);
+  par(cex = 0.9)
+  plotEigengeneNetworks(MET, setLabels, marDendro = c(0,2,2,1), marHeatmap = c(3,3,2,1),
+  zlimPreservation = c(0.5, 1), xLabelsAngle = 90)
+dev.off()
+```
+
