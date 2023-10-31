@@ -4,12 +4,24 @@ author: "Sofia Salazar"
 date: "2023-10-19"
 output: html_document
 ---
+
+```{bash}
+qlogin
+module load r/4.0.2
+R
+```
+
 ```{r}
 library(WGCNA)
+library(tidyverse)
 indir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/"
 figdir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/coexpression/figures/"
 
 load(paste0(indir, "Consensus-NetworkConstruction-auto.RData"))
+```
+
+```{r}
+lnames
 ```
 
 
@@ -35,4 +47,39 @@ addGuide = TRUE, guideHang = 0.05,
 setLayout = FALSE)
 dev.off()
 ```
+
+Get gene-modules df
+
+```{r}
+module_df <- data.frame(
+  gene_id = names(bnet$colors),
+  colors = labels2colors(bnet$colors)
+)
+write.csv(module_df, paste0(indir,"gene_modules.csv"))
+```
+
+Count genes per module
+
+```{r}
+genes_per_mod <- module_df %>%
+  group_by(colors) %>%
+  count() %>%
+  arrange(desc(n))
+
+#   colors        n
+ #  <chr>     <int>
+ # 1 grey      47431
+ # 2 turquoise   619
+ # 3 blue        612
+ # 4 brown       172
+ # 5 yellow      159
+ # 6 green       149
+ # 7 red          97
+ # 8 black        87
+ # 9 pink         58
+# 10 magenta      47
+# 11 purple       34
+```
+
+
 

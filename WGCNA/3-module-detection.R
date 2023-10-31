@@ -114,3 +114,30 @@ png(file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/named-reduced-m
 plot(METree, main = "Clustering of module eigengenes",
      xlab = "", sub = "")
 dev.off()
+
+
+### EVELIA CODIGO
+
+# https://github.com/RegRNALab/Transcriptome-guided_lncRNA_annotation/blob/master/04_WGCNA_annotation_At.R
+
+blockwiseModules(datExpr, power = 12,
+                 TOMType = "signed", minModuleSize = 50,
+                 networkType = "signed",
+                 maxBlockSize = 8000,
+                 mergeCutHeight = FALSE, deepSplit = 2,
+                 corType = "bicor",
+                 numericLabels = TRUE, pamRespectsDendro = FALSE,
+                 saveTOMs = TRUE,
+                 saveTOMFileBase = "TOM_wgcna_unmerged", 
+                 verbose = 4)
+
+https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/faq.html
+
+https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/Consensus-NetworkConstruction-blockwise.pdf
+
+HOTAIR (ENSG00000228630)
+
+exp_genes <- as.data.frame(datExpr) 
+head(exp_genes)
+
+exp_genes %>% select(ENSG00000270084.2)

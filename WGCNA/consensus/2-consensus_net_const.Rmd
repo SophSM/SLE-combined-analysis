@@ -5,6 +5,12 @@ date: "2023-10-18"
 output: html_document
 ---
 
+```{bash}
+qlogin
+module load r/4.0.2
+R
+```
+
 Following this [tutorial](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/Consensus-NetworkConstruction-blockwise.pdf) for "An automatic block-wise network construction and module detection method for users who wish to analyze data sets too large to be analyzed all in one."
 
 ## Libraries & setup
@@ -107,12 +113,11 @@ We choose 23 for both sets
 
 ```{r}
 bnet = blockwiseConsensusModules(
-multiExpr, maxBlockSize = 5000, power = 23, minModuleSize = 30,
-deepSplit = 2,
+multiExpr, maxBlockSize = 15000, power = 23, minModuleSize = 30,
+deepSplit = 2, TOMType = 'signed', saveConsensusTOMs = T, consensusTOMFilePattern = "/mnt/Citosina/amedina/ssalazaar/meta/combined/coexpression/tom/consensusTOM-block.%b.RData",
 pamRespectsDendro = FALSE,
 mergeCutHeight = 0.25, numericLabels = TRUE,
-minKMEtoStay = 0,
-saveTOMs = F, nThreads = 15, verbose = 5)
+minKMEtoStay = 0, nThreads = 30, verbose = 5)
 ```
 
 ## Save

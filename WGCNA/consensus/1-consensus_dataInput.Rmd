@@ -5,6 +5,12 @@ date: "2023-10-18"
 output: html_document
 ---
 
+```{bash}
+qlogin
+module load r/4.0.2
+R
+```
+
 I will be following this [tutorial](https://horvath.genetics.ucla.edu/html/CoexpressionNetwork/Rpackages/WGCNA/Tutorials/Consensus-DataInput.pdf)
 
 ## Libraries
