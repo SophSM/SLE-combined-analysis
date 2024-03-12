@@ -22,13 +22,14 @@ DGE_names<-DGE_names[,-c(10,11,12)]
 
 norm_counts <- as.data.frame(assay(vsd2))
 dim(norm_counts) # 49465
-
+zscore <- t(scale(t(norm_counts)))
+# zscore <- scale(norm_counts)
 ###
 
 # order dataframes
 
 DGE_names <- DGE_names[order(DGE_names$log2FoldChange, decreasing = TRUE),]
-ordered_norm <- norm_counts[ order(match(rownames(norm_counts), rownames(DGE_names))), ]
+ordered_norm <- zscore[ order(match(rownames(zscore), rownames(DGE_names))), ]
 dim(ordered_norm)  # 49465
 
 # get top genes rows
@@ -65,10 +66,10 @@ dim(ordered_norm) # 331
 l2_val <- as.matrix(DGE.top$log2FoldChange)
 
 # color map for log fold change
-col_logFC <- colorRamp2(c(min(l2_val), 0, max(l2_val)), c('#34a624','white','#a709eb'))
+col_logFC <- colorRamp2(c(min(l2_val), 0, 2), c('dodgerblue3','white','firebrick3'))
 
 # remove column names (sample IDs)
-colnames(ordered_norm) <- NULL
+# colnames(ordered_norm) <- NULL
 mat <- as.matrix(ordered_norm)
 
 # remove row names (gene names)
@@ -85,22 +86,22 @@ ordered_norm <- mat[,order(match(colnames(mat), ordered_samples$number)) ]
 colnames(ordered_norm) <- NULL
 rownames(ordered_norm) <- NULL
 
-col_exp <- colorRamp2(c(min(ordered_norm), 5, mean(ordered_norm), 10, max(ordered_norm)), c('white', 'blue', 'yellow', 'red', 'darkred'))
-
+col_exp <- colorRamp2(c(min(ordered_norm), 0, 2, max(ordered_norm)), c('blue', 'white', 'red','darkred'))
 split = data.frame(Samples = ordered_samples$DISEASE) # make block split
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
                              col = list(Study = c('SRP062966' = '#f5a142', 'SRP073191' = '#f5ef42', 'SRP111941' = '#2ef0e9', 'SRP136102' = '#f02eb3', 'SRP168421' = '#a1645c', 'SRP296987'='#599163', 'SRP311059'='#755c91','SRP322015'='#e68a8a')))
 l2_val <- as.matrix(DGE.top$log2FoldChange)
-col_logFC <- colorRamp2(c(min(l2_val), 0, max(l2_val)), c('#34a624','white','#a709eb'))
+col_logFC <- colorRamp2(c(min(l2_val), 0, max(l2_val)), c('dodgerblue3','white','firebrick3'))
 row_ha <- rowAnnotation(log2FC = l2_val, col = list(log2FC =col_logFC))
 
-heat_ordered <-Heatmap(ordered_norm, cluster_rows = F, cluster_columns = F, name = 'Normalized counts',
-                       left_annotation = row_ha, 
-                       bottom_annotation = study_ha, top_annotation = ha,
+heat_ordered <-Heatmap(ordered_norm, cluster_rows = F, cluster_columns = F, name = 'Z-score',
+                       left_annotation = row_ha, show_row_names = F, show_column_names = F,
                        column_split = split, col = col_exp)
-save(heat_ordered, file = paste0(outdir,'heat_ordered.RData'))
+
+ht_list =study_ha%v%  ha %v% heat_ordered
+save(ht_list, file = paste0(outdir,'heat_ordered.RData'))
 
 
 ###########
@@ -114,34 +115,36 @@ l2_val <-as.matrix(DGE.top[rows_keep,] $log2FoldChange)
 colnames(l2_val)<- "logFC"
 
 # remove column names (sample IDs)
-colnames(ordered_norm) <- NULL
+# colnames(ordered_norm) <- NULL
 mat <- as.matrix(ordered_norm)
 
 # expression color
-col_exp <- colorRamp2(c(min(mat[rows_keep,]), 5, mean(mat[rows_keep,]), 10, max(mat[rows_keep,])), c('white', 'blue', 'yellow', 'red', 'darkred'))
+col_exp <- colorRamp2(c(min(ordered_norm), 0, 2, max(ordered_norm)), c('blue', 'white', 'red','darkred'))
 
 study_ha <-HeatmapAnnotation(Study = all_data$study,
                              col = list(Study = c('SRP062966' = '#f5a142', 'SRP073191' = '#f5ef42', 'SRP111941' = '#2ef0e9', 'SRP136102' = '#f02eb3', 'SRP168421' = '#a1645c', 'SRP296987'='#599163', 'SRP311059'='#755c91','SRP322015'='#e68a8a')))
-col_logFC <- colorRamp2(c(min(l2_val) - 1 ,max(l2_val)), c('white','#a709eb'))
+col_logFC <- colorRamp2(c(min(l2_val) - 1 ,max(l2_val)), c('white','firebrick3'))
 
-ha <- HeatmapAnnotation(Samples = all_data$DISEASE,
+ha <- HeatmapAnnotation(Samples = colnames(mat),
                         col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
 
 row_ha <- rowAnnotation(log2FC = l2_val, col = list(log2FC =col_logFC))
 
 h1 <-Heatmap(mat[rows_keep,], cluster_rows = F, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Normalized counts', left_annotation = row_ha, 
-             top_annotation = ha, bottom_annotation = study_ha, col = col_exp,
-             column_km = 2)
+              col = col_exp, column_km = 2, show_row_names = F, show_column_names = T)
 
-save(h1, file = paste0(outdir,"cluster_heatmap.RData"))
+ggsave(h1_list, file = paste0(outdir, 'cluster_heatmap.png'))
+h1_list <- study_ha %v% ha %v% h1
+save(h1_list, file = paste0(outdir,"cluster_heatmap.RData"))
 
 
 # row clustering
 
 h2 <-Heatmap(mat[rows_keep,], cluster_rows = T, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Normalized counts', left_annotation = row_ha, 
-             top_annotation = ha, bottom_annotation = study_ha, col = col_exp,
-             column_km = 2)
-save(h2, file = paste0(outdir,"cluster_heatmap_rows.RData"))
+            col = col_exp, column_km = 2)
+
+h2_list <- study_ha %v% ha %v% h2
+save(h2_list, file = paste0(outdir,"cluster_heatmap_rows.RData"))
 
 #######
 sessionInfo()

@@ -132,8 +132,9 @@ for (i in 1:length(list.genes)){
   
     p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
       geom_violin(trim=FALSE) +
-      labs(title=gene,x = NULL, y="Normalized counts") +
-      ylim(0,21)
+      labs(title=gene, x = NULL, y="Normalized counts") +
+      ylim(0, 21) +
+      theme(plot.title = element_text(hjust = 0.5, size = 20))
   
     p1 <- p + geom_boxplot(width=0.15, color = 'black', fill=NA) +
       # geom_jitter(shape=16, position=position_jitter(0.2)) +
@@ -156,9 +157,9 @@ for (i in 1:length(list.genes)){
                       label = paste0('p-value = ', signif(pval, digits = 4)),
                       col = "black",
                       vjust = - 1)
-  
+    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 15))
   # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
-    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-",gene,'.RData'))
+    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
   }
 
 }
@@ -208,6 +209,7 @@ for (i in 1:length(list.genes_new)){
     p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
       geom_violin(trim=FALSE) +
       labs(title=gene,x = NULL, y="Normalized counts") +
+      theme(plot.title = element_text(hjust = 0.5, size = 20)) +
       ylim(0,17)
     
     p1 <- p + geom_boxplot(width=0.3, color = 'black', fill=NA) +
@@ -231,12 +233,13 @@ for (i in 1:length(list.genes_new)){
                         label = paste0('p-value = ', signif(pvalue, digits = 4)),
                         col = "black",
                         vjust = - 1)
-    
+    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 15))
     # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
-    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-",gene,'.RData'))
+    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
   }
 }
 
+p3
 ######
 sessionInfo()
 

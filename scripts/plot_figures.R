@@ -9,12 +9,9 @@ outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 
 # FIG 1
 
-# heatmap: h2
-load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/heatmap_all_object.RData") 
-heatmap <- grid.grabExpr(draw(h2))
 # heatmap ordered: heat_ordered
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/heat_ordered.RData") 
-heatmap <- grid.grabExpr(draw(heat_ordered))
+heatmap <- grid.grabExpr(draw(ht_list))
 # volcano plot: volcanoplot_names
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
 # pca: pca_plot
@@ -26,38 +23,37 @@ bottom_row <- plot_grid(heatmap, labels = 'C')
 p1 <- plot_grid(top_row, bottom_row, ncol = 1, align = 'v', axis = 'l',rel_heights = c(1,1))
 
 
-ggsave(dpi  = 300 , paste0(outdir, "figure1.png"), plot = p1, width = 4000, height = 5000, units = 'px')
 ggsave(dpi  = 300 , paste0(outdir, "figure1_ordered.png"), plot = p1, width = 4000, height = 5000, units = 'px')
 
 
 ######
 
 # FIG 2
-
+indir <- '/mnt/Citosina/amedina/ssalazar/meta/combined/figures/'
 list.genes <- c("TREX1" , "LBH" ,   "C2" ,    "C1QC"  , "C1QB"  , "IRF5" ,  "PHRF1" , "FCGR2A")
 # in local
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-TREX1.RData")
+load(paste0(indir,"violinplot-TREX1.RData"))
 trex1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-LBH.RData")
+load(paste0(indir, "violinplot-LBH.RData"))
 lbh <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C2.RData")
+load(paste0(indir, "violinplot-C2.RData"))
 c2 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C1QC.RData")
+load(paste0(indir, "violinplot-C1QC.RData"))
 c1qc <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-C1QB.RData")
+load(paste0(indir, "violinplot-C1QB.RData"))
 c1qb <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IRF5.RData")
+load(paste0(indir, "violinplot-IRF5.RData"))
 irf5 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-PHRF1.RData")
+load(paste0(indir, "violinplot-PHRF1.RData"))
 phrf1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-FCGR2A.RData")
+load(paste0(indir, "violinplot-FCGR2A.RData"))
 fcgr2a <- p3
 
 
@@ -68,45 +64,31 @@ fig2_A <- plot_grid(trex1, lbh, c2, c1qc, c1qb, irf5, phrf1, fcgr2a, labels = NU
 
 list.genes <- c("IFI27", "OTOF", "IFI44L","SIGLEC1","USP18", "IFI44", "IFIT1", "SPATS2L")
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI27.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI27.RData")
+load(paste0(indir, "violinplot-IFI27.RData"))
 
 ifi27 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-OTOF.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-OTOF.RData")
-
+load(paste0(indir, "violinplot-OTOF.RData"))
 otof <- p3
 
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI44L.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI44L.RData")
-
+load(paste0(indir, "violinplot-IFI44L.RData"))
 ifi44l <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-SIGLEC1.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-SIGLEC1.RData")
-
+load(paste0(indir, "violinplot-SIGLEC1.RData"))
 siglec1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-USP18.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-USP18.RData")
+load(paste0(indir, "violinplot-USP18.RData"))
 usp18 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFI44.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFI44.RData")
-
+load(paste0(indir, "violinplot-IFI44.RData"))
 ifi44 <- p3
 
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-IFIT1.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-IFIT1.RData")
-
+load(paste0(indir, "violinplot-IFIT1.RData"))
 ifit1 <- p3
 
-load("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot-SPATS2L.RData")
-# load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/violinplot-SPATS2L.RData")
-
+load(paste0(indir, "violinplot-SPATS2L.RData"))
 spats2l <- p3
 
 fig2_B <- plot_grid(ifi27, otof, ifi44l, siglec1, usp18, ifi44,ifit1,spats2l, labels = NULL, ncol = 2)
@@ -116,7 +98,7 @@ fig2_B <- plot_grid(ifi27, otof, ifi44l, siglec1, usp18, ifi44,ifit1,spats2l, la
 fig2 <- plot_grid(fig2_B, NULL, fig2_A, labels = c("A","","B"), ncol = 3, nrow = 1,
                   rel_widths = c(1, 0.3, 1))
 
-ggsave(dpi  = 300 , paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/", "figure2.png"), plot = fig2, width = 5000, height = 4000, units = 'px')
+ggsave(dpi  = 300 , paste0(indir, "figure2.png"), plot = fig2, width = 5000, height = 4000, units = 'px')
 
 ######
 
@@ -135,8 +117,8 @@ ggsave(dpi  = 300 , file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures
 # supplementary heatmap top DEGs
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/cluster_heatmap.RData") # h1
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/cluster_heatmap_rows.RData") # h2
-heatmap1 <- grid.grabExpr(draw(h1))
-heatmap2 <- grid.grabExpr(draw(h2))
+heatmap1 <- grid.grabExpr(draw(h1_list))
+heatmap2 <- grid.grabExpr(draw(h2_list))
 
 sup2 <- plot_grid(heatmap1, heatmap2, labels ="AUTO", ncol = 2)
 
