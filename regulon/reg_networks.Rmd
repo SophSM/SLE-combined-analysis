@@ -1,0 +1,112 @@
+---
+title: "Regulatory networks"
+author: "Sofia Salazar"
+date: "2024-07-28"
+output: html_document
+---
+
+# Aim
+
+Find differentially expressed regulons in SLE vs Controls in public data 
+
+
+## 1. Prepare terminal
+
+```{bash eval=FALSE}
+ssh -Y ssalazar@dna.lavis.unam.mx
+screen -S networks
+qlogin
+module load r/4.0.2
+R
+```
+
+## 2. Get counts
+
+```{r}
+library(DESeq2)
+outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/regulons/"
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/vsd2.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/named-transcripts-info.RData")
+
+transcripts <- rownames(vsd2) 
+new <- list()
+for(i in 1:length(transcripts)){
+  new[i] <- gsub("\\..*","", transcripts[i])
+}
+transcripts <- (unlist(new))
+
+unique_info <- info[!duplicated(info$gene_name), ]
+
+keep.rownames <- unique_info$ID
+length(keep.rownames)
+
+counts <- as.data.frame(assays(vsd2))
+counts <- counts[,-c(1,2)]
+
+rownames(counts) <- transcripts
+
+reduced.vsd <- counts[rownames(counts) %in% keep.rownames,]
+# reduced.vsd$id <- rownames(reduced.vsd)
+merged <- merge(info, reduced.vsd, by.x = "ID", by.y = "row.names")
+rownames(merged) <- merged$gene_name
+
+reduced.counts <- merged[ , !(names(merged) %in% c("ID", "gene_name", "transcript_biotype"))]
+
+
+dim(reduced.counts)
+
+write.table(reduced.counts, file = paste0(outdir, "reduced.counts.csv"), sep = ",", eol = "\n", na = "NA", row.names = T, col.names = T, quote = F)
+
+
+
+```
+
+## 3. Make loompy file
+
+```{bash eval = FALSE}
+module load anaconda3/2021.05
+source activate scanpy
+python3
+```
+
+```{python eval=FALSE}
+import loompy
+import pandas as pd
+import numpy as np
+import os
+
+print(loompy.__version__) # 3.0.6
+PRE = "/mnt/Citosina/amedina/ssalazar/meta/combined/regulons/"
+file = os.path.join(PRE, "reduced.counts.csv")
+
+# Read counts file
+data = pd.read_csv(file)
+# Define output file
+loomfile = file.replace(".csv", ".loom")
+
+# Create loompy file
+matrix = np.array(data.values)
+row_attrs = {"Gene" : list(data.index)}
+col_attrs = {"CellID" : list(data.columns)}
+loompy.create(loomfile, matrix, row_attrs, col_attrs)
+```
+
+## 4. Run pipeline
+
+```{bash eval = FALSE}
+module load nextflow/20.10.0
+module load singularity/3.7.0
+umask 2
+nextflow pull vib-singlecell-nf/vsn-pipelines -r v0.25.0
+nextflow config vib-singlecell-nf/vsn-pipelines \
+    -profile loom,scenic,scenic_multiruns,scenic_use_cistarget_motifs,scenic_use_cistarget_tracks,hg38,singularity \
+    > sle_scenic.config
+    
+# after modifying parameters...
+    
+nextflow -C sle_scenic.config \
+    run vib-singlecell-nf/vsn-pipelines \
+    -entry scenic \
+    -resume -r v0.25.0
+```
+
