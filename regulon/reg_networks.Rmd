@@ -7,7 +7,7 @@ output: html_document
 
 # Aim
 
-Find differentially expressed regulons in SLE vs Controls in public data 
+Find differentially activated regulons in SLE vs Controls in public data 
 
 
 ## 1. Prepare terminal
@@ -108,5 +108,13 @@ nextflow -C sle_scenic.config \
     run vib-singlecell-nf/vsn-pipelines \
     -entry scenic \
     -resume -r v0.25.0
+```
+
+## 5. Get differentiated regulons
+
+```{bash eval=FALSE}
+python3 dif_regulons.py --outdir "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results" \
+--loompy_file "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results/multi_runs_regulons_auc_trk.loom" \
+--metadata "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/data/all_data.csv"
 ```
 

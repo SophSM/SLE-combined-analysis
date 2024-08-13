@@ -1,0 +1,97 @@
+---
+title: "Explore regulons"
+author: "Sofia Salazar"
+date: "2024-08-13"
+output: html_document
+---
+
+# Libraries
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(ComplexHeatmap)
+library(gprofiler2)
+library(circlize)
+```
+
+# Load data
+
+```{r}
+workdir = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined"
+
+regulon_dir = glue::glue("{workdir}/regulon")
+
+results <- read.csv(file = glue::glue("{regulon_dir}/results/difregs_SLE_Ctrl.csv"),
+                    header = T)
+
+auc_mtx <- read.csv(file = glue::glue("{regulon_dir}/results/AUC_mtx.csv"), row.names = "X")
+
+metadata <- read.csv(file = glue::glue("{workdir}/all_data.csv"), header = T, row.names = "X")
+
+colnames(auc_mtx) <- gsub("_...", "", colnames(auc_mtx))
+summary(results$log2FC)
+#   Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+# -0.0586874 -0.0073308 -0.0011612 -0.0004623  0.0003301  0.2432426 
+```
+
+
+# Filter regulons with an adjusted p-value threshold of <0.05 and a log2FC
+
+
+If log2FC > 0, it means the values in auc_sle are greater on average than those in auc_ctrl (relative to the reference auc_ctrl).
+If log2FC < 0, it means the values in auc1 are smaller on average than those in auc2 (relative to the reference auc2).
+```{r}
+# up
+
+up_regulons <- results %>%
+  filter(AdjPvalues < 0.05 & log2FC > 0) %>%
+   mutate(regulon = str_remove(regulon, "_\\(\\+\\)"),
+         direction = "Upregulated")
+
+dim(up_regulons)
+
+# down
+
+down_regulons <- results %>%
+  filter(AdjPvalues < 0.05 & log2FC < 0) %>%
+  mutate(regulon = str_remove(regulon, "_\\(\\+\\)"),
+         direction = "Downregulated")
+
+dim(down_regulons)
+```
+
+
+**There are 23 upregulated regulons & 64 downregulated regulons.**
+
+
+# Heatmap showing AUC values for the subset of regulons that were differentially activated
+
+```{r}
+
+meta_DA_regulons <- rbind(up_regulons, down_regulons)
+auc_mat_heatmap <- auc_mtx[, meta_DA_regulons$regulon] %>% t() %>% as.matrix()
+
+metadata_ordered <- metadata[match(colnames(auc_mat_heatmap), metadata$samples), ]
+
+split = data.frame(Direction = meta_DA_regulons$direction)
+col_fun = colorRamp2(c(min(auc_mat_heatmap), 0.1, max(auc_mat_heatmap)), c("white", "#ebcea7","#FF8C00" ))
+
+sample_ha <- HeatmapAnnotation("Group" = metadata_ordered$DISEASE, col = list("Group" = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+
+col_lfc <- colorRamp2(c(min(meta_DA_regulons$log2FC),  0, 0.1,  max(meta_DA_regulons$log2FC)), c("blue", "white", "#ffb5b0","red"))
+lfc_anno = rowAnnotation("log2FC" = meta_DA_regulons$log2FC, col = list("log2FC" = col_lfc))
+
+
+png(filename = glue::glue("{regulon_dir}/results/AUC_heatmap.png"), width = 20, height = 35, units = "cm", res = 300)
+Heatmap(auc_mat_heatmap, name = "AUC", show_column_names = F, row_split = split,
+        col = col_fun, top_annotation = sample_ha, right_annotation = lfc_anno)
+dev.off()
+```
+
+
+# Enrichment analysis only regulons
+
+# Enrichment analysis regulons and gene targets
+
+

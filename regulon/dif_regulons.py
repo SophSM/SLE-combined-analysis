@@ -5,7 +5,7 @@
 Usage:
 
 python3 dif_regulons.py --outdir "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results" \
---loompy_file "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results/.loompy" \
+--loompy_file "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results/multi_runs_regulons_auc_trk.loom" \
 --metadata "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/data/all_data.csv"
 '''
 
@@ -184,10 +184,13 @@ meta_ctrl = metadf[metadf['disease'] == 'CONTROL']
 print(f"INFO --- Metadata SLE shape: {meta_sle.shape}, metadata CONTROL shape: {meta_ctrl.shape}")
 
 print("INFO --- Reading loompy file...")
-lf = lp.connect(args.loompy_dile, mode='r+', validate=False)
+lf = lp.connect(args.loompy_file, mode='r+', validate=False)
 print("INFO --- Retrieving AUC matrix")
 
 auc_mtx_multi = pd.DataFrame(lf.ca.RegulonsAUC, index=lf.ca.CellID)
+auc_mtx_multi.to_csv(os.path.join(args.outdir, "AUC_mtx.csv"), sep=",", index=True)
+print("INFO --- Saved AUC matrix")
+
 
 print(f"INFO --- AUC matrix shape: {auc_mtx_multi.shape}")
 
