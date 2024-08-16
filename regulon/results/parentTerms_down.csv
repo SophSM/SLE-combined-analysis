@@ -1,0 +1,65 @@
+,regulon,topParent,topTerm,Small
+1,ARNT,intracellular transport,4123,Cellular transport
+2,ATF1,cellular response to DNA damage stimulus,5535,Response to stimulus
+3,BCL11A,lymphocyte activation,7625,Immune cell activation
+4,BHLHE40,negative regulation of cellular biosynthetic process,6251,Metabolic process
+5,CEBPG,DNA protection,2350,Metabolic process
+6,DEAF1,valine metabolic process,4190,Metabolic process
+7,EBF1,developmental process,2236,Developmental process
+8,ESRRA,catabolic process,6895,Metabolic process
+9,GABPA,protein prenylation,8541,Metabolic process
+10,GATA1,catabolic process,1117,Metabolic process
+11,GATA2,regulation of plasma membrane bounded cell projection organization,10224,Cell cycle
+12,GLI4,tRNA modification,12233,Nucleic acid processing
+13,GMEB2,Atg8-specific peptidase activity,3729,Metabolic process
+14,HIC1,phosphorus metabolic process,7208,Metabolic process
+15,JUND,regulation of primary metabolic process,10129,Metabolic process
+16,KLF13,helper T cell diapedesis,10131,Immune cell activation
+17,MAFK,protein metabolic process,8825,Metabolic process
+18,MAZ,regulation of nitrogen compound metabolic process,10252,Metabolic process
+19,MEF2D,positive regulation of RNA metabolic process,8284,Nucleic acid processing
+20,MYC,ncRNA metabolic process,5535,Metabolic process
+21,NR2F1,negative regulation of wound healing,9312,Metabolic process
+22,NR2F6,positive regulation of nuclear-transcribed mRNA poly(A) tail shortening,6536,Metabolic process
+23,NRF1,intracellular transport,4123,Cellular transport
+24,PAX5,ncRNA processing,1326,Nucleic acid processing
+25,PKNOX1,regulation of primary metabolic process,10252,Metabolic process
+26,REST,"post-translational protein targeting to membrane, translocation",5314,Metabolic process
+27,RFX5,cellular response to stress,4977,Response to stimulus
+28,RUNX1,positive regulation of biological process,7534,Metabolic process
+29,RUNX3,cellular response to stimulus,1496,Response to stimulus
+30,SALL2,anatomical structure morphogenesis,817,Developmental process
+31,SOX6,developmental process,7534,Developmental process
+32,SREBF1,cellular response to stress,7534,Response to stimulus
+33,SREBF2,regulation of cell cycle,9380,Cell cycle
+34,TBX21,leukocyte activation,1181,Immune cell activation
+35,TCF7,positive regulation of leukocyte cell-cell adhesion,7933,Immune cell activation
+36,TFDP1,cell cycle,1198,Cell cycle
+37,THRB,positive regulation of cell differentiation,10417,Cell cycle
+38,UBTF,regulation of chromosome organization,8923,Cell cycle
+39,YBX1,protein catabolic process,8668,Metabolic process
+40,ZBTB20,regulation of transcription by RNA polymerase II,10570,Nucleic acid processing
+41,ZBTB44,intraciliary transport involved in cilium assembly,4132,Cell cycle
+42,ZHX2,"transcription, DNA-templated",10252,Nucleic acid processing
+43,ZIC2,clathrin heavy chain binding,3796,Metabolic process
+44,ZIK1,leukocyte adhesion to vascular endothelial cell,9530,Immune system process
+45,ZNF2,synaptic vesicle budding from presynaptic endocytic zone membrane,11801,Neural process
+46,ZNF274,negative regulation of neural crest formation,3036,Neural process
+47,ZNF282,vesicle-mediated transport,2777,Cellular transport
+48,ZNF354C,translation initiation factor activity,12118,Nucleic acid processing
+49,ZNF398,multicellular organism development,5346,Developmental process
+50,ZNF404,regulation of RNA biosynthetic process,10392,Nucleic acid processing
+51,ZNF48,ribosomal subunit export from nucleus,12063,Cellular transport
+52,ZNF491,DNA-binding transcription factor activity,2400,TF activity
+53,ZNF501,amide biosynthetic process,361,Metabolic process
+54,ZNF510,transcription by RNA polymerase II,12040,Nucleic acid processing
+55,ZNF524,positive regulation of nitrogen compound metabolic process,8105,Metabolic process
+56,ZNF529,organic acid transmembrane transport,1061,Cellular transport
+57,ZNF548,regulation of RNA biosynthetic process,9576,Nucleic acid processing
+58,ZNF549,aromatic compound biosynthetic process,3595,Metabolic process
+59,ZNF558,mitochondrial gene expression,2967,Nucleic acid processing
+60,ZNF585B,"rRNA (adenine-N6,N6-)-dimethyltransferase activity",11155,Nucleic acid processing
+61,ZNF614,regulation of protein stability,6732,Metabolic process
+62,ZNF662,anatomical structure development,432,Developmental process
+63,ZNF692,regulation of carbohydrate biosynthetic process,8903,Metabolic process
+64,ZNF837,multicellular organism development,4917,Developmental process

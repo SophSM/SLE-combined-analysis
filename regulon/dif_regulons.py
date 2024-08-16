@@ -5,7 +5,7 @@
 Usage:
 
 python3 dif_regulons.py --outdir "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results" \
---loompy_file "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/regulon/results/multi_runs_regulons_auc_trk.loom" \
+--loompy_file "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/multi_runs_regulons_auc_trk.loom" \
 --metadata "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/data/all_data.csv"
 '''
 
@@ -199,6 +199,10 @@ for i,r in pd.DataFrame(lf.ra.Regulons,index=lf.ra.Gene).items():
     regulons[i] =  list(r[r==1].index.values)
 
 print(f"INFO --- Total regulons found: {len(regulons.keys())}")
+
+tf_targets = pd.DataFrame(lf.ra.Regulons, columns = list(auc_mtx_multi.columns), index= list(lf.ra.Gene))
+tf_targets.to_csv(os.path.join(args.outdir, "tf_targets.csv"), sep=",", index=True)
+print("INFO --- Saved tf targets data")
 print("INFO --- Splitting AUC matrix into SLE and control samples")
 
 auc_ctrl = auc_mtx_multi[auc_mtx_multi.index.isin(meta_ctrl['ID'])]

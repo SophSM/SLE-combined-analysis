@@ -24,6 +24,8 @@ regulon_dir = glue::glue("{workdir}/regulon")
 
 results <- read.csv(file = glue::glue("{regulon_dir}/results/difregs_SLE_Ctrl.csv"),
                     header = T)
+tf_targets <- read.csv(file = glue::glue("{regulon_dir}/results/tf_targets.csv"), header = T, row.names = "X")
+colnames(tf_targets) <- gsub("_...", "", colnames(tf_targets))
 
 auc_mtx <- read.csv(file = glue::glue("{regulon_dir}/results/AUC_mtx.csv"), row.names = "X")
 
@@ -83,15 +85,316 @@ col_lfc <- colorRamp2(c(min(meta_DA_regulons$log2FC),  0, 0.1,  max(meta_DA_regu
 lfc_anno = rowAnnotation("log2FC" = meta_DA_regulons$log2FC, col = list("log2FC" = col_lfc))
 
 
-png(filename = glue::glue("{regulon_dir}/results/AUC_heatmap.png"), width = 20, height = 35, units = "cm", res = 300)
+# png(filename = glue::glue("{regulon_dir}/results/AUC_heatmap.png"), width = 20, height = 35, units = "cm", res = 300)
 Heatmap(auc_mat_heatmap, name = "AUC", show_column_names = F, row_split = split,
         col = col_fun, top_annotation = sample_ha, right_annotation = lfc_anno)
-dev.off()
+# dev.off()
+```
+
+No common regulons between up or down:
+
+```{r}
+intersect(up_regulons$regulon, down_regulons$regulon)
 ```
 
 
-# Enrichment analysis only regulons
-
 # Enrichment analysis regulons and gene targets
+
+
+Make the tf_targets dataframe a list, with names as regulons and inside, a vector of the names of the genes that are targets for that TF
+
+```{r}
+tf_targets <- tf_targets %>%
+  rownames_to_column(var = "gene")
+tf_targets <- tf_targets %>%
+  gather(key = "ID", value = "value", -gene) %>%
+  filter(value == 1) %>%
+  group_by(ID) %>%
+  summarize(genes = list(gene)) %>%
+  deframe()
+```
+
+
+Get upregulated regulons and their gene targets
+
+```{r}
+genes_up <- c()
+regulon_column <- c() # store here the "main" regulon name
+for (regulon in up_regulons$regulon){
+  target_genes <- tf_targets[[regulon]]
+  genes_up <- c(genes_up, target_genes)
+  regulon_column <- c(regulon_column, rep(regulon, length(target_genes)))
+}
+
+up_genes_df <- data.frame(geneName = genes_up, regulon = regulon_column, direction = "Upregulated")
+
+dim(up_genes_df)
+# [1] 15414     3
+length(unique(up_genes_df$geneName)) #  7523 --> some genes are in two or more regulons at the same time
+```
+
+Get downregulated regulons and their gene targets
+
+
+```{r}
+genes_down <- c()
+regulon_column <- c() # store here the "main" regulon name
+for (regulon in down_regulons$regulon){
+  target_genes <- tf_targets[[regulon]]
+  genes_down <- c(genes_down, target_genes)
+  regulon_column <- c(regulon_column, rep(regulon, length(target_genes)))
+}
+
+down_genes_df <- data.frame(geneName = genes_down, regulon = regulon_column, direction = "Downregulated")
+
+dim(down_genes_df)
+# [1] 28724     3
+length(unique(down_genes_df$geneName)) #  12334 --> some genes are in two or more regulons at the same time
+```
+
+Plot regulons and number of targets per regulon
+
+```{r}
+up_genes_count <- up_genes_df %>%
+  count(regulon)
+
+down_genes_count <- down_genes_df %>%
+  count(regulon)
+
+# png(filename = glue::glue("{regulon_dir}/results/upRegs_targets.png"), width = 15, height = 10, units = "cm", res = 300)
+  ggplot(up_genes_count, aes(x = reorder(regulon, n), y = n)) +
+    geom_bar(stat = "identity", fill = "firebrick") +
+    geom_text(aes(label = n), hjust = -0.2, size = 2) +
+    coord_flip() + 
+    labs(x = "Regulon name", y = "Number of target genes") + 
+    theme_minimal()
+# dev.off()
+
+# png(filename = glue::glue("{regulon_dir}/results/downRegs_targets.png"), width = 17, height = 18, units = "cm", res = 300)
+  ggplot(down_genes_count, aes(x = reorder(regulon, n), y = n)) +
+    geom_bar(stat = "identity", fill = "dodgerblue") +
+    geom_text(aes(label = n), hjust = -0.2, size = 2) +
+    coord_flip() + 
+    labs(x = "Regulon name", y = "Number of target genes") + 
+    theme_minimal()
+# dev.off()
+```
+
+
+```{r}
+library(ggvenn)
+gene_lists <- list(
+  Upregulated = up_genes_df$geneName,
+  Downregulated = down_genes_df$geneName
+)
+
+# Plot the Venn diagram
+ggvenn(gene_lists, fill_color = c("skyblue", "lightgreen"))
+```
+
+
+### Enrichment analysis
+
+
+```{r}
+# make a list for gost query, each name is a regulon main TF and inside are the gene targets for the TF
+gost_querylist_up = list()
+for (r in unique(up_genes_df$regulon)){
+  print(r)
+  genes_in_regulon <- unique((up_genes_df %>% filter(regulon == r))$geneName)
+  gost_querylist_up[[r]] <- genes_in_regulon
+  print(length(genes_in_regulon))
+}
+gost_querylist_down = list()
+for (r in unique(down_genes_df$regulon)){
+  print(r)
+  genes_in_regulon <- unique((down_genes_df %>% filter(regulon == r))$geneName)
+  gost_querylist_down[[r]] <- genes_in_regulon
+  print(length(genes_in_regulon))
+}
+
+# this returns the query for gost but in condition we have each regulon name
+# multi_gp_up <- gost(gost_querylist_up, correction_method = "fdr", multi_query = F, ordered_query = T, organism = 'hsapiens', sources = c("GO:BP","GO:MF","GO:CC","KEGG"))
+# save(multi_gp_up, file = glue::glue("{regulon_dir}/results/GO.upRegulons_results.RData"))
+
+
+# multi_gp_down <- gost(gost_querylist_down, correction_method = "fdr", multi_query = F, ordered_query = T, organism = 'hsapiens', sources = c("GO:BP","GO:MF","GO:CC","KEGG"))
+# save(multi_gp_down, file = glue::glue("{regulon_dir}/results/GO.downRegulons_results.RData"))
+
+load(glue::glue("{regulon_dir}/results/GO.upRegulons_results.RData"))
+load(glue::glue("{regulon_dir}/results/GO.downRegulons_results.RData"))
+
+
+query_up <- as.data.frame(multi_gp_up$result)
+
+up_go_data <- data.frame("term" = as.factor(query_up$term_name), "regulon" = query_up$query, "count" = query_up$term_size, "p.adjust" = query_up$p_value, 'category' =query_up$source, GO_ID = query_up$term_id)
+
+
+query_down <- as.data.frame(multi_gp_down$result)
+
+down_go_data <- data.frame("term" = as.factor(query_down$term_name), "regulon" = query_down$query, "count" = query_down$term_size, "p.adjust" = query_down$p_value, 'category' =query_down$source, GO_ID = query_down$term_id)
+```
+
+
+# Get top term per regulon
+
+Here I use revigo to get the parent term for the "top" term from BP ontology terms associated to each regulon and its target genes.
+
+```{r eval = FALSE}
+library(rrvgo)
+# this takes a long time, will save output result
+regulon_vec <- c()
+topParent_termBP_up <- c()
+top_termBP_up <- c()
+for (r in unique(up_go_data$regulon)){
+  print(r)
+  regulon_vec <- c(regulon_vec, r)
+  sub_regulon <- up_go_data %>%
+    filter(regulon == r & p.adjust < 0.05 & category == "GO:BP") #  %>%
+    # group_by(category) %>%
+    # slice_min(p.adjust, n=20, with_ties = FALSE) %>%
+    # ungroup()       
+  
+  simMat <- calculateSimMatrix(sub_regulon$GO_ID, # vector GO terms
+                                           orgdb="org.Hs.eg.db",
+                                           ont="BP", 
+                                           method="Rel")
+  scores <- setNames(-log10(sub_regulon$p.adjust), sub_regulon$GO_ID)
+  reducedTerms <- reduceSimMatrix(simMat,
+                                           scores,
+                                           threshold= 0.7,
+                                           orgdb="org.Hs.eg.db")
+  reducedTerms <- reducedTerms[reducedTerms$size != 0,]
+  
+  top <- sub_regulon %>% arrange(p.adjust) %>% head(1)
+  
+  topParent <- reducedTerms %>% filter(go == top$term)
+  if (nrow(topParent) == 0){
+    topParent <- reducedTerms %>% filter(score == max(reducedTerms$score)) %>% head(1)
+  }
+  topParent_termBP_up <- c(topParent_termBP_up, topParent$parentTerm)
+  top_termBP_up <- c(top_termBP_up, top$term)
+
+  print(length(regulon_vec) == length(topParent_termBP_up))
+
+}
+
+top_upTerms.df <- data.frame(regulon = regulon_vec, topParent = topParent_termBP_up,
+                             topTerm = top_termBP_up)
+
+write.csv(top_upTerms.df, glue::glue("{regulon_dir}/results/parentTerms_up.csv"))
+```
+
+
+```{r}
+# this takes a long time, will save output result
+regulon_vec <- c()
+topParent_termBP_down <- c()
+top_termBP_down <- c()
+for (r in unique(down_go_data$regulon)){
+  print(r)
+  regulon_vec <- c(regulon_vec, r)
+  sub_regulon <- down_go_data %>%
+    filter(regulon == r & p.adjust < 0.05 & category == "GO:BP") #  %>%
+    # group_by(category) %>%
+    # slice_min(p.adjust, n=20, with_ties = FALSE) %>%
+    # ungroup()       
+  
+  if(nrow(sub_regulon) == 0){
+    sub_regulon <- down_go_data %>%
+      filter(regulon == r & p.adjust < 0.05 & category == "GO:MF")
+    simMat <- calculateSimMatrix(sub_regulon$GO_ID, # vector GO terms
+                                 orgdb="org.Hs.eg.db",
+                                 ont="MF", 
+                                 method="Rel")
+  }else{
+  simMat <- calculateSimMatrix(sub_regulon$GO_ID, # vector GO terms
+                               orgdb="org.Hs.eg.db",
+                               ont="BP", 
+                               method="Rel")
+  }  scores <- setNames(-log10(sub_regulon$p.adjust), sub_regulon$GO_ID)
+  reducedTerms <- reduceSimMatrix(simMat,
+                                           scores,
+                                           threshold= 0.7,
+                                           orgdb="org.Hs.eg.db")
+  reducedTerms <- reducedTerms[reducedTerms$size != 0,]
+  
+  top <- sub_regulon %>% arrange(p.adjust) %>% head(1)
+  
+  topParent <- reducedTerms %>% filter(go == top$term)
+  if (nrow(topParent) == 0){
+    topParent <- reducedTerms %>% filter(score == max(reducedTerms$score)) %>% head(1)
+  }
+  topParent_termBP_down <- c(topParent_termBP_down, topParent$parentTerm)
+  top_termBP_down <- c(top_termBP_down, top$term)
+
+  print(length(regulon_vec) == length(topParent_termBP_down))
+
+}
+regulon_vec <- regulon_vec[-c(65)]
+top_downTerms.df <- data.frame(regulon = regulon_vec, topParent = topParent_termBP_down,
+                             topTerm = top_termBP_down)
+
+write.csv(top_downTerms.df, glue::glue("{regulon_dir}/results/parentTerms_down.csv"))
+```
+
+
+Top three terms per regulon:
+
+```{r}
+topTerms_up <- list()
+for (r in unique(up_go_data$regulon)){
+  print(r)
+  regulon_vec <- c(regulon_vec, r)
+  sub_regulon <- up_go_data %>%
+    filter(regulon == r & p.adjust < 0.05 & category == "GO:BP")  %>%
+    arrange(p.adjust) %>% head(3)
+    # slice_min(p.adjust, n=20, with_ties = FALSE) %>%
+    # ungroup()
+  topTerms_up[[r]] <- sub_regulon
+}
+
+topTerms_up <- do.call(rbind, topTerms_up)
+# png(filename = glue::glue("{regulon_dir}/results/upRegs_mainTerms.png"), width = 18, height = 20, units = "cm", res = 300)
+  ggplot(topTerms_up, aes(y = reorder(term, -p.adjust), x = reorder(regulon, p.adjust), size = -log10(p.adjust)))+
+    geom_point() +
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90, hjust=0.5))+
+    labs(x = "Regulon name", y = "Term", size = "-log10(p-adjust)")
+# dev.off()
+```
+
+
+```{r}
+topTerms_down <- list()
+for (r in unique(down_go_data$regulon)){
+  print(r)
+  regulon_vec <- c(regulon_vec, r)
+  sub_regulon <- down_go_data %>%
+    filter(regulon == r & p.adjust < 0.05 & category == "GO:BP")  %>%
+    arrange(p.adjust) %>% head(3)
+  
+  if(nrow(sub_regulon) == 0){
+    sub_regulon <- down_go_data %>%
+    filter(regulon == r & p.adjust < 0.05 & category == "GO:MF")  %>%
+    arrange(p.adjust) %>% head(1)
+  }
+    # slice_min(p.adjust, n=20, with_ties = FALSE) %>%
+    # ungroup()
+  topTerms_down[[r]] <- sub_regulon
+}
+
+topTerms_down <- do.call(rbind, topTerms_down)
+
+# png(filename = glue::glue("{regulon_dir}/results/downRegs_mainTerms.png"), width = 45, height = 40, units = "cm", res = 300)
+  ggplot(topTerms_down, aes(y = reorder(term, -p.adjust), x = reorder(regulon, p.adjust), size = -log10(p.adjust)))+
+    geom_point() +
+    theme_minimal()+
+    theme(axis.text.x = element_text(angle = 90, hjust=0.5))+
+    labs(x = "Regulon name", y = "Term", size = "-log10(p-adjust)")
+# dev.off()
+```
+
+
 
 

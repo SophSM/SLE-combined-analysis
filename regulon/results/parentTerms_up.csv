@@ -1,0 +1,24 @@
+,regulon,topParent,topTerm,Small
+1,ATF3,cellular response to amino acid starvation,8084,Response to stimulus
+2,BACH1,intracellular signal transduction,3433,Response to stimulus
+3,BCL3,follicular dendritic cell differentiation,2600,Dendritic cell differentiation
+4,BCL6,cell death,9408,Response to stimulus
+5,CREM,mitotic cell cycle,4280,Cell cycle
+6,E2F1,mitotic cell cycle process,4283,Cell cycle
+7,E2F7,DNA metabolic process,1974,Nucleic acid processing
+8,ELF1,cellular response to steroid hormone stimulus,9528,Response to stimulus
+9,ETV6,regulation of immune system process,9017,Immune system process
+10,FOSL2,developmental process,6515,Developmental process
+11,FOXA1,tissue development,2282,Developmental process
+12,IRF1,positive regulation of biological process,9562,Response to stimulus
+13,IRF2,positive regulation of macromolecule metabolic process,6841,Metabolic process
+14,IRF4,leukocyte activation,3656,Immune cell activation
+15,MAFG,catabolic process,897,Metabolic process
+16,NFE2L2,regulation of nitrogen compound metabolic process,8786,Metabolic process
+17,NFIL3,positive regulation of macromolecule metabolic process,6841,Metabolic process
+18,STAT1,defense response to virus,1765,Immune system process
+19,STAT3,cellular response to stimulus,9017,Response to stimulus
+20,TGIF2,ncRNA metabolic process,4612,Metabolic process
+21,VEZF1,regulation of primary metabolic process,8900,Metabolic process
+22,ZKSCAN1,microtubule organizing center organization,4183,Cell cycle
+23,ZNF148,regulation of nitrogen compound metabolic process,8900,Metabolic process
