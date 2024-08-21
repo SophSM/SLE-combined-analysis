@@ -43,6 +43,8 @@ norm_counts <- as.data.frame(assay(vsd2))
 norm_counts <- tibble::rownames_to_column(norm_counts, "ID")
 norm_counts_id <- name_short(norm_counts)
 norm_counts_name <- inner_join(norm_counts_id, df_names, by = 'ID')
+
+all(df_names$gene_name == norm_counts_name$gene_name) # TRUE
 norm_counts_name<- norm_counts_name[,-c(1,320:327)]
 rownames(norm_counts_name) <- df_names$gene_name
 
