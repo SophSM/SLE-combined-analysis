@@ -19,7 +19,7 @@ volcanoplot <- ggplot(data, aes(log2FoldChange, -log(padj,10))) +
   xlab(expression("log"[2]*"FC")) + 
   ylab(expression("-log"[10]*"p-adj")) +
   scale_color_manual(values = c("dodgerblue3", "gray50", "firebrick3")) +
-  guides(colour = guide_legend(override.aes = list(size=1.5))) 
+  guides(colour = guide_legend(override.aes = list(size=1.5)))
 
 data %>% 
   count(Expression) %>% 
@@ -46,13 +46,20 @@ top_genes %>%
 volcanoplot_names <-  volcanoplot +
   ggrepel::geom_label_repel(data = top_genes,
                             mapping = aes(log2FoldChange, -log(padj,10), label = gene_name),
-                            size = 2) + theme_classic() + theme(legend.position = 'bottom')
+                            size = 2) + theme_classic() + theme(legend.position = 'top',
+                                                                plot.background = element_rect(fill = "white"),
+                                                                text = element_text(size = 16),
+                                                                axis.title = element_text(size = 16),
+                                                                legend.title = element_text(size = 13),
+                                                                legend.text = element_text(size = 13),
+                                                                axis.text.x = element_text(size = 16),  
+                                                                axis.text.y = element_text(size = 16),
+                                                                legend.key.size = unit(1.5, "lines"))
 
 save(volcanoplot_names, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
 
 ggsave(paste0(outdir,"volcanoPlotWithTopGenes.png"),
        plot = volcanoplot_names, dpi = 300)
-dev.off()
 
 ######
 sessionInfo()

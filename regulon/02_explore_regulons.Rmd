@@ -120,16 +120,19 @@ Get upregulated regulons and their gene targets
 ```{r}
 genes_up <- c()
 regulon_column <- c() # store here the "main" regulon name
+lfc_up <- c()
 for (regulon in up_regulons$regulon){
+  lfc <- up_regulons[up_regulons$regulon == regulon,]$log2FC
   target_genes <- tf_targets[[regulon]]
   genes_up <- c(genes_up, target_genes)
   regulon_column <- c(regulon_column, rep(regulon, length(target_genes)))
+  lfc_up <- c(lfc_up, rep(lfc, length(target_genes)))
 }
 
-up_genes_df <- data.frame(geneName = genes_up, regulon = regulon_column, direction = "Upregulated")
+up_genes_df <- data.frame(geneName = genes_up, regulon = regulon_column, log2FC = lfc_up, direction = "Upregulated")
 
 dim(up_genes_df)
-# [1] 15414     3
+# [1] 15414     4
 length(unique(up_genes_df$geneName)) #  7523 --> some genes are in two or more regulons at the same time
 ```
 
@@ -139,18 +142,27 @@ Get downregulated regulons and their gene targets
 ```{r}
 genes_down <- c()
 regulon_column <- c() # store here the "main" regulon name
+lfc_down <- c()
 for (regulon in down_regulons$regulon){
+  lfc <- down_regulons[down_regulons$regulon == regulon,]$log2FC
   target_genes <- tf_targets[[regulon]]
   genes_down <- c(genes_down, target_genes)
   regulon_column <- c(regulon_column, rep(regulon, length(target_genes)))
+  lfc_down <- c(lfc_down, rep(lfc, length(target_genes)))
 }
 
-down_genes_df <- data.frame(geneName = genes_down, regulon = regulon_column, direction = "Downregulated")
+down_genes_df <- data.frame(geneName = genes_down, regulon = regulon_column, log2FC = lfc, direction = "Downregulated")
 
 dim(down_genes_df)
-# [1] 28724     3
+# [1] 28724     4
 length(unique(down_genes_df$geneName)) #  12334 --> some genes are in two or more regulons at the same time
 ```
+
+```{r}
+DEregulon_targets_df <- rbind(down_genes_df, up_genes_df)
+write.csv(DEregulon_targets_df, file = glue::glue("{regulon_dir}/results/DEregulon_targets.csv"))
+```
+
 
 Plot regulons and number of targets per regulon
 

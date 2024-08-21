@@ -1,0 +1,135 @@
+---
+title: "Regulons and expression heatmaps"
+author: "Sofia Salazar"
+date: "2024-08-16"
+output: html_document
+---
+
+Libraries
+
+```{r}
+library(tidyverse)
+library(ComplexHeatmap)
+library(circlize)
+library(DESeq2)
+library(ggplot2)
+```
+
+
+```{r}
+name_short<-function(table){
+  table$ID <- gsub("\\..*","", table$ID)
+  return(table)
+}
+```
+
+Data
+
+```{r}
+workdir <- "/mnt/Citosina/amedina/ssalazar/meta/combined/"
+regulon_dir <- glue::glue("{workdir}/regulons")
+results_dir <- glue::glue("{regulon_dir}/results")
+DEregulon_targets <- read.csv(glue::glue("{results_dir}/DEregulon_targets.csv"), row.names = "X")
+load("/mnt/Citosina/amedina/backup/lupus/sofi/vsd2.RData")
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
+
+all_data <-  read.csv(glue::glue("{workdir}/all_data.csv"), header = T)
+  
+ordered_samples <- all_data[order(all_data$DISEASE),] # reorder all_data
+
+
+
+norm_counts <- as.data.frame(assay(vsd2))
+norm_counts <- tibble::rownames_to_column(norm_counts, "ID")
+norm_counts_id <- name_short(norm_counts)
+norm_counts_name <- inner_join(norm_counts_id, df_names, by = 'ID')
+norm_counts_name<- norm_counts_name[,-c(1,320:327)]
+rownames(norm_counts_name) <- df_names$gene_name
+
+
+counts <- as.matrix(norm_counts_name)
+zscore <- t(scale(t(counts)))
+
+# get targets within each regulon
+genes_per_reg <- c()
+lfc <- c()
+regs<-c()
+direction <- c()
+for (r in unique(DEregulon_targets$regulon)){
+  sub <- DEregulon_targets %>% filter(regulon ==r)
+  genes_per_reg <- c(genes_per_reg, dim(sub)[1])
+  lfc <- c(lfc, head(sub$log2FC,1))
+  direction <- c(direction, head(sub$direction,1))
+  regs <- c(regs, r)
+}
+
+
+
+```
+
+
+Get counts matrix, some rows are repeated because a gene is in more than one regulon
+
+```{r}
+filtered_DEregulon_targets <- DEregulon_targets %>%
+  filter(geneName %in% rownames(zscore))
+
+dim(filtered_DEregulon_targets)
+ordered_counts <- zscore[filtered_DEregulon_targets$geneName, , drop = FALSE]
+
+ordered_counts <- ordered_counts[,ordered_samples$samples]
+```
+
+
+Terms of each regulon
+
+```{r}
+
+reg_df <- filtered_DEregulon_targets %>%
+  select(-c("geneName"))
+
+parentTerms_up <- read.csv(glue::glue("{results_dir}/parentTerms_up.csv"),
+                             header = T, row.names = "X")
+parentTerms_down <- read.csv(glue::glue("{results_dir}/parentTerms_down.csv"),
+                             header = T, row.names = "X")
+
+parentTerms <- rbind(parentTerms_down, parentTerms_up)
+reg_df <- reg_df %>%
+  left_join(parentTerms %>% select(regulon, Small), by = "regulon") 
+
+term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
+  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ffad7a", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
+
+```
+
+Heatmap
+
+```{r}
+mat <- as.matrix(ordered_counts)
+ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+
+col_lfc <- colorRamp2(c(min(reg_df$log2FC), 0.05, 0, 0.1,  max(reg_df$log2FC)), c("blue","lightblue1", "white", "#ffb5b0","red"))
+
+lfc_anno = rowAnnotation("log2FC" = reg_df$log2FC, col = list("log2FC" = col_lfc))
+
+term_anno <- rowAnnotation("Regulon associated process" = reg_df$Small,
+                           col = list("Regulon associated process" = term_col), 
+                           show_annotation_name = F)
+regulon_split = data.frame("Regulon" = filtered_DEregulon_targets$direction)
+sample_split = data.frame("Sample" = ordered_samples$DISEASE)
+color_fun <- colorRamp2(c(min(ordered_counts),-2, 0, 2, max(ordered_counts)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+
+h <- Heatmap(mat, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = F, show_column_names = F, 
+             top_annotation = ha, column_split = sample_split, 
+             row_split = regulon_split, right_annotation =  term_anno)
+# la anotacion de logfoldchange no se ve bien, tal vez es necesario hacer mas cortes
+
+png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
+
+  draw(h)
+
+dev.off()
+
+```
+

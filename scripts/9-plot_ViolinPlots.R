@@ -5,7 +5,7 @@ library(DESeq2)
 library(tidyverse)
 library(perm)
 load('/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData')
-load("/mnt/Citosina/amedina/ssalazar/meta/combined/vsd2.RData")
+load("/mnt/Citosina/amedina/backup/lupus/sofi/vsd2.RData")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
 outdir = '/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/'
 #####

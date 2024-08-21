@@ -10,7 +10,7 @@ outdir = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/"
 # FIG 1
 
 # heatmap ordered: heat_ordered
-load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/heat_ordered.RData") 
+load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/heatmapFULL.RData") 
 heatmap <- grid.grabExpr(draw(ht_list))
 # volcano plot: volcanoplot_names
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
