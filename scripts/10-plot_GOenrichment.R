@@ -164,7 +164,77 @@ ggsave(paste0(outdir,"barplotDOWN_GO.png"),
 
 save(g.down, file = paste0(outdir, "barplotGO_DOWN.RData"))
 
+## reduce terms with rvgo
+library(rrvgo)
 
+upTerms <- gost_query %>% filter(query == 'Upregulated' & source == "GO:BP")
+downTerms <- gost_query %>% filter(query == 'Downregulated' & source == "GO:BP")
+
+
+simMat_up <- calculateSimMatrix(upTerms$term_id, # vector GO terms
+                             orgdb="org.Hs.eg.db",
+                             ont="BP", 
+                             method="Rel")
+scores_up <- setNames(-log10(upTerms$p_value), upTerms$term_id)
+reducedTerms_up <- reduceSimMatrix(simMat_up,
+                                   scores_up,
+                                threshold= 0.7,
+                                orgdb="org.Hs.eg.db")
+
+simMat_down <- calculateSimMatrix(downTerms$term_id, # vector GO terms
+                                orgdb="org.Hs.eg.db",
+                                ont="BP", 
+                                method="Rel")
+scores_down <- setNames(-log10(downTerms$p_value), downTerms$term_id)
+reducedTerms_down <- reduceSimMatrix(simMat_down,
+                                     scores_down,
+                                   threshold= 0.7,
+                                   orgdb="org.Hs.eg.db")
+
+reducedTerms_down <- reducedTerms_down[reducedTerms_down$size != 0,]
+reducedTerms_up <- reducedTerms_up[reducedTerms_up$size != 0,]
+
+# get most significant term per parent term
+reducedTerms_downDF <- reducedTerms_down %>%
+  group_by(parentTerm) %>%
+  summarise(max_logpval = max(score))%>%
+  arrange(max_logpval)%>%
+  mutate(direction= "Downregulated")
+
+reducedTerms_upDF <- reducedTerms_up %>%
+  group_by(parentTerm) %>%
+  summarise(max_logpval = max(score))%>%
+  arrange(desc(max_logpval))%>%
+  head(10)%>%
+  arrange(max_logpval)%>%
+  mutate(direction= "Upregulated")
+
+parentTerms <- rbind(reducedTerms_downDF, reducedTerms_upDF)
+
+parentTerms_df <- parentTerms %>%
+  distinct(parentTerm, .keep_all = TRUE)
+parentTerms_df$parentTerm <- factor(parentTerms_df$parentTerm, levels = parentTerms_df$parentTerm)
+
+p_parent <- ggplot(parentTerms_df, aes(x = parentTerm,y = direction, size = max_logpval))+
+  geom_point(aes(color = direction), position = position_dodge(width = 0.6), alpha = 0.7)+
+  coord_flip() +
+  theme_minimal()+
+  theme(plot.background = element_rect(fill = "white"),
+        axis.text.x = element_text(size = 12, hjust = 0.5),
+        axis.text.y = element_text(size = 12),
+        axis.title = element_text(size = 13),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 12),
+        legend.key.size = unit(1.5, "lines"))+
+  scale_size_continuous(range = c(3, 10)) + 
+  scale_color_manual(values = c("Upregulated" = "firebrick3", "Downregulated"="dodgerblue"))+
+  labs(x = "Biological process", y = "Expression", colour = "Expression", size = "-log10(p-value)")
+
+ggsave(filename = glue::glue("{outdir}/parentTerms_dotplot.png"), plot = p_parent,
+       width = 25, height = 20, units = "cm", dpi = 300)
+
+
+# the scores column corresponds to the -log10(pvalue of the term)
 #####
 sessionInfo()
 
