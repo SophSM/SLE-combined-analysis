@@ -111,7 +111,7 @@ mat <- as.matrix(ordered_counts)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
 
-col_lfc <- colorRamp2(c(min(reg_df$log2FC), 0.05, 0, 0.1,  max(reg_df$log2FC)), c("blue","lightblue1", "white", "#ffb5b0","red"))
+col_lfc <- colorRamp2(c(min(reg_df$log2FC), 0, 0.1,  max(reg_df$log2FC)), c("blue", "white", "#ffb5b0","red"))
 
 lfc_anno = rowAnnotation("log2FC" = reg_df$log2FC, col = list("log2FC" = col_lfc))
 
@@ -124,8 +124,7 @@ color_fun <- colorRamp2(c(min(ordered_counts),-2, 0, 2, max(ordered_counts)), c(
 
 h <- Heatmap(mat, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = F, show_column_names = F, 
              top_annotation = ha, column_split = sample_split, 
-             row_split = regulon_split, right_annotation =  term_anno)
-# la anotacion de logfoldchange no se ve bien, tal vez es necesario hacer mas cortes
+             row_split = regulon_split, right_annotation =  c(lfc_anno, term_anno))
 
 png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
 
@@ -133,5 +132,155 @@ png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height =
 
 dev.off()
 
+# unique_small <- unique(reg_df$Small)
+# row_indices <- sapply(unique_small, function(x) which(reg_df$Small == x))
+# 
+# # Draw rectangles around the blocks of rows
+# for(i in seq_along(row_indices)) {
+#   decorate_heatmap_body("Z-score", {
+#     if(length(row_indices[[i]]) > 1) {
+#       row_range <- range(row_indices[[i]])
+#       grid.rect(y = unit(row_range[1] - 0.5, "native"), 
+#                 height = unit(diff(row_range) + 1, "native"), 
+#                 gp = gpar(col = "black", fill = NA, lwd = 2))
+#     }
+#   })
+# }
+# 
+# png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
+# 
+#   draw(h)
+# 
+# dev.off()
+
+
+```
+
+## Top regulons only
+
+```{r}
+library(tidyverse)
+# top two regulons up and down and targets
+regulon_df <- unique(filtered_DEregulon_targets %>% select(regulon, log2FC, direction))
+regulonUP <- regulon_df %>% filter(direction == "Upregulated") %>%
+  arrange(desc(log2FC)) %>%  head(3)
+regulonUP_df <- filtered_DEregulon_targets %>% filter(regulon %in% regulonUP$regulon ) %>%  arrange(desc(log2FC))
+
+
+regulonDown <- regulon_df %>% filter(direction == "Downregulated") %>%
+  arrange(log2FC)%>%  head(3)
+
+regulonDown_df <- filtered_DEregulon_targets %>% filter(regulon %in% regulonDown$regulon ) %>%  arrange(desc(log2FC))
+
+smallRegulon <- rbind(regulonUP_df, regulonDown_df )
+
+smallRegulon <- smallRegulon %>% left_join(parentTerms %>% select(regulon, Small), by = "regulon") 
+
+dim(smallRegulon)
+small_counts <- zscore[smallRegulon$geneName, , drop = FALSE]
+
+small_counts <- small_counts[,ordered_samples$samples]
+```
+
+
+```{r}
+mat2 <- as.matrix(small_counts)
+ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+
+col_lfc <- colorRamp2(c(min(smallRegulon$log2FC), 0, max(smallRegulon$log2FC)), c("blue", "white", "red"))
+
+lfc_anno = rowAnnotation("log2FC" = smallRegulon$log2FC, col = list("log2FC" = col_lfc))
+unique(smallRegulon$Small)
+term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
+  "Immune cell activation" = "#0f5203","Immune system process" = "#ffad7a")
+
+term_anno <- rowAnnotation("Regulon associated process" = smallRegulon$Small,
+                           col = list("Regulon associated process" = term_col), 
+                           show_annotation_name = F)
+
+smallRegulon$regulon <- factor(smallRegulon$regulon, levels = unique(smallRegulon$regulon))
+
+regulon_split = data.frame("Regulon" = smallRegulon$regulon)
+regulon_split$Regulon <- factor(regulon_split$Regulon, levels = unique(smallRegulon$regulon))
+
+sample_split = data.frame("Sample" = ordered_samples$DISEASE)
+color_fun <- colorRamp2(c(min(mat2),-2, 0, 2, max(mat2)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+
+h <- Heatmap(mat2, name = "Z-score", col = color_fun, cluster_rows = T, cluster_columns = F, show_row_names = F, show_column_names = F, 
+             top_annotation = ha, column_split = sample_split, 
+             row_split = regulon_split, right_annotation =  c(lfc_anno,term_anno), row_title_rot = 0, show_row_dend = F)
+
+png(filename = glue::glue("{results_dir}/heatmapSmall_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
+
+  draw(h)
+
+dev.off()
+```
+
+```{r}
+sessionInfo()
+
+# R version 4.0.2 (2020-06-22)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: CentOS Linux 7 (Core)
+# 
+# Matrix products: default
+# BLAS:   /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRblas.so
+# LAPACK: /cm/shared/apps/r/4.0.2-studio/lib64/R/lib/libRlapack.so
+# 
+# locale:
+#  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+# 
+# attached base packages:
+#  [1] parallel  stats4    grid      stats     graphics  grDevices utils    
+#  [8] datasets  methods   base     
+# 
+# other attached packages:
+#  [1] DESeq2_1.30.1               SummarizedExperiment_1.20.0
+#  [3] Biobase_2.50.0              MatrixGenerics_1.2.1       
+#  [5] matrixStats_1.0.0           GenomicRanges_1.42.0       
+#  [7] GenomeInfoDb_1.30.1         IRanges_2.24.1             
+#  [9] S4Vectors_0.28.1            BiocGenerics_0.38.0        
+# [11] circlize_0.4.14             ComplexHeatmap_2.9.3       
+# [13] forcats_0.5.1               stringr_1.4.0              
+# [15] dplyr_1.0.10                purrr_0.3.4                
+# [17] readr_1.4.0                 tidyr_1.2.1                
+# [19] tibble_3.1.3                ggplot2_3.5.1              
+# [21] tidyverse_1.3.0            
+# 
+# loaded via a namespace (and not attached):
+#  [1] bitops_1.0-7           fs_1.5.0               bit64_4.0.5           
+#  [4] lubridate_1.7.9.2      doParallel_1.0.17      RColorBrewer_1.1-2    
+#  [7] httr_1.4.2             tools_4.0.2            backports_1.2.1       
+# [10] utf8_1.2.2             R6_2.5.0               DBI_1.1.1             
+# [13] colorspace_2.0-2       GetoptLong_1.0.5       withr_3.0.0           
+# [16] tidyselect_1.2.0       bit_4.0.4              compiler_4.0.2        
+# [19] cli_3.6.0              rvest_0.3.6            xml2_1.3.2            
+# [22] DelayedArray_0.16.3    scales_1.3.0           genefilter_1.72.1     
+# [25] digest_0.6.27          XVector_0.30.0         pkgconfig_2.0.3       
+# [28] fastmap_1.1.0          dbplyr_2.2.1           rlang_1.1.3           
+# [31] GlobalOptions_0.1.2    readxl_1.3.1           rstudioapi_0.13       
+# [34] RSQLite_2.2.7          shape_1.4.6            generics_0.1.3        
+# [37] jsonlite_1.7.2         BiocParallel_1.24.1    RCurl_1.98-1.3        
+# [40] magrittr_2.0.1         GenomeInfoDbData_1.2.4 Matrix_1.6-5          
+# [43] Rcpp_1.0.7             munsell_0.5.0          fansi_0.5.0           
+# [46] lifecycle_1.0.3        stringi_1.6.2          zlibbioc_1.36.0       
+# [49] blob_1.2.1             crayon_1.4.1           lattice_0.20-41       
+# [52] splines_4.0.2          haven_2.3.1            annotate_1.68.0       
+# [55] hms_1.1.0              locfit_1.5-9.4         pillar_1.6.2          
+# [58] rjson_0.2.20           geneplotter_1.68.0     codetools_0.2-18      
+# [61] reprex_1.0.0           XML_3.99-0.6           glue_1.4.2            
+# [64] modelr_0.1.8           png_0.1-7              vctrs_0.6.5           
+# [67] foreach_1.5.2          cellranger_1.1.0       gtable_0.3.0          
+# [70] clue_0.3-59            assertthat_0.2.1       cachem_1.0.5          
+# [73] xtable_1.8-4           broom_0.7.9            survival_3.5-5        
+# [76] iterators_1.0.13       memoise_2.0.0          AnnotationDbi_1.52.0  
+# [79] cluster_2.1.0          ellipsis_0.3.2 
 ```
 

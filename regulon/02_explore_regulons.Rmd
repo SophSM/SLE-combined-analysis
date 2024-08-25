@@ -151,7 +151,7 @@ for (regulon in down_regulons$regulon){
   lfc_down <- c(lfc_down, rep(lfc, length(target_genes)))
 }
 
-down_genes_df <- data.frame(geneName = genes_down, regulon = regulon_column, log2FC = lfc, direction = "Downregulated")
+down_genes_df <- data.frame(geneName = genes_down, regulon = regulon_column, log2FC = lfc_down, direction = "Downregulated")
 
 dim(down_genes_df)
 # [1] 28724     4
