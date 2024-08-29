@@ -2,6 +2,7 @@
 #####
 library(DESeq2)
 library(ggplot2)
+library(tidyverse)
 load('/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData')
 load("/mnt/Citosina/amedina/backup/lupus/sofi/vsd2.RData")
 outdir = '/mnt/Citosina/amedina/ssalazar/meta/combined/figures/'
@@ -38,7 +39,48 @@ save(pca_plot, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/pca_
 ggsave(paste0(outdir,"PCA-ellipse.png"), width = 3000, height = 3000,
        units = 'px', dpi = 300, bg = "white", plot = pca_plot)
 
+# Color by study
+all_data <- all_data %>%
+  mutate(study =  case_when(
+    study == "SRP322015" ~ "GSE175839",
+    study == "SRP168421" ~ "GSE122459",
+    study == "SRP311059" ~ "GSE169080",
+    study == "SRP296987" ~ "GSE162828",
+    study == "SRP111941" ~ "GSE101437",
+    study == "SRP136102" ~ "GSE112087",
+    study == "SRP073191" ~ "GSE80183",
+    TRUE ~"GSE72509"))
 
+pcaData <- plotPCA(vsd2, 'DISEASE', returnData = TRUE)
+pcaData <- tibble::rownames_to_column(pcaData, "samples")
+
+
+pc_df <- pcaData %>%
+  inner_join(all_data, by = c("samples" = "samples"))
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+
+
+pca_plot2 <- ggplot(pc_df, aes(PC1, PC2, color=study, shape = DISEASE.x)) +
+  geom_point(size=3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  scale_color_manual(values = c('GSE175839' = '#f5a142', 'GSE122459' = '#f5ef42', 
+                                'GSE169080' = '#2ef0e9', 'GSE162828' = '#f02eb3', 
+                                'GSE101437' = '#a1645c', 'GSE112087'='#599163', 
+                                'GSE80183'='#755c91','GSE72509'='#e68a8a')) +
+  stat_ellipse(aes(group = DISEASE.x)) + theme_classic() +
+  labs(color = 'Study', shape = "Samples") +
+  theme(plot.background = element_rect(fill = "white"),
+        text = element_text(size = 16),
+        axis.title = element_text(size = 16),
+        legend.title = element_text(size = 16),
+        legend.text = element_text(size = 16),
+        axis.text.x = element_text(size = 16),  
+        axis.text.y = element_text(size = 16),
+        legend.key.size = unit(1.5, "lines"))
+
+ggsave(paste0(outdir,"PCA-studies.png"), width = 3000, height = 3000,
+       units = 'px', dpi = 300, bg = "white", plot = pca_plot2)
 #######
 sessionInfo()
 
