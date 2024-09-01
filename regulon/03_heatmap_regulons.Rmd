@@ -109,7 +109,7 @@ Heatmap
 ```{r}
 mat <- as.matrix(ordered_counts)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
-                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 
 col_lfc <- colorRamp2(c(min(reg_df$log2FC), 0, 0.1,  max(reg_df$log2FC)), c("blue", "white", "#ffb5b0","red"))
 
@@ -186,7 +186,7 @@ small_counts <- small_counts[,ordered_samples$samples]
 ```{r}
 mat2 <- as.matrix(small_counts)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
-                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 
 col_lfc <- colorRamp2(c(min(smallRegulon$log2FC), 0, max(smallRegulon$log2FC)), c("blue", "white", "red"))
 
@@ -217,6 +217,54 @@ png(filename = glue::glue("{results_dir}/heatmapSmall_targetsRegulons.png"), hei
 
 dev.off()
 ```
+
+# Only TFs
+
+```{r}
+tfs_df <- unique(reg_df)
+tfs_df <- tfs_df %>%
+  group_by(direction) %>%
+  arrange(desc(direction), desc(abs(log2FC))) %>%
+  ungroup()
+
+tfs_df %>% filter(direction == "Downregulated") %>% select(log2FC)
+tf_counts <- zscore[tfs_df$regulon, , drop = FALSE]
+
+tf_counts <- tf_counts[,ordered_samples$samples]
+
+
+mat3 <- as.matrix(tf_counts)
+ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
+
+col_lfc <- colorRamp2(c(min(tfs_df$log2FC), 0, max(tfs_df$log2FC)), c("blue", "white", "red"))
+
+lfc_anno = rowAnnotation("log2FC" = tfs_df$log2FC, col = list("log2FC" = col_lfc))
+unique(tfs_df$Small)
+term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
+  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ffad7a", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
+
+term_anno <- rowAnnotation("Regulon associated process" = tfs_df$Small,
+                           col = list("Regulon associated process" = term_col), 
+                           show_annotation_name = F)
+
+tfs_df$regulon <- factor(tfs_df$regulon, levels = unique(tfs_df$regulon))
+
+
+reg_split <- data.frame("Expression" = tfs_df$direction)
+sample_split = data.frame("Sample" = ordered_samples$DISEASE)
+color_fun <- colorRamp2(c(min(mat3),-2, 0, 2, max(mat3)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+
+h <- Heatmap(mat3, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = T, show_column_names = F, 
+             top_annotation = ha, column_split = sample_split,
+             row_split = reg_split,
+              right_annotation =  c(lfc_anno,term_anno), row_title_rot = 0, show_row_dend = F)
+
+png(filename = glue::glue("{results_dir}/heatmapTFs_Regulons.png"), height = 36, width = 20, units = "cm", res = 300)
+draw(h)
+dev.off()
+```
+
 
 ```{r}
 sessionInfo()

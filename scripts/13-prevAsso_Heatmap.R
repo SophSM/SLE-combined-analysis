@@ -65,7 +65,7 @@ lfc_anno = rowAnnotation("log2FC" = dge_df$log2FoldChange, col = list("log2FC" =
 
 mat <- zscore[dge_df$gene_name,ordered_samples$samples]
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
-                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
                              col = list(Study = c('GSE175839' = '#f5a142', 'GSE122459' = '#f5ef42', 'GSE169080' = '#2ef0e9', 'GSE162828' = '#f02eb3', 'GSE101437' = '#a1645c', 'GSE112087'='#599163', 'GSE80183'='#755c91','GSE72509'='#e68a8a')))
 
@@ -90,3 +90,4 @@ heat_clust <-Heatmap(mat, cluster_rows = T, cluster_columns = T, name = 'Z-score
 png(glue::glue("{fig_dir}/prevAsso_heatmapClust.png"), height = 15, width = 15, units = "cm", res = 300)
 draw(heat_clust)
 dev.off()
+

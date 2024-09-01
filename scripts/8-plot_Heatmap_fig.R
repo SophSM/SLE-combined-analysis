@@ -98,7 +98,7 @@ all(colnames(ordered_norm)==ordered_samples$samples)
 col_exp <- colorRamp2(c(min(ordered_norm), 0, 2, max(ordered_norm)), c('blue', 'white', 'red','darkred'))
 split = data.frame(Samples = ordered_samples$DISEASE) # make block split
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
-                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
                              col = list(Study = c('GSE175839' = '#f5a142', 'GSE122459' = '#f5ef42', 'GSE169080' = '#2ef0e9', 'GSE162828' = '#f02eb3', 'GSE101437' = '#a1645c', 'GSE112087'='#599163', 'GSE80183'='#755c91','GSE72509'='#e68a8a')))
 l2_val <- as.matrix(DGE.top$log2FoldChange)
@@ -131,7 +131,7 @@ col_logFC <- colorRamp2(c(0,  min(l2_val),  max(l2_val)), c('white','#ffb3b3','#
 mat <- mat[, ordered_samples$samples]
 all(colnames(mat) == ordered_samples$samples)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
-                        col = list(Samples = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b')))
+                        col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
                              col = list(Study = c('GSE175839' = '#f5a142', 'GSE122459' = '#f5ef42', 'GSE169080' = '#2ef0e9', 'GSE162828' = '#f02eb3', 'GSE101437' = '#a1645c', 'GSE112087'='#599163', 'GSE80183'='#755c91','GSE72509'='#e68a8a')))
 

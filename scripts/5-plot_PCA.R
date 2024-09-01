@@ -22,7 +22,7 @@ pca_plot <- ggplot(pcaData, aes(PC1, PC2, color=group, shape = group)) +
   geom_point(size=3) +
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
   ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
-  scale_color_manual(values = c('CONTROL' = '#a9e536', 'SLE' = '#f5704b'))+
+  scale_color_manual(values = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff'))+
   stat_ellipse() + theme_classic() +
   labs(color = 'Samples', shape = "Samples") +
   theme(plot.background = element_rect(fill = "white"),
