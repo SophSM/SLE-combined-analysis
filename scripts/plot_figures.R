@@ -68,14 +68,15 @@ fig2_A <- plot_grid(c2 + theme(legend.position="none"),
                     c1qa+ theme(legend.position="none"), 
                     tnfaip3+ theme(legend.position="none"), 
                     atg5+ theme(legend.position="none"), 
-                    hladqa1+ theme(legend.position="none"), labels = NULL, ncol = 4)
+                    crp+ theme(legend.position="none"), 
+                    hladqa1+ theme(legend.position="none"), labels = NULL, ncol = 3)
 
 legend <- get_legend(
   c1qc
 )
 
 prevAsso_grid <- plot_grid(fig2_A, legend, rel_widths = c(3, .4))
-ggsave(dpi  = 300 , paste0(indir, "violinplot_prevAsso_h.png"), plot = prevAsso_grid, width = 5000, height = 3000, units = 'px')
+ggsave(dpi  = 300 , paste0(indir, "violinplot_prevAsso.png"), plot = prevAsso_grid, width = 5000, height = 5000, units = 'px')
 
 ##
 

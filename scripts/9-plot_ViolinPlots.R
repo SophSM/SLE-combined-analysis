@@ -251,7 +251,8 @@ for (i in 1:length(list.genes_new)){
                         y = 14.5,
                         label = paste0('p-value = ', signif(pvalue, digits = 2)),
                         col = "black",
-                        vjust = - 1)
+                        vjust = - 1,
+                        size = 6)
     p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 18),
                      plot.background = element_rect(fill = "white"),
                      text = element_text(size = 16),
