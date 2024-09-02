@@ -3,7 +3,6 @@
 library(ggplot2)
 library(DESeq2)
 library(tidyverse)
-library(perm)
 load('/mnt/Citosina/amedina/ssalazar/meta/combined/LRT-dds.RData')
 load("/mnt/Citosina/amedina/backup/lupus/sofi/vsd2.RData")
 load("/mnt/Citosina/amedina/ssalazar/meta/combined/namedDGElist.RData")
@@ -32,11 +31,15 @@ rownames(norm_counts_name) <- df_names$gene_name
 
 write.csv(norm_counts_name, "/mnt/Citosina/amedina/ssalazar/meta/combined/normcounts_name.csv")
 
-###### 
+#################################################
+#################################################
+#################################################
 
-## In local
-
-norm_counts_name <- read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/normcounts_name.csv')
+# ------------------In local----------------------
+library(tidyverse)
+library(perm)
+norm_counts_name <- read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/normcounts_name.csv',
+                             header = T, row.names = "X")
 all_data <-  read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/all_data.csv')
 
 rownames(norm_counts_name) <- norm_counts_name$X
@@ -164,6 +167,8 @@ for (i in 1:length(list.genes)){
 
 }
 ######
+
+
 g <- list()
 pvals <- list()
 for (i in 1:length(list.genes_tab)){
@@ -183,10 +188,24 @@ table <- data.frame(as.character(g), as.numeric(pvals))
 colnames(table) <- c("Gene", "p.value")
 write.csv(table, file = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/FIG2A-genes-pvals.csv")
 
-list.genes_new <- head(table %>% arrange(p.value),8)$Gene
-arr_pvalues <- head(table %>% arrange(p.value),8)$p.value
-####
-# Volcano plots PANEL B
+# ------------------------
+# SELECTED PREVIOUSLY ASSOCIATED GENES
+
+# Complement: C2, C1QC, C1QB, C1QA
+# Removal of immune complexes: FCGR2A
+# Inflammation: CRP, HLA-DQA1, TNFAIP3
+# Autophagy: ATG5
+
+table <- read.csv(file = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/FIG2A-genes-pvals.csv",
+                  header = T, row.names = "X")
+
+prev_asso_df <- table %>% filter(Gene %in% c("C2", "C1QC", "C1QB", "C1QA",
+                                             "FCGR2A", "CRP", "HLA-DQA1","TNFAIP3",
+                                             "ATG5")) %>% arrange(p.value)
+
+list.genes_new <- prev_asso_df$Gene
+arr_pvalues <- prev_asso_df$p.value
+
 for (i in 1:length(list.genes_new)){
   gene <- list.genes_new[i]
   counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
@@ -208,32 +227,39 @@ for (i in 1:length(list.genes_new)){
       ungroup()
     p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
       geom_violin(trim=FALSE) +
-      labs(title=gene,x = NULL, y="Normalized counts") +
+      labs(title=gene,x = NULL, y="Normalized counts", fill = "Samples") +
       theme(plot.title = element_text(hjust = 0.5, size = 20)) +
       ylim(0,17)
     
     p1 <- p + geom_boxplot(width=0.3, color = 'black', fill=NA) +
       # geom_jitter(shape=16, position=position_jitter(0.2)) +
-      scale_fill_manual(values=c("#e65a5a", "#4d80c4")) +
+      scale_fill_manual(values=c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')) +
       geom_point(df_mean, mapping = aes(x = sample, y = average), color = 'white', shape = 18, size = 3) +
       geom_line(df_mean, mapping = aes(x = sample, y = average, group = 1), linetype = "dashed")  +
       theme_classic()
     
-    p2 <- p1 + theme(legend.position="none") +
-      annotate("text",
-               x = 1:length(table(df.gene$sample)),
-               y = 16,
-               label = paste0('n = ', table(df.gene$sample)),
-               col = "black",
-               vjust = - 1)
+    # p2 <- p1 + theme(legend.position="none") +
+    #   annotate("text",
+    #            x = 1:length(table(df.gene$sample)),
+    #            y = 16,
+    #            label = paste0('n = ', table(df.gene$sample)),
+    #            col = "black",
+    #            vjust = - 1)
     
-    p3 <- p2 + annotate("text",
+    p3 <- p1 + annotate("text",
                         x = 1,
                         y = 14.5,
-                        label = paste0('p-value = ', signif(pvalue, digits = 4)),
+                        label = paste0('p-value = ', signif(pvalue, digits = 2)),
                         col = "black",
                         vjust = - 1)
-    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 15))
+    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 18),
+                     plot.background = element_rect(fill = "white"),
+                     text = element_text(size = 16),
+                     axis.title = element_text(size = 16),
+                     legend.title = element_text(size = 16),
+                     legend.text = element_text(size = 16),
+                     axis.text.x = element_text(size = 16, angle = 45, vjust = 0.5),  
+                     axis.text.y = element_text(size = 16))
     # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
     save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
   }

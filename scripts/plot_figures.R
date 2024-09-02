@@ -28,37 +28,54 @@ ggsave(dpi  = 300 , paste0(outdir, "figure1_ordered.png"), plot = p1, width = 40
 
 ######
 
-# FIG 2
-indir <- '/mnt/Citosina/amedina/ssalazar/meta/combined/figures/'
-list.genes <- c("TREX1" , "LBH" ,   "C2" ,    "C1QC"  , "C1QB"  , "IRF5" ,  "PHRF1" , "FCGR2A")
+# Previously associated
+indir <- '/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/'
+list.genes <- c("C2", "C1QC", "C1QB", "C1QA",
+                "FCGR2A", "CRP", "HLA-DQA1","TNFAIP3",
+                "ATG5")
 # in local
-load(paste0(indir,"violinplot-TREX1.RData"))
-trex1 <- p3
-
-load(paste0(indir, "violinplot-LBH.RData"))
-lbh <- p3
-
-load(paste0(indir, "violinplot-C2.RData"))
+load(paste0(indir,"violin/violinplot-C2.RData"))
 c2 <- p3
 
-load(paste0(indir, "violinplot-C1QC.RData"))
+load(paste0(indir, "violin/violinplot-C1QC.RData"))
 c1qc <- p3
 
-load(paste0(indir, "violinplot-C1QB.RData"))
+load(paste0(indir, "violin/violinplot-C1QB.RData"))
 c1qb <- p3
 
-load(paste0(indir, "violinplot-IRF5.RData"))
-irf5 <- p3
-
-load(paste0(indir, "violinplot-PHRF1.RData"))
-phrf1 <- p3
-
-load(paste0(indir, "violinplot-FCGR2A.RData"))
+load(paste0(indir, "violin/violinplot-FCGR2A.RData"))
 fcgr2a <- p3
 
+load(paste0(indir, "violin/violinplot-C1QA.RData"))
+c1qa<- p3
 
-fig2_A <- plot_grid(trex1, lbh, c2, c1qc, c1qb, irf5, phrf1, fcgr2a, labels = NULL, ncol = 2)
+load(paste0(indir, "violin/violinplot-TNFAIP3.RData"))
+tnfaip3 <- p3
 
+load(paste0(indir, "violin/violinplot-ATG5.RData"))
+atg5 <- p3
+
+load(paste0(indir, "violin/violinplot-CRP.RData"))
+crp <- p3
+
+load(paste0(indir, "violin/violinplot-HLA-DQA1.RData"))
+hladqa1 <- p3
+
+fig2_A <- plot_grid(c2 + theme(legend.position="none"), 
+                    c1qc+ theme(legend.position="none"), 
+                    c1qb+ theme(legend.position="none"), 
+                    fcgr2a+ theme(legend.position="none"), 
+                    c1qa+ theme(legend.position="none"), 
+                    tnfaip3+ theme(legend.position="none"), 
+                    atg5+ theme(legend.position="none"), 
+                    hladqa1+ theme(legend.position="none"), labels = NULL, ncol = 4)
+
+legend <- get_legend(
+  c1qc
+)
+
+prevAsso_grid <- plot_grid(fig2_A, legend, rel_widths = c(3, .4))
+ggsave(dpi  = 300 , paste0(indir, "violinplot_prevAsso_h.png"), plot = prevAsso_grid, width = 5000, height = 3000, units = 'px')
 
 ##
 
