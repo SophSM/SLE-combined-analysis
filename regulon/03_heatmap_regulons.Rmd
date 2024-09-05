@@ -48,7 +48,6 @@ all(df_names$gene_name == norm_counts_name$gene_name) # TRUE
 norm_counts_name<- norm_counts_name[,-c(1,320:327)]
 rownames(norm_counts_name) <- df_names$gene_name
 
-
 counts <- as.matrix(norm_counts_name)
 zscore <- t(scale(t(counts)))
 
@@ -64,9 +63,6 @@ for (r in unique(DEregulon_targets$regulon)){
   direction <- c(direction, head(sub$direction,1))
   regs <- c(regs, r)
 }
-
-
-
 ```
 
 
@@ -87,8 +83,6 @@ Terms of each regulon
 
 ```{r}
 
-reg_df <- filtered_DEregulon_targets %>%
-  select(-c("geneName"))
 
 parentTerms_up <- read.csv(glue::glue("{results_dir}/parentTerms_up.csv"),
                              header = T, row.names = "X")
@@ -96,11 +90,12 @@ parentTerms_down <- read.csv(glue::glue("{results_dir}/parentTerms_down.csv"),
                              header = T, row.names = "X")
 
 parentTerms <- rbind(parentTerms_down, parentTerms_up)
-reg_df <- reg_df %>%
-  left_join(parentTerms %>% select(regulon, Small), by = "regulon") 
+reg_df <- filtered_DEregulon_targets %>%
+  left_join(parentTerms %>% select(regulon, Small), by = "regulon") %>%
+  arrange(-log2FC)
 
 term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
-  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ffad7a", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
+  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ff7300", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
 
 ```
 
@@ -108,6 +103,10 @@ Heatmap
 
 ```{r}
 mat <- as.matrix(ordered_counts)
+
+mat <- mat[reg_df$geneName,]
+
+all(rownames(mat) == reg_df$geneName)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 
@@ -118,13 +117,15 @@ lfc_anno = rowAnnotation("log2FC" = reg_df$log2FC, col = list("log2FC" = col_lfc
 term_anno <- rowAnnotation("Regulon associated process" = reg_df$Small,
                            col = list("Regulon associated process" = term_col), 
                            show_annotation_name = F)
-regulon_split = data.frame("Regulon" = filtered_DEregulon_targets$direction)
 sample_split = data.frame("Sample" = ordered_samples$DISEASE)
-color_fun <- colorRamp2(c(min(ordered_counts),-2, 0, 2, max(ordered_counts)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+color_fun <- colorRamp2(c(min(mat), 0, 2, max(ordered_counts)), c('blue', 'white', 'red','darkred'))
 
+direction_split = data.frame(Direction = reg_df$direction)
+direction_split$Direction = as.factor(direction_split$Direction)
+levels(direction_split$Direction)
 h <- Heatmap(mat, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = F, show_column_names = F, 
              top_annotation = ha, column_split = sample_split, 
-             row_split = regulon_split, right_annotation =  c(lfc_anno, term_anno))
+             right_annotation =  c(lfc_anno, term_anno))
 
 png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
 
@@ -156,28 +157,26 @@ dev.off()
 
 ```
 
-## Top regulons only
+## Regulons associated to immune functions
 
 ```{r}
 library(tidyverse)
-# top two regulons up and down and targets
-regulon_df <- unique(filtered_DEregulon_targets %>% select(regulon, log2FC, direction))
-regulonUP <- regulon_df %>% filter(direction == "Upregulated") %>%
-  arrange(desc(log2FC)) %>%  head(3)
-regulonUP_df <- filtered_DEregulon_targets %>% filter(regulon %in% regulonUP$regulon ) %>%  arrange(desc(log2FC))
+
+functions_interest <- c("Immune system process", "Immune cell activation", "Dendritic cell differentiation")
+
+immune_regulons <- parentTerms %>%
+  filter(Small %in% functions_interest)%>%
+  inner_join(filtered_DEregulon_targets, by = "regulon")%>%
+  arrange(-log2FC)
 
 
-regulonDown <- regulon_df %>% filter(direction == "Downregulated") %>%
-  arrange(log2FC)%>%  head(3)
+immune_regulons$regulon <- factor(immune_regulons$regulon, levels = unique(immune_regulons$regulon))
 
-regulonDown_df <- filtered_DEregulon_targets %>% filter(regulon %in% regulonDown$regulon ) %>%  arrange(desc(log2FC))
+unique(immune_regulons$regulon)
+# [1] STAT1  ETV6   BCL3   IRF4   ZIK1   BCL11A KLF13  TBX21  TCF7 
 
-smallRegulon <- rbind(regulonUP_df, regulonDown_df )
-
-smallRegulon <- smallRegulon %>% left_join(parentTerms %>% select(regulon, Small), by = "regulon") 
-
-dim(smallRegulon)
-small_counts <- zscore[smallRegulon$geneName, , drop = FALSE]
+dim(immune_regulons) # [1] 4980    7
+small_counts <- zscore[immune_regulons$geneName, , drop = FALSE]
 
 small_counts <- small_counts[,ordered_samples$samples]
 ```
@@ -185,33 +184,34 @@ small_counts <- small_counts[,ordered_samples$samples]
 
 ```{r}
 mat2 <- as.matrix(small_counts)
+
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 
-col_lfc <- colorRamp2(c(min(smallRegulon$log2FC), 0, max(smallRegulon$log2FC)), c("blue", "white", "red"))
+col_lfc <- colorRamp2(c(min(immune_regulons$log2FC), 0, max(immune_regulons$log2FC)), c("blue", "white", "red"))
 
-lfc_anno = rowAnnotation("log2FC" = smallRegulon$log2FC, col = list("log2FC" = col_lfc))
-unique(smallRegulon$Small)
-term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
-  "Immune cell activation" = "#0f5203","Immune system process" = "#ffad7a")
+lfc_anno <- rowAnnotation("log2FC" = immune_regulons$log2FC, col = list("log2FC" = col_lfc))
+term_col <- c("Immune cell activation" = "#0f5203", "Immune system process" = "#ff7300", "Dendritic cell differentiation" = "#6b08c2")
 
-term_anno <- rowAnnotation("Regulon associated process" = smallRegulon$Small,
-                           col = list("Regulon associated process" = term_col), 
+term_anno <- rowAnnotation("Regulon associated process" = immune_regulons$Small,
+                           col = list("Regulon associated process" = term_col),
                            show_annotation_name = F)
 
-smallRegulon$regulon <- factor(smallRegulon$regulon, levels = unique(smallRegulon$regulon))
+regulon_split <- data.frame("Regulon" = immune_regulons$regulon)
+regulon_split$Regulon <- factor(regulon_split$Regulon, levels = unique(immune_regulons$regulon))
 
-regulon_split = data.frame("Regulon" = smallRegulon$regulon)
-regulon_split$Regulon <- factor(regulon_split$Regulon, levels = unique(smallRegulon$regulon))
 
-sample_split = data.frame("Sample" = ordered_samples$DISEASE)
-color_fun <- colorRamp2(c(min(mat2),-2, 0, 2, max(mat2)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+all(unique(immune_regulons$regulon) == unique(regulon_split$Regulon))
+sample_split <- data.frame("Sample" = ordered_samples$DISEASE)
+color_fun <- colorRamp2(c(min(mat2), 0, 2, max(mat2)), c('blue', 'white', 'red', 'darkred'))
 
-h <- Heatmap(mat2, name = "Z-score", col = color_fun, cluster_rows = T, cluster_columns = F, show_row_names = F, show_column_names = F, 
-             top_annotation = ha, column_split = sample_split, 
-             row_split = regulon_split, right_annotation =  c(lfc_anno,term_anno), row_title_rot = 0, show_row_dend = F)
+# Generate the heatmap
+h <- Heatmap(mat2, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, 
+             show_row_names = F, show_column_names = F, top_annotation = ha, 
+             column_split = sample_split, row_split = regulon_split, 
+             right_annotation = c(lfc_anno, term_anno), row_title_rot = 0, show_row_dend = F)
 
-png(filename = glue::glue("{results_dir}/heatmapSmall_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
+png(filename = glue::glue("{results_dir}/heatmapSmall_targetsRegulons.png"), height = 25, width = 30, units = "cm", res = 300)
 
   draw(h)
 

@@ -130,6 +130,8 @@ col_logFC <- colorRamp2(c(0,  min(l2_val),  max(l2_val)), c('white','#ffb3b3','#
 
 mat <- mat[, ordered_samples$samples]
 all(colnames(mat) == ordered_samples$samples)
+col_exp <- colorRamp2(c(min(mat[rows_keep,]), 0, 2, max(mat[rows_keep,])), c('blue', 'white', 'red','darkred'))
+
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
@@ -149,8 +151,9 @@ save(h1_list, file = paste0(outdir,"heatmapTOP.RData"))
 
 
 # row clustering
+col_exp <- colorRamp2(c(min(mat[rows_keep,]), 0, 2, max(mat[rows_keep,])), c('blue', 'white', 'red','darkred'))
 
-h2 <-Heatmap(mat[rows_keep,], cluster_rows = T, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Normalized counts', left_annotation = row_ha, 
+h2 <-Heatmap(mat[rows_keep,], cluster_rows = T, row_labels = DGE.top[rows_keep,]$gene_name, name = 'Z-score', left_annotation = row_ha, 
              col = col_exp, column_km = 2, show_column_names = F)
 
 h2_list <- study_ha %v% ha %v% h2
