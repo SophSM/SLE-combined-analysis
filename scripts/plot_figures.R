@@ -55,20 +55,20 @@ tnfaip3 <- p3
 load(paste0(indir, "violin/violinplot-ATG5.RData"))
 atg5 <- p3
 
-load(paste0(indir, "violin/violinplot-CRP.RData"))
-crp <- p3
+load(paste0(indir, "violin/violinplot-TREX1.RData"))
+trex1 <- p3
 
 load(paste0(indir, "violin/violinplot-HLA-DQA1.RData"))
 hladqa1 <- p3
 
-fig2_A <- plot_grid(c2 + theme(legend.position="none"), 
+fig2_A <- plot_grid(trex1 + theme(legend.position="none"),
+                    c2 + theme(legend.position="none"), 
                     c1qc+ theme(legend.position="none"), 
                     c1qb+ theme(legend.position="none"), 
                     fcgr2a+ theme(legend.position="none"), 
                     c1qa+ theme(legend.position="none"), 
                     tnfaip3+ theme(legend.position="none"), 
                     atg5+ theme(legend.position="none"), 
-                    crp+ theme(legend.position="none"), 
                     hladqa1+ theme(legend.position="none"), labels = NULL, ncol = 3)
 
 legend <- get_legend(

@@ -39,6 +39,7 @@ write.csv(norm_counts_name, "/mnt/Citosina/amedina/ssalazar/meta/combined/normco
 
 library(tidyverse)
 library(perm)
+library(ggplot2)
 norm_counts_name <- read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/normcounts_name.csv',
                              header = T, row.names = "X")
 all_data <-  read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/all_data.csv')
@@ -222,7 +223,7 @@ table <- read.csv(file = "/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/comb
                   header = T, row.names = "X")
 
 prev_asso_df <- table %>% filter(Gene %in% c("C2", "C1QC", "C1QB", "C1QA",
-                                             "FCGR2A", "CRP", "HLA-DQA1","TNFAIP3",
+                                             "FCGR2A", "TREX1", "HLA-DQA1","TNFAIP3",
                                              "ATG5")) %>% arrange(p.value)
 
 list.genes_new <- prev_asso_df$Gene
