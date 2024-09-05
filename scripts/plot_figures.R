@@ -79,45 +79,56 @@ prevAsso_grid <- plot_grid(fig2_A, legend, rel_widths = c(3, .4))
 ggsave(dpi  = 300 , paste0(indir, "violinplot_prevAsso.png"), plot = prevAsso_grid, width = 5000, height = 5000, units = 'px')
 
 ##
+# Interferon signature genes
+list.genes <- c("IFI44","IFI27", "IFI44L","IFIT1", "USP18", "RSAD2", "ISG15", 
+                "SIGLEC1", "CCL2")
 
-list.genes <- c("IFI27", "OTOF", "IFI44L","SIGLEC1","USP18", "IFI44", "IFIT1", "SPATS2L")
+load(paste0(indir, "violin/violinplot-IFI44.RData"))
 
-load(paste0(indir, "violinplot-IFI27.RData"))
+IFI44 <- p3
 
-ifi27 <- p3
+load(paste0(indir, "violin/violinplot-IFI27.RData"))
+IFI27 <- p3
 
-load(paste0(indir, "violinplot-OTOF.RData"))
-otof <- p3
-
-
-load(paste0(indir, "violinplot-IFI44L.RData"))
-ifi44l <- p3
-
-load(paste0(indir, "violinplot-SIGLEC1.RData"))
-siglec1 <- p3
-
-load(paste0(indir, "violinplot-USP18.RData"))
-usp18 <- p3
-
-load(paste0(indir, "violinplot-IFI44.RData"))
-ifi44 <- p3
+load(paste0(indir, "violin/violinplot-IFI44L.RData"))
+IFI44L <- p3
 
 
-load(paste0(indir, "violinplot-IFIT1.RData"))
-ifit1 <- p3
+load(paste0(indir, "violin/violinplot-IFIT1.RData"))
+IFIT1 <- p3
 
-load(paste0(indir, "violinplot-SPATS2L.RData"))
-spats2l <- p3
+load(paste0(indir, "violin/violinplot-USP18.RData"))
+USP18 <- p3
 
-fig2_B <- plot_grid(ifi27, otof, ifi44l, siglec1, usp18, ifi44,ifit1,spats2l, labels = NULL, ncol = 2)
+load(paste0(indir, "violin/violinplot-RSAD2.RData"))
+RSAD2 <- p3
+
+load(paste0(indir, "violin/violinplot-ISG15.RData"))
+ISG15 <- p3
 
 
+load(paste0(indir, "violin/violinplot-SIGLEC1.RData"))
+SIGLEC1 <- p3
 
-fig2 <- plot_grid(fig2_B, NULL, fig2_A, labels = c("A","","B"), ncol = 3, nrow = 1,
-                  rel_widths = c(1, 0.3, 1))
+load(paste0(indir, "violin/violinplot-CCL2.RData"))
+CCL2 <- p3
 
-ggsave(dpi  = 300 , paste0(indir, "figure2.png"), plot = fig2, width = 5000, height = 4000, units = 'px')
+fig2_B <- plot_grid(IFI44 + theme(legend.position="none"), 
+                    IFI27+ theme(legend.position="none"), 
+                    IFI44L + theme(legend.position="none"), 
+                    IFIT1 + theme(legend.position="none"), 
+                    USP18+ theme(legend.position="none"), 
+                    RSAD2+ theme(legend.position="none"), 
+                    ISG15+ theme(legend.position="none"), 
+                    SIGLEC1+ theme(legend.position="none"), 
+                    CCL2 + theme(legend.position="none"), labels = NULL, ncol = 3)
 
+legend <- get_legend(
+  CCL2
+)
+
+interferon_grid <- plot_grid(fig2_B, legend, rel_widths = c(3, .4))
+ggsave(dpi  = 300 , paste0(indir, "violinplot_interferonSign.png"), plot = interferon_grid, width = 5000, height = 5000, units = 'px')
 ######
 
 # supplementary DEGs barplots

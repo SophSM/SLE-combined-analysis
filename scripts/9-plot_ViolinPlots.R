@@ -36,16 +36,21 @@ write.csv(norm_counts_name, "/mnt/Citosina/amedina/ssalazar/meta/combined/normco
 #################################################
 
 # ------------------In local----------------------
+
 library(tidyverse)
 library(perm)
 norm_counts_name <- read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/normcounts_name.csv',
                              header = T, row.names = "X")
 all_data <-  read.csv('/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/all_data.csv')
 
-rownames(norm_counts_name) <- norm_counts_name$X
-norm_counts_name<-norm_counts_name[,-c(1)]
+
+##########
+# OUR SELECTED INTERFERON SIGNATURE GENES
+
+# compute pvalues
 all_pvalues <- list()
-list.genes <- c("IFI27", "OTOF", "IFI44L","SIGLEC1","USP18", "IFI44", "IFIT1", "SPATS2L")
+list.genes <- c("CCL2", "IFIT1", "RSAD2", "IFI44L", 
+                "IFI44", "USP18", "ISG15", "IFI27", "SIGLEC1")
 for (i in 1:length(list.genes)){
   gene <- list.genes[i]
   counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
@@ -67,9 +72,84 @@ for (i in 1:length(list.genes)){
 
 l <- length(all_pvalues)
 l
+
+# Adjust p values
+
+
+adj_pvalues <- p.adjust(unlist(all_pvalues), method = "fdr", n = length(all_pvalues))
+length(adj_pvalues)
+
+pvals_df <- data.frame(pval = adj_pvalues, gene = list.genes)
+pvals_df <- pvals_df %>% arrange(pval)
+for (i in 1:length(pvals_df$pval)){
+  gene <- pvals_df$gene[i]
+  counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
+  counts.gene<- as.data.frame(t(counts.gene))
+  expression = counts.gene[,1]
+  sample = all_data$DISEASE
+  check_data <- all(all_data$samples == rownames(counts.gene))
+  if (check_data){
+    df.gene <- data.frame(expression, sample)
+    
+    control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
+    sle.e<- df.gene[df.gene$sample=='SLE',]$expression
+    
+    pval <- pvals_df$pval[i]
+    if(pval < 0.05){
+      print(gene)
+      # plot
+      df_mean <- df.gene %>%
+        group_by(sample) %>%
+        summarize(average = mean(expression)) %>%
+        ungroup()
+      
+      p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
+        geom_violin(trim=FALSE) +
+        labs(title=gene,x = NULL, y="Normalized counts", fill = "Samples") +
+        theme(plot.title = element_text(hjust = 0.5, size = 20)) +
+        ylim(0,17)
+      
+      p1 <- p + geom_boxplot(width=0.2, color = 'black', fill=NA) +
+        # geom_jitter(shape=16, position=position_jitter(0.2)) +
+        scale_fill_manual(values=c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')) +
+        geom_point(df_mean, mapping = aes(x = sample, y = average), color = 'white', shape = 18, size = 3) +
+        geom_line(df_mean, mapping = aes(x = sample, y = average, group = 1), linetype = "dashed")  +
+        theme_classic()
+      
+      # p2 <- p1 + theme(legend.position="none") +
+      #   annotate("text",
+      #            x = 1:length(table(df.gene$sample)),
+      #            y = 16,
+      #            label = paste0('n = ', table(df.gene$sample)),
+      #            col = "black",
+      #            vjust = - 1)
+      
+      p3 <- p1 + annotate("text",
+                          x = 1,
+                          y = 14.5,
+                          label = paste0('p-value = ', signif(pval, digits = 2)),
+                          col = "black",
+                          vjust = - 1,
+                          size = 6)
+      p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 18),
+                       plot.background = element_rect(fill = "white"),
+                       text = element_text(size = 16),
+                       axis.title = element_text(size = 16),
+                       legend.title = element_text(size = 16),
+                       legend.text = element_text(size = 16),
+                       axis.text.x = element_text(size = 16, angle = 45, vjust = 0.5),  
+                       axis.text.y = element_text(size = 16))
+      # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
+      save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
+    }
+  } else{
+    print("Found discrepancy")
+  }
+}
+######
 #######
 
-
+# Table of all previously associated genes
 # table genes
 list.genes_tab <- c("ATG5", "BANK1","BLK","C1QA","C1QB","C1QC","C2", "C4A","C4B",
                     "CRP","ETS1","FAM167A", "FCGR2A", 
@@ -108,64 +188,6 @@ length(all_pvalues)
 
 adj_pvalues <- p.adjust(unlist(all_pvalues), method = "fdr", n = length(all_pvalues))
 length(adj_pvalues)
-#####
-
-
-# VIOLIN PLOTS PANEL A
-
-for (i in 1:length(list.genes)){
-  gene <- list.genes[i]
-  counts.gene <- norm_counts_name[rownames(norm_counts_name)==gene,]
-  counts.gene<- as.data.frame(t(counts.gene))
-  expression = counts.gene[,1]
-  sample = all_data$DISEASE
-  df.gene <- data.frame(expression, sample)
-  
-  control.e <- df.gene[df.gene$sample=='CONTROL',]$expression
-  sle.e<- df.gene[df.gene$sample=='SLE',]$expression
-  
-  pval <- adj_pvalues[i]
-  if(pval < 0.05){
-    print(gene)
-    # plot
-    df_mean <- df.gene %>%
-      group_by(sample) %>%
-      summarize(average = mean(expression)) %>%
-      ungroup()
-  
-    p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
-      geom_violin(trim=FALSE) +
-      labs(title=gene, x = NULL, y="Normalized counts") +
-      ylim(0, 21) +
-      theme(plot.title = element_text(hjust = 0.5, size = 20))
-  
-    p1 <- p + geom_boxplot(width=0.15, color = 'black', fill=NA) +
-      # geom_jitter(shape=16, position=position_jitter(0.2)) +
-      scale_fill_manual(values=c("#e65a5a", "#4d80c4")) +
-      geom_point(df_mean, mapping = aes(x = sample, y = average), color = 'white', shape = 18, size = 3) +
-      geom_line(df_mean, mapping = aes(x = sample, y = average, group = 1), linetype = "dashed")  +
-      theme_classic()
-  
-    p2 <- p1 + theme(legend.position="none") +
-      annotate("text",
-             x = 1:length(table(df.gene$sample)),
-             y = 19,
-             label = paste0('n = ', table(df.gene$sample)),
-             col = "black",
-             vjust = - 1)
-  
-    p3 <- p2 + annotate("text",
-                      x = 1,
-                      y = 17,
-                      label = paste0('p-value = ', signif(pval, digits = 4)),
-                      col = "black",
-                      vjust = - 1)
-    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 15))
-  # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
-    save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
-  }
-
-}
 ######
 
 
