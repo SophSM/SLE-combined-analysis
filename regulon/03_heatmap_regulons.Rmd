@@ -51,18 +51,6 @@ rownames(norm_counts_name) <- df_names$gene_name
 counts <- as.matrix(norm_counts_name)
 zscore <- t(scale(t(counts)))
 
-# get targets within each regulon
-genes_per_reg <- c()
-lfc <- c()
-regs<-c()
-direction <- c()
-for (r in unique(DEregulon_targets$regulon)){
-  sub <- DEregulon_targets %>% filter(regulon ==r)
-  genes_per_reg <- c(genes_per_reg, dim(sub)[1])
-  lfc <- c(lfc, head(sub$log2FC,1))
-  direction <- c(direction, head(sub$direction,1))
-  regs <- c(regs, r)
-}
 ```
 
 
@@ -73,16 +61,18 @@ filtered_DEregulon_targets <- DEregulon_targets %>%
   filter(geneName %in% rownames(zscore))
 
 dim(filtered_DEregulon_targets)
-ordered_counts <- zscore[filtered_DEregulon_targets$geneName, , drop = FALSE]
 
+ordered_counts <- zscore[filtered_DEregulon_targets$geneName, , drop = FALSE]
+all(rownames(ordered_counts) == filtered_DEregulon_targets$geneName) # TRUE
 ordered_counts <- ordered_counts[,ordered_samples$samples]
+all(colnames(ordered_counts) == ordered_samples$samples)
+
 ```
 
 
 Terms of each regulon
 
 ```{r}
-
 
 parentTerms_up <- read.csv(glue::glue("{results_dir}/parentTerms_up.csv"),
                              header = T, row.names = "X")
@@ -94,6 +84,7 @@ reg_df <- filtered_DEregulon_targets %>%
   left_join(parentTerms %>% select(regulon, Small), by = "regulon") %>%
   arrange(-log2FC)
 
+
 term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
   "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ff7300", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
 
@@ -102,15 +93,18 @@ term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b80
 Heatmap
 
 ```{r}
-mat <- as.matrix(ordered_counts)
+unique(reg_df$log2FC)
+ordered_genes <- reg_df[order(-reg_df$log2FC),]
 
-mat <- mat[reg_df$geneName,]
 
-all(rownames(mat) == reg_df$geneName)
+ordered_counts <- ordered_counts[ordered_genes$geneName,]
+
+all(rownames(ordered_counts) == reg_df$geneName)
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 
-col_lfc <- colorRamp2(c(min(reg_df$log2FC), 0, 0.1,  max(reg_df$log2FC)), c("blue", "white", "#ffb5b0","red"))
+l2_val <- as.matrix(reg_df$log2FC)
+col_lfc <- colorRamp2(c(min(l2_val), 0, 0.1,  max(l2_val)), c("blue", "white", "#ffb5b0","red"))
 
 lfc_anno = rowAnnotation("log2FC" = reg_df$log2FC, col = list("log2FC" = col_lfc))
 
@@ -118,13 +112,14 @@ term_anno <- rowAnnotation("Regulon associated process" = reg_df$Small,
                            col = list("Regulon associated process" = term_col), 
                            show_annotation_name = F)
 sample_split = data.frame("Sample" = ordered_samples$DISEASE)
-color_fun <- colorRamp2(c(min(mat), 0, 2, max(ordered_counts)), c('blue', 'white', 'red','darkred'))
 
-direction_split = data.frame(Direction = reg_df$direction)
-direction_split$Direction = as.factor(direction_split$Direction)
-levels(direction_split$Direction)
-h <- Heatmap(mat, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = F, show_column_names = F, 
+
+color_fun <- colorRamp2(c(min(ordered_counts), 0, 2, max(ordered_counts)), c('blue', 'white', 'red','darkred'))
+
+direction_split = cut(l2_val, breaks = c(-Inf, 0, Inf), labels = c("Downregulated", "Upregulated"), right = FALSE)
+h <- Heatmap(ordered_counts, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = F, show_column_names = F, 
              top_annotation = ha, column_split = sample_split, 
+             row_split = factor(direction_split, levels = c("Upregulated", "Downregulated")),
              right_annotation =  c(lfc_anno, term_anno))
 
 png(filename = glue::glue("{results_dir}/heatmap_targetsRegulons.png"), height = 20, width = 20, units = "cm", res = 300)
@@ -221,15 +216,16 @@ dev.off()
 # Only TFs
 
 ```{r}
-tfs_df <- unique(reg_df)
+tfs_df <- unique(reg_df %>% select(-c(geneName)))
 tfs_df <- tfs_df %>%
   group_by(direction) %>%
-  arrange(desc(direction), desc(abs(log2FC))) %>%
+  arrange(desc(direction),-log2FC) %>%
   ungroup()
 
-tfs_df %>% filter(direction == "Downregulated") %>% select(log2FC)
-tf_counts <- zscore[tfs_df$regulon, , drop = FALSE]
+ordered_tf <- tfs_df[order(-tfs_df$log2FC),]
+tf_counts <- zscore[ordered_tf$regulon, , drop = FALSE]
 
+all(rownames(tf_counts) == tfs_df$regulon)
 tf_counts <- tf_counts[,ordered_samples$samples]
 
 
@@ -242,25 +238,23 @@ col_lfc <- colorRamp2(c(min(tfs_df$log2FC), 0, max(tfs_df$log2FC)), c("blue", "w
 lfc_anno = rowAnnotation("log2FC" = tfs_df$log2FC, col = list("log2FC" = col_lfc))
 unique(tfs_df$Small)
 term_col <- c("Cellular transport" = "#d6b3f2", "Response to stimulus" = "#f0b800", 
-  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ffad7a", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
+  "Immune cell activation" = "#0f5203", "Metabolic process" = "#a3a5cf", "Developmental process"  = "#de049d", "Cell cycle"  = "#08a3a6", "Nucleic acid processing" = "#b3de7e", "Immune system process" = "#ff7300", "Neural process" = "#f54545", "TF activity"="#005cb8", "Dendritic cell differentiation" = "#6b08c2")
 
 term_anno <- rowAnnotation("Regulon associated process" = tfs_df$Small,
                            col = list("Regulon associated process" = term_col), 
                            show_annotation_name = F)
 
-tfs_df$regulon <- factor(tfs_df$regulon, levels = unique(tfs_df$regulon))
-
-
-reg_split <- data.frame("Expression" = tfs_df$direction)
+l2_val <- as.matrix(tfs_df$log2FC)
+direction_split = cut(l2_val, breaks = c(-Inf, 0, Inf), labels = c("Downregulated", "Upregulated"), right = FALSE)
 sample_split = data.frame("Sample" = ordered_samples$DISEASE)
-color_fun <- colorRamp2(c(min(mat3),-2, 0, 2, max(mat3)), c('#086ec2',"lightblue1", 'white', 'red','darkred'))
+color_fun <- colorRamp2(c(min(mat3), 0, 2, max(mat3)), c('blue', 'white', 'red','darkred'))
 
 h <- Heatmap(mat3, name = "Z-score", col = color_fun, cluster_rows = F, cluster_columns = F, show_row_names = T, show_column_names = F, 
              top_annotation = ha, column_split = sample_split,
-             row_split = reg_split,
+             row_split = factor(direction_split, levels = c("Upregulated", "Downregulated")),
               right_annotation =  c(lfc_anno,term_anno), row_title_rot = 0, show_row_dend = F)
 
-png(filename = glue::glue("{results_dir}/heatmapTFs_Regulons.png"), height = 36, width = 20, units = "cm", res = 300)
+png(filename = glue::glue("{results_dir}/heatmapTFs_Regulons.png"), height = 36, width = 30, units = "cm", res = 300)
 draw(h)
 dev.off()
 ```

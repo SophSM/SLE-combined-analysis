@@ -14,12 +14,27 @@ data <- df_names %>%
                                 log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
                                 TRUE ~ "Unchanged"))
 
+
+deg_table <- data %>% 
+  filter(!Expression == "Unchanged") %>%
+  arrange(padj, desc(log2FoldChange)) %>%
+  select(c("gene_name", "log2FoldChange", "lfcSE", "padj", "pvalue", "Expression"))
+
+head(deg_table)
+
+tab_bottom <- deg_table %>% filter(Expression == "Down-regulated") %>%
+  arrange(desc(padj), log2FoldChange) 
+tab_top <- deg_table %>% filter(Expression == "Up-regulated")
+
+sup_table <- rbind(tab_top, tab_bottom)
+write.table(sup_table, "/mnt/Citosina/amedina/ssalazar/meta/combined/supplementaryTab-DEGs.csv",
+          col.names = T, row.names = F, sep = "\t")
 volcanoplot <- ggplot(data, aes(log2FoldChange, -log(padj,10))) +
-  geom_point(aes(color = Expression), size = 2/5) +
+  geom_point(aes(color = Expression), size = 3) +
   xlab(expression("log"[2]*"FC")) + 
   ylab(expression("-log"[10]*"p-adj")) +
   scale_color_manual(values = c("dodgerblue3", "gray50", "firebrick3")) +
-  guides(colour = guide_legend(override.aes = list(size=1.5)))
+  guides(colour = guide_legend(override.aes = list(size=4.5)))
 
 data %>% 
   count(Expression) %>% 
@@ -46,19 +61,19 @@ top_genes %>%
 volcanoplot_names <-  volcanoplot +
   ggrepel::geom_label_repel(data = top_genes,
                             mapping = aes(log2FoldChange, -log(padj,10), label = gene_name),
-                            size = 2) + theme_classic() + theme(legend.position = 'top',
+                            size = 8) + theme_classic() + theme(legend.position = 'top',
                                                                 plot.background = element_rect(fill = "white"),
-                                                                text = element_text(size = 16),
-                                                                axis.title = element_text(size = 16),
-                                                                legend.title = element_text(size = 13),
-                                                                legend.text = element_text(size = 13),
-                                                                axis.text.x = element_text(size = 16),  
-                                                                axis.text.y = element_text(size = 16),
+                                                                text = element_text(size = 35),
+                                                                axis.title = element_text(size = 35),
+                                                                legend.title = element_text(size = 32),
+                                                                legend.text = element_text(size = 32),
+                                                                axis.text.x = element_text(size = 35),  
+                                                                axis.text.y = element_text(size = 35),
                                                                 legend.key.size = unit(1.5, "lines"))
 
 save(volcanoplot_names, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/volcanoplot_object.RData")
 
-ggsave(paste0(outdir,"volcanoPlotWithTopGenes.png"),
+ggsave(paste0(outdir,"volcanoPlotWithTopGenes.png"), width = 5000, height = 5000, units = "px",
        plot = volcanoplot_names, dpi = 300)
 
 ######

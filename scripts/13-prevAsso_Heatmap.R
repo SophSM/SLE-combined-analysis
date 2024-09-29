@@ -59,35 +59,45 @@ dge_df <- df_names %>% filter(gene_name %in% associated_genes$Gene) %>%
   arrange(padj)
 
 # Heatmap
-col_lfc <- colorRamp2(c(min(dge_df$log2FoldChange), 0, 0.5,  max(dge_df$log2FoldChange)),
-                      c("blue", "white", "#ffb5b0","red"))
-lfc_anno = rowAnnotation("log2FC" = dge_df$log2FoldChange, col = list("log2FC" = col_lfc))
+
 
 mat <- zscore[dge_df$gene_name,ordered_samples$samples]
+
+ordered_genes <- dge_df[order(-dge_df$log2FoldChange), ] 
+mat <- zscore[ordered_genes$gene_name, ordered_samples$samples]
+
 ha <- HeatmapAnnotation(Samples = ordered_samples$DISEASE,
                         col = list(Samples = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
 study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
                              col = list(Study = c('GSE175839' = '#f5a142', 'GSE122459' = '#f5ef42', 'GSE169080' = '#2ef0e9', 'GSE162828' = '#f02eb3', 'GSE101437' = '#a1645c', 'GSE112087'='#599163', 'GSE80183'='#755c91','GSE72509'='#e68a8a')))
 
+col_lfc <- colorRamp2(c(min(ordered_genes$log2FoldChange), 0, 0.5,  max(ordered_genes$log2FoldChange)),
+                      c("blue", "white", "#ffb5b0","red"))
+lfc_anno = rowAnnotation("log2FC" = ordered_genes$log2FoldChange, col = list("log2FC" = col_lfc))
+l2_val <- ordered_genes$log2FoldChange
 split = data.frame(Samples = ordered_samples$DISEASE) # make block split
 col_exp <- colorRamp2(c(min(mat),-5, 0, 3, max(mat)), c('blue', "lightblue1", 'white', 'red','darkred'))
 
+Rsplit  <- cut(l2_val, breaks = c(-Inf, 0, Inf), labels = c("Downregulated",  "Upregulated"))
 
 heat_ordered <-Heatmap(mat, cluster_rows = T, cluster_columns = T, name = 'Z-score',
                        left_annotation = lfc_anno, show_row_names = T, show_column_names = F,
-                       column_split = split,show_column_dend = F, top_annotation = c(study_ha,ha))
+                       column_split = split, row_split = factor(Rsplit, levels = c("Upregulated", "Downregulated")),
+                                                                            show_column_dend = F)
 
-
+heat_list <- study_ha %v% ha %v% heat_ordered
 png(glue::glue("{fig_dir}/prevAsso_heatmap.png"), height = 15, width = 15, units = "cm", res = 300)
-  draw(heat_ordered)
+  draw(heat_list)
 dev.off()
 
-heat_clust <-Heatmap(mat, cluster_rows = T, cluster_columns = T, name = 'Z-score',
+heat_clust <-Heatmap(mat, cluster_rows = F, cluster_columns = T, name = 'Z-score',
                        left_annotation = lfc_anno, show_row_names = T, show_column_names = F,
-                       show_column_dend = T, column_km = 2, top_annotation = c(study_ha,ha))
+                       show_column_dend = T, column_km = 2, 
+                     row_split = factor(Rsplit, levels = c("Upregulated", "Downregulated")))
 
+heat_list2 <- study_ha %v% ha %v% heat_clust
 
 png(glue::glue("{fig_dir}/prevAsso_heatmapClust.png"), height = 15, width = 15, units = "cm", res = 300)
-draw(heat_clust)
+draw(heat_list2)
 dev.off()
 

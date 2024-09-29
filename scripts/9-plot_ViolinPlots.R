@@ -107,8 +107,8 @@ for (i in 1:length(pvals_df$pval)){
       p <- ggplot(df.gene, aes(x=sample, y=expression, fill=sample)) + 
         geom_violin(trim=FALSE) +
         labs(title=gene,x = NULL, y="Normalized counts", fill = "Samples") +
-        theme(plot.title = element_text(hjust = 0.5, size = 20)) +
-        ylim(0,17)
+        theme(plot.title = element_text(hjust = 0.1, size = 26)) +
+        ylim(0,18)
       
       p1 <- p + geom_boxplot(width=0.2, color = 'black', fill=NA) +
         # geom_jitter(shape=16, position=position_jitter(0.2)) +
@@ -127,19 +127,19 @@ for (i in 1:length(pvals_df$pval)){
       
       p3 <- p1 + annotate("text",
                           x = 1,
-                          y = 14.5,
+                          y = 16,
                           label = paste0('p-value = ', signif(pval, digits = 2)),
                           col = "black",
-                          vjust = - 1,
-                          size = 6)
-      p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 18),
+                          vjust = - 1, hjust = 0.4,
+                          size = 8)
+      p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 26),
                        plot.background = element_rect(fill = "white"),
-                       text = element_text(size = 16),
-                       axis.title = element_text(size = 16),
-                       legend.title = element_text(size = 16),
-                       legend.text = element_text(size = 16),
-                       axis.text.x = element_text(size = 16, angle = 45, vjust = 0.5),  
-                       axis.text.y = element_text(size = 16))
+                       text = element_text(size = 25),
+                       axis.title = element_text(size = 25),
+                       legend.title = element_text(size = 25),
+                       legend.text = element_text(size = 25),
+                       axis.text.x = element_text(size = 25, angle = 45, vjust = 0.5),  
+                       axis.text.y = element_text(size = 25))
       # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
       save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
     }
@@ -160,7 +160,7 @@ list.genes_tab <- c("ATG5", "BANK1","BLK","C1QA","C1QB","C1QC","C2", "C4A","C4B"
                     "PHRF1", "PTPN22","RASGRP3","SLC15A4", 
                     "SPATA48","STAT4","TNFAIP3","TNFSF4","TNIP1", "TNPO3","TREX1",
                     "TYK2","UBE2L3","WDFY4")
-
+all_pvalues <- list()
 
 for (i in 1:length(list.genes_tab)){
   gene <- list.genes_tab[i]
@@ -178,7 +178,7 @@ for (i in 1:length(list.genes_tab)){
   sle.e<- df.gene[df.gene$sample=='SLE',]$expression
   test <- permTS(control.e, sle.e)
   p <- (test$p.value)
-  all_pvalues[l+i] <- p
+  all_pvalues[gene] <- p
   print(gene)
   }
   
@@ -274,16 +274,16 @@ for (i in 1:length(list.genes_new)){
                         y = 14.5,
                         label = paste0('p-value = ', signif(pvalue, digits = 2)),
                         col = "black",
-                        vjust = - 1,
-                        size = 6)
-    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 18),
+                        vjust = - 1, hjust = 0.4,
+                        size = 8)
+    p3 <- p3 + theme(plot.title = element_text(hjust = 0.5, size = 26),
                      plot.background = element_rect(fill = "white"),
-                     text = element_text(size = 16),
-                     axis.title = element_text(size = 16),
-                     legend.title = element_text(size = 16),
-                     legend.text = element_text(size = 16),
-                     axis.text.x = element_text(size = 16, angle = 45, vjust = 0.5),  
-                     axis.text.y = element_text(size = 16))
+                     text = element_text(size = 25),
+                     axis.title = element_text(size = 25),
+                     legend.title = element_text(size = 25),
+                     legend.text = element_text(size = 25),
+                     axis.text.x = element_text(size = 25, angle = 45, vjust = 0.5),  
+                     axis.text.y = element_text(size = 25))
     # ggsave(paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violinplot",gene,"-ptest.png"), dpi = 300, plot = p3)  
     save(p3, file = paste0("/Users/sofiasalazar/Desktop/LAB/meta-analysis-SLE/combined/figures/violin/violinplot-",gene,'.RData'))
   }

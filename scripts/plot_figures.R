@@ -129,6 +129,7 @@ legend <- get_legend(
 
 interferon_grid <- plot_grid(fig2_B, legend, rel_widths = c(3, .4))
 ggsave(dpi  = 300 , paste0(indir, "violinplot_interferonSign.png"), plot = interferon_grid, width = 5000, height = 5000, units = 'px')
+save(interferon_grid, file = "/Users/sofiasalazar/Desktop/LAB/paper/robjects/fig2B.RData")
 ######
 
 # supplementary DEGs barplots

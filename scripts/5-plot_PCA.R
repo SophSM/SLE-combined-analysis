@@ -26,12 +26,12 @@ pca_plot <- ggplot(pcaData, aes(PC1, PC2, color=group, shape = group)) +
   stat_ellipse() + theme_classic() +
   labs(color = 'Samples', shape = "Samples") +
   theme(plot.background = element_rect(fill = "white"),
-        text = element_text(size = 16),
-        axis.title = element_text(size = 16),
-        legend.title = element_text(size = 16),
-        legend.text = element_text(size = 16),
-        axis.text.x = element_text(size = 16),  
-        axis.text.y = element_text(size = 16),
+        text = element_text(size = 25),
+        axis.title = element_text(size = 25),
+        legend.title = element_text(size = 25),
+        legend.text = element_text(size = 25),
+        axis.text.x = element_text(size = 25),  
+        axis.text.y = element_text(size = 25),
         legend.key.size = unit(1.5, "lines"))
 
 save(pca_plot, file = "/mnt/Citosina/amedina/ssalazar/meta/combined/figures/pca_object.RData")
@@ -71,12 +71,12 @@ pca_plot2 <- ggplot(pc_df, aes(PC1, PC2, color=study, shape = DISEASE.x)) +
   stat_ellipse(aes(group = DISEASE.x)) + theme_classic() +
   labs(color = 'Study', shape = "Samples") +
   theme(plot.background = element_rect(fill = "white"),
-        text = element_text(size = 16),
-        axis.title = element_text(size = 16),
-        legend.title = element_text(size = 16),
-        legend.text = element_text(size = 16),
-        axis.text.x = element_text(size = 16),  
-        axis.text.y = element_text(size = 16),
+        text = element_text(size = 25),
+        axis.title = element_text(size = 25),
+        legend.title = element_text(size = 25),
+        legend.text = element_text(size = 25),
+        axis.text.x = element_text(size = 25),  
+        axis.text.y = element_text(size = 25),
         legend.key.size = unit(1.5, "lines"))
 
 ggsave(paste0(outdir,"PCA-studies.png"), width = 3000, height = 3000,

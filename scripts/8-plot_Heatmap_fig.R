@@ -104,10 +104,13 @@ study_ha <-HeatmapAnnotation(Study = ordered_samples$study,
 l2_val <- as.matrix(DGE.top$log2FoldChange)
 col_logFC <- colorRamp2(c(min(l2_val), 0, max(l2_val)), c('dodgerblue3','white','firebrick3'))
 row_ha <- rowAnnotation(log2FC = l2_val, col = list(log2FC =col_logFC))
-
+Colsplit <- data.frame(Samples = ordered_samples$DISEASE) # make block split
+Rowsplit <- cut(l2_val, breaks = c(-Inf, -1, 1, Inf), labels = c("Downregulated", "No Change", "Upregulated"))
 heat_ordered <-Heatmap(ordered_norm, cluster_rows = F, cluster_columns = F, name = 'Z-score',
                        left_annotation = row_ha, show_row_names = F, show_column_names = F,
-                       column_split = split, col = col_exp)
+                       column_split = Colsplit, col = col_exp,
+                       row_split = factor(Rowsplit, levels = c("Upregulated", "Downregulated"))   # Split de filas segun log2FoldChange
+                       )
 
 ht_list =study_ha%v%  ha %v% heat_ordered
 png(filename = paste0(outdir, 'heatmapFULL.png'), height = 20, width = 30, units = "cm", res = 300)

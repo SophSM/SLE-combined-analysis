@@ -1,0 +1,88 @@
+regulon	log2FC	DA	topTerm	reducedTerm
+ARNT	-0.016556906887415	Downregulated	intracellular transport	Cellular transport
+ATF1	-0.00184297758998876	Downregulated	cellular response to DNA damage stimulus	Response to stimulus
+BCL11A	-0.00808186137641953	Downregulated	lymphocyte activation	Immune cell activation
+BHLHE40	-0.00590234845612478	Downregulated	negative regulation of cellular biosynthetic process	Metabolic process
+CEBPG	-0.00294244972439568	Downregulated	DNA protection	Metabolic process
+DEAF1	-0.0119296102135012	Downregulated	valine metabolic process	Metabolic process
+EBF1	-0.00516462870830027	Downregulated	developmental process	Developmental process
+ESRRA	-0.00644100863225708	Downregulated	catabolic process	Metabolic process
+GABPA	-0.00105125316405053	Downregulated	protein prenylation	Metabolic process
+GATA1	-0.00363197859434884	Downregulated	catabolic process	Metabolic process
+GATA2	-0.0102506350172492	Downregulated	regulation of plasma membrane bounded cell projection organization	Cell cycle
+GLI4	-0.0101119044476934	Downregulated	tRNA modification	Nucleic acid processing
+GMEB2	-0.0288533958488326	Downregulated	Atg8-specific peptidase activity	Metabolic process
+HIC1	-0.0141306685615711	Downregulated	phosphorus metabolic process	Metabolic process
+JUND	-0.00439330717779584	Downregulated	regulation of primary metabolic process	Metabolic process
+KLF13	-0.0173796480858657	Downregulated	helper T cell diapedesis	Immune cell activation
+MAFK	-0.00987539808506515	Downregulated	protein metabolic process	Metabolic process
+MAZ	-0.00720089249515115	Downregulated	regulation of nitrogen compound metabolic process	Metabolic process
+MEF2D	-0.0170809826525258	Downregulated	positive regulation of RNA metabolic process	Nucleic acid processing
+MYC	-0.0129276674189146	Downregulated	ncRNA metabolic process	Metabolic process
+NR2F1	-0.00317926309713909	Downregulated	negative regulation of wound healing	Metabolic process
+NR2F6	-0.000756449100538489	Downregulated	positive regulation of nuclear-transcribed mRNA poly(A) tail shortening	Metabolic process
+NRF1	-0.0160801121481894	Downregulated	intracellular transport	Cellular transport
+PAX5	-0.00741555780974316	Downregulated	ncRNA processing	Nucleic acid processing
+PKNOX1	-0.00387288077817631	Downregulated	regulation of primary metabolic process	Metabolic process
+REST	-0.00616387464201726	Downregulated	post-translational protein targeting to membrane, translocation	Metabolic process
+RFX5	-0.00783947544242761	Downregulated	cellular response to stress	Response to stimulus
+RUNX1	-0.00758188905722785	Downregulated	positive regulation of biological process	Metabolic process
+RUNX3	-0.0397290634526162	Downregulated	cellular response to stimulus	Response to stimulus
+SALL2	-0.0106735503440972	Downregulated	anatomical structure morphogenesis	Developmental process
+SOX6	-0.00135266616827161	Downregulated	developmental process	Developmental process
+SREBF1	-0.0111056748951922	Downregulated	cellular response to stress	Response to stimulus
+SREBF2	-0.00747708144726771	Downregulated	regulation of cell cycle	Cell cycle
+TBX21	-0.0213341633819294	Downregulated	leukocyte activation	Immune cell activation
+TCF7	-0.0586873861854734	Downregulated	positive regulation of leukocyte cell-cell adhesion	Immune cell activation
+TFDP1	-0.00116118256692817	Downregulated	cell cycle	Cell cycle
+THRB	-0.0309671668693828	Downregulated	positive regulation of cell differentiation	Cell cycle
+UBTF	-0.033082165066746	Downregulated	regulation of chromosome organization	Cell cycle
+YBX1	-0.0215298308882394	Downregulated	protein catabolic process	Metabolic process
+ZBTB20	-0.011875606282244	Downregulated	regulation of transcription by RNA polymerase II	Nucleic acid processing
+ZBTB44	-0.00834401595309588	Downregulated	intraciliary transport involved in cilium assembly	Cell cycle
+ZHX2	-0.0189311872380831	Downregulated	transcription, DNA-templated	Nucleic acid processing
+ZIC2	-0.014941792414324	Downregulated	clathrin heavy chain binding	Metabolic process
+ZIK1	-0.00285833468100058	Downregulated	leukocyte adhesion to vascular endothelial cell	Immune system process
+ZNF274	-0.00428118129078723	Downregulated	negative regulation of neural crest formation	Neural process
+ZNF282	-0.00629661878562926	Downregulated	vesicle-mediated transport	Cellular transport
+ZNF2	-0.0231858217138343	Downregulated	synaptic vesicle budding from presynaptic endocytic zone membrane	Neural process
+ZNF354C	-0.0330071952947812	Downregulated	translation initiation factor activity	Nucleic acid processing
+ZNF398	-0.0139411398666027	Downregulated	multicellular organism development	Developmental process
+ZNF404	-9.32080551246081e-05	Downregulated	regulation of RNA biosynthetic process	Nucleic acid processing
+ZNF48	-0.0412564486668366	Downregulated	ribosomal subunit export from nucleus	Cellular transport
+ZNF491	-0.00323346023026107	Downregulated	DNA-binding transcription factor activity	TF activity
+ZNF501	-0.00263612291292396	Downregulated	amide biosynthetic process	Metabolic process
+ZNF510	-0.00107911815004594	Downregulated	transcription by RNA polymerase II	Nucleic acid processing
+ZNF524	-0.00415817220089352	Downregulated	positive regulation of nitrogen compound metabolic process	Metabolic process
+ZNF529	-0.00694946285924169	Downregulated	organic acid transmembrane transport	Cellular transport
+ZNF548	-0.00405047022113286	Downregulated	regulation of RNA biosynthetic process	Nucleic acid processing
+ZNF549	-0.00690051237493161	Downregulated	aromatic compound biosynthetic process	Metabolic process
+ZNF558	-0.00376619234959032	Downregulated	mitochondrial gene expression	Nucleic acid processing
+ZNF585B	-0.00187420242964172	Downregulated	rRNA (adenine-N6,N6-)-dimethyltransferase activity	Nucleic acid processing
+ZNF614	-0.00733082950260315	Downregulated	regulation of protein stability	Metabolic process
+ZNF662	-0.00592310580822944	Downregulated	anatomical structure development	Developmental process
+ZNF692	-0.023275763661089	Downregulated	regulation of carbohydrate biosynthetic process	Metabolic process
+ZNF837	-0.00604689357590605	Downregulated	multicellular organism development	Developmental process
+ATF3	0.0510132649824114	Upregulated	cellular response to amino acid starvation	Response to stimulus
+BACH1	0.055675571305141	Upregulated	intracellular signal transduction	Response to stimulus
+BCL3	0.0323082393419372	Upregulated	follicular dendritic cell differentiation	Dendritic cell differentiation
+BCL6	0.0278800562470562	Upregulated	cell death	Response to stimulus
+CREM	0.00506110664154376	Upregulated	mitotic cell cycle	Cell cycle
+E2F1	0.0024292554479069	Upregulated	mitotic cell cycle process	Cell cycle
+E2F7	0.00253276390738953	Upregulated	DNA metabolic process	Nucleic acid processing
+ELF1	0.0165260850038736	Upregulated	cellular response to steroid hormone stimulus	Response to stimulus
+ETV6	0.046387880306395	Upregulated	regulation of immune system process	Immune system process
+FOSL2	0.0209602911359561	Upregulated	developmental process	Developmental process
+FOXA1	0.000427768907284808	Upregulated	tissue development	Developmental process
+IRF1	0.0237185057766941	Upregulated	positive regulation of biological process	Response to stimulus
+IRF2	0.0462691721441262	Upregulated	positive regulation of macromolecule metabolic process	Metabolic process
+IRF4	0.0104628204462342	Upregulated	leukocyte activation	Immune cell activation
+MAFG	0.00341565321134148	Upregulated	catabolic process	Metabolic process
+NFE2L2	0.0173568697423023	Upregulated	regulation of nitrogen compound metabolic process	Metabolic process
+NFIL3	0.0316326879766435	Upregulated	positive regulation of macromolecule metabolic process	Metabolic process
+STAT1	0.243242614657648	Upregulated	defense response to virus	Immune system process
+STAT3	0.0170146062215674	Upregulated	cellular response to stimulus	Response to stimulus
+TGIF2	0.00346932302636442	Upregulated	ncRNA metabolic process	Metabolic process
+VEZF1	0.00981859515306419	Upregulated	regulation of primary metabolic process	Metabolic process
+ZKSCAN1	0.000788799780522174	Upregulated	microtubule organizing center organization	Cell cycle
+ZNF148	0.0142915595887022	Upregulated	regulation of nitrogen compound metabolic process	Metabolic process
