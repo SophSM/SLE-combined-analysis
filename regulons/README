@@ -1,0 +1,257 @@
+# README — SCENIC (vib-singlecell-nf/vsn-pipelines) en SLURM con Nextflow 21.04.3 + Singularity
+
+## Objetivo
+
+Correr el pipeline SCENIC del repositorio `vib-singlecell-nf/vsn-pipelines` usando:
+
+* SLURM como scheduler
+* Singularity 3.7.0 para contenedores
+* Nextflow 21.04.3 (fijado) para evitar incompatibilidades del cluster
+* Java 8 (oracle-java/8u371) para máxima compatibilidad con Nextflow 21.04.3
+
+## Estructura final esperada
+
+BASE=/mnt/data/amedina/dramirez/Reg_network/final_scenic
+
+Dentro de BASE:
+
+* bin/                      -> Nextflow fijado (21.04.3)
+* scripts/                  -> scripts principales
+
+  * run_scenic.sbatch       -> script SLURM “head/orchestrator”
+  * sle_scenic.config       -> config de Nextflow (params + recursos + slurm)
+  * logs/                   -> logs del head job y del pipeline
+* work/                     -> workdir de Nextflow (tareas y outputs intermedios)
+* out/                      -> resultados finales del pipeline (incluye out/scenic)
+* singularity/              -> cache de imágenes Singularity (persistente)
+* .nextflow_home/           -> cache de Nextflow (persistente)
+* tmp/                      -> temporales del head job
+
+1. Preparación inicial (una sola vez)
+
+---
+
+## 1.1 Crear directorios base
+
+Ejecutar en login:
+
+BASE="/mnt/data/amedina/ssalazar/regulons_SLE/"
+mkdir -p "${BASE}/bin" 
+mkdir -p "${BASE}/scripts/logs" 
+mkdir -p "${BASE}/work" 
+mkdir -p "${BASE}/out" 
+mkdir -p "${BASE}/singularity" 
+mkdir -p "${BASE}/.nextflow_home" 
+mkdir -p "${BASE}/tmp"
+
+## 1.2 Instalar Nextflow 21.04.3 de forma local (fijo y reproducible)
+En login:
+
+module purge
+module load oracle-java/8u371
+
+BASE="/mnt/data/amedina/ssalazar/regulons_SLE/"
+cd "${BASE}/bin"
+
+export NXF_VER=21.04.3
+curl -fsSL https://get.nextflow.io | bash
+chmod +x nextflow
+
+Verificar:
+
+./nextflow -version
+
+Debe mostrar:
+version 21.04.3 build 5560
+
+2. Archivos necesarios
+
+---
+
+## 2.1 Script SLURM (head/orchestrator)
+
+Archivo:
+${BASE}/scripts/run_scenic.sbatch
+
+Qué hace:
+
+* Carga módulos (java 8 + singularity)
+* Fuerza el uso del Nextflow local (bin/nextflow)
+* Fija caches y workdir dentro del proyecto (no usa $HOME)
+* Lanza el pipeline con `-resume` y `-qs 1`
+* Guarda logs en scripts/logs
+
+## 2.2 Config de Nextflow
+
+Archivo:
+${BASE}/scripts/sle_scenic.config
+
+Qué contiene:
+
+* params globales (project_name, outdir, genome, etc.)
+* rutas de inputs (loom, TF list, motifs db, tracks db)
+* configuración SLURM por labels del pipeline (cpus/mem/time/maxForks)
+* configuración Singularity (cacheDir + binds)
+* FIX importante: forzar container “utils” en pasos de agregación multi-run
+  (evita error “No such file or directory” al ejecutar scripts .py)
+
+## 2.3 Inputs requeridos (verificar que existan)
+
+Según tu config actual:
+
+* Loom input:
+  /mnt/data/amedina/lupus/RNA_lupus/counts/reduced_counts.loom
+
+* TF list:
+  /mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/allTFs_hg38.txt
+
+* Motifs DB:
+  /mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/hg38__refseq-r80__*feather
+
+* Motifs annotation:
+  /mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/motifs-v9-nr.hgnc-m0.001-o0.0.tbl
+
+* Tracks DB:
+  /mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/encode_20190621__ChIP_seq_transcription_factor.hg38__refseq-r80__*feather
+
+* Tracks annotation:
+  /mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/encode_project_20190621__ChIP-seq_transcription_factor.homo_sapiens.hg38.bigwig_signal_pvalue.track_to_tf_in_motif_to_tf_format.tsv
+
+3. Ejecutar el pipeline
+
+---
+
+## 3.1 Lanzar con sbatch
+
+Desde login:
+
+BASE="/mnt/data/amedina/ssalazar/regulons_SLE"
+sbatch "${BASE}/scripts/run_scenic.sbatch"
+
+Esto crea:
+
+* Un job “head/orchestrator” (tu sbatch)
+* Muchos jobs hijos “nf-...” (tareas del pipeline)
+
+Es normal ver 2+ jobs en `squeue`:
+
+* uno con nombre scenic_sle_100runs (head)
+* otros nf-scenic_... (tasks)
+
+## 3.2 Monitoreo rápido
+
+Ver jobs:
+squeue -u $USER
+
+Ver log principal:
+tail -n 60 "${BASE}/scripts/logs/nextflow_<JOBID>.log"
+
+Ver salida del head:
+tail -n 60 "${BASE}/scripts/logs/head_<JOBID>.out"
+tail -n 60 "${BASE}/scripts/logs/head_<JOBID>.err"
+
+Ver trace:
+tail -n 20 "${BASE}/scripts/logs/execution_trace.txt"
+
+4. Dónde quedan los resultados
+
+---
+
+## 4.1 Outputs finales del pipeline
+
+Por config:
+${BASE}/out/
+
+En particular SCENIC:
+${BASE}/out/scenic/
+
+## 4.2 Workdir
+
+Tareas intermedias, scripts .command.*, etc:
+${BASE}/work/
+
+Si una tarea falla, su directorio `work/xx/<hash>/` contiene:
+
+* .command.sh
+* .command.out
+* .command.err
+* .command.run
+  Esto permite depurar sin necesitar el log global.
+
+## 4.3 Cache Singularity
+
+Imágenes descargadas:
+${BASE}/singularity/
+
+Ejemplo:
+aertslab-pyscenic-0.10.4.img
+
+## 4.4 Cache Nextflow
+
+Se guarda aquí:
+${BASE}/.nextflow_home/
+
+5. Notas importantes (para evitar errores)
+
+---
+
+## 5.1 No usar flags nuevos en Nextflow 21.04.3
+
+En esta versión NO existen flags como:
+
+* -disable-jobs-cancellation
+* -log
+
+Para log se usa:
+export NXF_LOG_FILE=/ruta/al/log
+
+## 5.2 El ^M (carriage return) en logs no es error
+
+Es la barra de progreso de descargas (CAPSULE). Es cosmético.
+Se reduce con:
+
+* export NXF_ANSI_LOG=false
+* export NXF_PROGRESS=false
+
+## 5.3 Si un job aparece como CANCELLED+
+
+Eso casi siempre es política del cluster (QOS/Account/limits).
+Solución típica:
+
+* añadir `clusterOptions = '--account=XXX --qos=YYY'` en `process {}` del config
+* o pedir a admin confirmar asociaciones de usuario en SLURM
+
+## 5.4 Primera corrida tarda más
+
+La primera vez:
+
+* Nextflow descarga dependencias
+* Singularity hace pull de imágenes
+  Luego, con -resume, es mucho más rápido y estable.
+
+6. Comandos útiles de debugging
+
+---
+
+## 6.1 Ver qué job SLURM corresponde a una tarea nextflow
+
+En nextflow log buscas “jobId: 102422”.
+Luego:
+sacct -j 102422 -X --format=JobID,JobName%60,State,ExitCode,Elapsed,ReqMem,MaxRSS,AllocCPUS,NodeList
+
+## 6.2 Encontrar el workdir de una tarea fallida
+
+Si Nextflow reporta error, normalmente muestra el workDir.
+Si no, busca en execution_trace:
+grep -n "FAILED" "${BASE}/scripts/logs/execution_trace.txt"
+
+## 6.3 Reanudar sin repetir trabajo
+
+Siempre usar -resume:
+sbatch run_scenic.sbatch
+(ya está dentro del script)
+
+## Fin
+
+Este README documenta el flujo completo para que la corrida sea reproducible:
+Nextflow fijo + caches locales + módulos controlados + logs centralizados.

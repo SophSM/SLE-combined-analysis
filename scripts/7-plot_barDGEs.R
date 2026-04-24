@@ -1,7 +1,7 @@
 # Barplots for all DEGs
 #####
 library(tidyverse)
-library(plyr)
+library(dplyr)
 library(ggplot2)
 DIR = "/Users/sofiasalazar/Desktop/SLE-combined-analysis"
 FIGDIR = glue::glue("{DIR}/figures_updated")
@@ -14,6 +14,14 @@ DGElist <- DGElist %>%
     log2FoldChange <= -1 & padj < 0.05 ~ "Down-regulated",
     TRUE ~ "Unchanged"))
 
+
+DGE_prot <- DGElist %>%
+  filter(transcript_biotype == "protein_coding",
+         expression != "Unchanged")
+
+DGE_prot %>%
+  group_by(expression) %>%
+  summarise(count = n_distinct(ID))
 
 # count.types1 <- as.data.frame(table(upreg$transcript_biotype))
 keep_biotypes <- c("lncRNA","miRNA","protein_coding","protein_coding_CDS_not_defined","snoRNA","snRNA")

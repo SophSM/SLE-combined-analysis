@@ -1,0 +1,429 @@
+---
+title: "Explore regulons"
+author: "Sofia Salazar"
+format: html
+editor: visual
+---
+
+# Libraries
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(ComplexHeatmap)
+library(gprofiler2)
+library(circlize)
+```
+
+# Load data
+
+```{r}
+DIR = "/Users/sofiasalazar/Desktop/SLE-combined-analysis"
+REGULON_DIR = glue::glue("{DIR}/regulons")
+FIGDIR = glue::glue("{REGULON_DIR}/figures")
+results <- read.csv(file = glue::glue("{REGULON_DIR}/out/difregs_SLE_Ctrl.csv"),
+                    header = T)
+
+DEG_list <- data.table::fread(glue::glue("{DIR}/out/DGElist_all.csv"))
+DEG_list <- DEG_list %>%
+  mutate(direction = case_when(
+    log2FoldChange > 1 & padj < 0.05 ~ "Up-regulated",
+    log2FoldChange < 1 & padj < 0.05 ~ "Down-regulated",
+    T ~ "Unchanged"))
+tf_targets <- read.csv(file = glue::glue("{REGULON_DIR}/out/tf_targets.csv"), header = T, row.names = "X")
+colnames(tf_targets) <- gsub("\\_...", "", colnames(tf_targets))
+
+auc_mtx <- read.csv(file = glue::glue("{REGULON_DIR}/out/AUC_mtx.csv"), row.names = "X")
+colnames(auc_mtx) <- gsub("\\_...", "", colnames(auc_mtx))
+
+metadata <- read.csv(file = glue::glue("{DIR}/data/all_data.csv"), header = T, row.names = "X")
+
+
+
+summary(results$log2FC)
+#       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+# -0.031486 -0.007232 -0.001378  0.002960  0.011713  0.069263 
+```
+
+# Filter regulons with an adjusted p-value threshold of \<0.05 and a log2FC
+
+If log2FC \> 0, it means the values in auc_sle are greater on average than those in auc_ctrl (relative to the reference auc_ctrl). If log2FC \< 0, it means the values in auc1 are smaller on average than those in auc2 (relative to the reference auc2).
+
+```{r}
+# up
+
+up_regulons <- results %>%
+  filter(AdjPvalues < 0.05 & log2FC > 0) %>%
+   mutate(regulon = str_remove(regulon, "\\_\\(\\+\\)"),
+         direction = "Up-regulated")
+
+dim(up_regulons) # [1] 8 5
+
+# down
+
+down_regulons <- results %>%
+  filter(AdjPvalues < 0.05 & log2FC < 0) %>%
+  mutate(regulon = str_remove(regulon, "\\_\\(\\+\\)"),
+         direction = "Down-regulated")
+
+dim(down_regulons) # [1] 16  5
+```
+
+**There are 8 upregulated regulons & 16 downregulated regulons.**
+
+# Heatmap showing AUC values for the subset of regulons that were differentially activated
+
+```{r}
+
+meta_DA_regulons <- rbind(up_regulons, down_regulons)
+meta_DA_regulons <- meta_DA_regulons %>%
+  group_by(direction) %>%
+  arrange(desc(log2FC)) %>%
+  ungroup()
+meta_DA_regulons$direction <- factor(meta_DA_regulons$direction,
+                                     levels = c("Up-regulated","Down-regulated"))
+# auc_mat_heatmap <- auc_mtx[, meta_DA_regulons$regulon] %>% t() %>% as.matrix()
+auc_scaled <- scale(auc_mtx[metadata$samples,meta_DA_regulons$regulon])
+auc_mat_heatmap <- auc_scaled %>% t() %>% as.matrix()
+
+
+# all(colnames(auc_mat_heatmap) == metadata_ordered$samples)
+
+
+split = data.frame(Direction = meta_DA_regulons$direction)
+split$Direction <- factor(split$Direction, levels = c("Up-regulated", "Down-regulated"))
+col_fun = colorRamp2(c(min(auc_mat_heatmap), -1, -0.5, 0, 0.5,2, max(auc_mat_heatmap)), rev(RColorBrewer::brewer.pal(7, "RdYlBu")))
+
+
+sample_ha <- HeatmapAnnotation("Group" = metadata$DISEASE, col = list("Group" = c('CONTROL' = '#96d4ccff', 'SLE' = '#b493b4ff')))
+
+
+
+col_lfc <- colorRamp2(c(min(meta_DA_regulons$log2FC),-0.01,  0, 0.02,  max(meta_DA_regulons$log2FC)), c("blue","#ABD9E9", "#FFFFBF", "#ffb5b0","red"))
+lfc_anno = rowAnnotation("log2FC" = meta_DA_regulons$log2FC, col = list("log2FC" = col_lfc))
+# draw(lfc_anno)
+
+# png(filename = glue::glue("{REGULON_DIR}/figures/AUC_heatmap.png"), width = 20, height = 15, units = "cm", res = 500)
+ht <- Heatmap(auc_mat_heatmap, name = "AUC\nz-score", show_column_names = F, row_split = split,
+        col = col_fun, top_annotation = sample_ha, right_annotation = lfc_anno,
+        show_column_dend = T, show_row_dend = T,
+        row_gap = unit(2, "mm"),
+        cluster_rows = F,
+        cluster_row_slices = FALSE,
+        column_gap = unit(2, "mm"),
+        column_split = metadata$DISEASE
+        )
+draw(ht)
+# dev.off()
+```
+
+# Enrichment analysis regulons and gene targets
+
+```{r}
+gene_targets_count <- data.frame()
+# up
+up_targets_lst <- list()
+
+for (reg in unique(up_regulons$regulon)){
+  print(reg)
+  if (reg %in% colnames(tf_targets)){
+    gene_targets <- tf_targets %>%
+      dplyr::select(all_of(reg)) 
+    colnames(gene_targets)[1] = "count"
+    gene_targets <- gene_targets %>% 
+      rownames_to_column("gene_name") %>%
+      filter(count == 1) %>%
+      pull(gene_name)
+    
+    df_rank <- data.frame(gene_name = gene_targets)
+    # rank according to Dif. gene expression results
+    df_rank <- df_rank %>%
+      inner_join(DEG_list, by = "gene_name")  %>% 
+      dplyr::select(c(gene_name, log2FoldChange)) %>%
+      unique() %>%
+      arrange(desc(abs(log2FoldChange)))
+    
+    up_targets_lst[[reg]] <- c(reg, df_rank$gene_name)
+    count_df <- data.frame(regulon = reg, num_targets = length(gene_targets), direction = "Up-regulated")
+    gene_targets_count <- rbind(count_df, gene_targets_count)
+    print(length(gene_targets))
+    
+  }
+}
+
+# down
+down_targets_lst <- list()
+for (reg in unique(down_regulons$regulon)){
+  print(reg)
+  if (reg %in% colnames(tf_targets)){
+    gene_targets <- tf_targets %>%
+      dplyr::select(all_of(reg)) 
+    colnames(gene_targets)[1] = "count"
+    gene_targets <- gene_targets %>% 
+      rownames_to_column("gene_name") %>%
+      filter(count == 1) %>%
+      pull(gene_name)
+    
+    
+    df_rank <- data.frame(gene_name = gene_targets)
+    # rank according to Dif. gene expression results
+    df_rank <- df_rank %>%
+      inner_join(DEG_list, by = "gene_name")  %>% 
+      dplyr::select(c(gene_name, log2FoldChange)) %>%
+      unique() %>%
+      arrange(desc(abs(log2FoldChange)))
+    
+    down_targets_lst[[reg]] <- c(reg, df_rank$gene_name)
+      
+    count_df <- data.frame(regulon = reg, num_targets = length(gene_targets), direction = "Down-regulated")
+    gene_targets_count <- rbind(count_df, gene_targets_count)
+    print(length(gene_targets))
+    
+  }
+}
+```
+
+```{r}
+gene_targets_count <- gene_targets_count %>%
+  group_by(direction) %>%
+  arrange(direction, num_targets) %>% 
+  ungroup()
+
+gene_targets_count$regulon <- factor(gene_targets_count$regulon, 
+                                     levels = gene_targets_count$regulon)
+
+# png(filename = glue::glue("{FIGDIR}/regulon_gene_targets.png"), height = 12, width = 32, units = "cm", res = 500)
+ggplot(gene_targets_count, aes(x = num_targets, 
+                               y = regulon,
+                               fill = direction)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  theme_minimal() +
+  geom_text(mapping = aes(x = num_targets, y = regulon, label = num_targets), hjust = -0.3) +
+  labs(x = "Number of gene targets", y = "Regulon", fill = "Direction")
+# dev.off()
+```
+
+## Up-regulated
+
+```{r}
+# Query with ranked gene lists per regulon
+# multi_gp_up <- gost(up_targets_lst, correction_method = "fdr", multi_query = T, ordered_query = T, organism = 'hsapiens', sources = c("GO:BP","KEGG"))
+# save(multi_gp_up, file = glue::glue("{REGULON_DIR}/out/GO.upRegulons_results.RData"))
+# 
+# 
+# multi_gp_down <- gost(down_targets_lst, correction_method = "fdr", multi_query = T, ordered_query = T, organism = 'hsapiens', sources = c("GO:BP","KEGG"))
+# save(multi_gp_down, file = glue::glue("{REGULON_DIR}/out/GO.downRegulons_results.RData"))
+
+load(glue::glue("{REGULON_DIR}/out/GO.upRegulons_results.RData"))
+load(glue::glue("{REGULON_DIR}/out/GO.downRegulons_results.RData"))
+
+
+up_go_data <- multi_gp_up$result %>%
+  dplyr::select(c(term_name, source, p_values, significant, intersection_sizes)) %>% 
+  mutate(regulon = list(names(up_targets_lst))) %>%
+  unnest(regulon, p_values, significant, intersection_sizes)
+
+
+# write.table(up_go_data, file = glue::glue("{REGULON_DIR}/out/upregulated_go_terms.tsv"), row.names = F,
+            # quote = F, sep = "\t")
+
+up_go_data_reduced <- up_go_data %>%
+  filter(significant == T) %>%
+  group_by(regulon) %>%
+  slice_min(p_values, n = 10)
+
+up_small_terms <- data.table::fread( glue::glue("{REGULON_DIR}/out/upregulated_go_terms_reduced.tsv"))
+```
+
+```{r}
+up_go_mat <- up_small_terms %>%
+  filter(!small_Term %in% c("metabolic_process","regulation of metabolic process")) %>% # too general
+  # mutate(small_Term = ifelse(small_Term == "regulation of metabolic process (RNA)", "regulation of RNA metabolism", small_Term)) %>%
+  dplyr::select(c(small_Term, regulon, p_values)) %>%
+  group_by(regulon, small_Term) %>%
+  slice_min(p_values, n = 1) %>%
+  unique() %>%
+  mutate(p_values = -log10(p_values)) %>%
+  pivot_wider(names_from = regulon, values_from = p_values, values_fill = 0) %>%
+  na.omit() %>%
+  column_to_rownames("small_Term") %>%
+  as.matrix()
+```
+
+```{r}
+# br = seq(0, max(up_go_mat), by = 5)
+col_fun <- colorRamp2(c(0, 2, 3, 6, 9, 12, 24, 36, 48),
+                      RColorBrewer::brewer.pal(9, "YlOrRd"))
+
+# png(filename = glue::glue("{FIGDIR}/up_regulons_terms_ht.png"), width = 26, height = 12, units = "cm", res = 500)
+Heatmap(t(up_go_mat), name = "-log10(p-value)",
+        show_row_dend = F, show_column_dend = F,
+        show_column_names = T, show_row_names = T,col = col_fun,
+        rect_gp = gpar(col = "lightgray", lwd = 2),
+        row_names_side = "left",
+        column_names_rot = 45,
+        row_names_max_width = unit(10,"cm"),
+        column_names_max_height = unit(20,"cm"),
+        column_names_gp = gpar(fontsize = 10))
+# dev.off()
+```
+
+## Down-regulated
+
+```{r}
+
+down_go_data <- multi_gp_down$result %>%
+  dplyr::select(c(term_name, source, p_values, significant, intersection_sizes)) %>% 
+  mutate(regulon = list(names(down_targets_lst))) %>%
+  unnest(regulon, p_values, significant, intersection_sizes)
+
+
+# write.table(down_go_data, file = glue::glue("{REGULON_DIR}/out/downregulated_go_terms.tsv"), row.names = F,
+            # quote = F, sep = "\t")
+
+down_go_data_reduced <- down_go_data %>%
+  filter(significant == T) %>%
+  group_by(regulon) %>%
+  slice_min(p_values, n = 10)
+
+down_small_terms <- data.table::fread( glue::glue("{REGULON_DIR}/out/downregulated_go_terms_reduced.tsv"))
+```
+
+```{r}
+down_go_mat <- down_small_terms %>%
+  filter(include == "yes") %>%
+  filter(small_Term != "metabolic_process") %>% # too general
+  dplyr::select(c(small_Term, regulon, p_values)) %>%
+  group_by(regulon, small_Term) %>%
+  slice_min(p_values, n = 1) %>%
+  unique() %>%
+  mutate(p_values = -log10(p_values)) %>%
+  pivot_wider(names_from = regulon, values_from = p_values, values_fill = 0) %>%
+  na.omit() %>%
+  column_to_rownames("small_Term") %>%
+  as.matrix()
+```
+
+```{r}
+# br = seq(0, max(down_go_mat), by = 5)
+col_fun <- colorRamp2(c(0, 2, 4, 6, 8, 10, 20, 30, 40),
+                      RColorBrewer::brewer.pal(9, "YlGnBu"))
+
+# png(filename = glue::glue("{FIGDIR}/down_regulons_terms_ht.png"), width = 26, height = 12, units = "cm", res = 500)
+Heatmap(t(down_go_mat), name = "-log10(p-value)",
+        show_row_dend = F, show_column_dend = F,
+        show_column_names = T, show_row_names = T,col = col_fun,
+        rect_gp = gpar(col = "lightgray", lwd = 2),
+        row_names_side = "left",
+        column_names_rot = 45,
+        row_names_max_width = unit(10,"cm"),
+        column_names_max_height = unit(20,"cm"),
+        column_names_gp = gpar(fontsize = 10))
+# dev.off()
+```
+
+## Network upregulated regulons
+
+```{r}
+up_targets_DGE <- list()
+for (reg in unique(up_regulons$regulon)){
+  print(reg)
+  if (reg %in% colnames(tf_targets)){
+    gene_targets <- tf_targets %>%
+      dplyr::select(all_of(reg)) 
+    colnames(gene_targets)[1] = "count"
+    gene_targets <- gene_targets %>% 
+      rownames_to_column("gene_name") %>%
+      filter(count == 1) %>%
+      pull(gene_name)
+    
+    
+    df_rank <- data.frame(gene_name =gene_targets)
+    # rank according to Dif. gene expression results
+    df_rank <- df_rank %>%
+      inner_join(DEG_list %>%
+                   mutate(abslfc = abs(log2FoldChange)) %>%
+                   filter(direction != "Unchanged" & 
+                            abslfc > 1 & 
+                            padj < 0.05), by = "gene_name") %>% 
+      dplyr::select(c(gene_name, log2FoldChange, padj, direction)) %>%
+      unique() %>%
+      mutate(source = reg)
+    
+    up_targets_DGE[[reg]] <- df_rank
+      
+    
+  }
+}
+
+```
+
+```{r}
+regs_interest <- names(up_targets_DGE)
+up_targets_DGE_df <- data.frame()
+for (reg in regs_interest){
+  o <- up_targets_DGE[[reg]]
+  up_targets_DGE_df <- rbind(o, up_targets_DGE_df)
+}
+
+
+# write.table(up_targets_DGE_df %>%
+              # filter(abs(log2FoldChange) > 2), file = glue::glue("{REGULON_DIR}/out/upRegulons_DEG_targets_ntwk.csv"), sep = ",",
+            # quote = F, row.names = F)
+
+# write.table(up_targets_DGE_df, file = glue::glue("{REGULON_DIR}/out/upRegulons_DEG_ALL_targets_ntwk.csv"), sep = ",",
+            # quote = F, row.names = F)
+```
+
+## Network downregulated regulons
+
+```{r}
+down_targets_DGE <- list()
+for (reg in unique(down_regulons$regulon)){
+  print(reg)
+  if (reg %in% colnames(tf_targets)){
+    gene_targets <- tf_targets %>%
+      dplyr::select(all_of(reg)) 
+    colnames(gene_targets)[1] = "count"
+    gene_targets <- gene_targets %>% 
+      rownames_to_column("gene_name") %>%
+      filter(count == 1) %>%
+      pull(gene_name)
+    
+    
+    df_rank <- data.frame(gene_name =gene_targets)
+    # rank according to Dif. gene expression results
+    df_rank <- df_rank %>%
+      inner_join(DEG_list %>%
+                   mutate(abslfc = abs(log2FoldChange)) %>%
+                   filter(direction != "Unchanged" & 
+                            abslfc > 1 & 
+                            padj < 0.05), by = "gene_name") %>% 
+      dplyr::select(c(gene_name, log2FoldChange, padj, direction)) %>%
+      unique() %>%
+      mutate(source = reg)
+    
+    down_targets_DGE[[reg]] <- df_rank
+      
+    
+  }
+}
+
+```
+
+```{r}
+regs_interest <- names(down_targets_DGE)
+down_targets_DGE_df <- data.frame()
+for (reg in regs_interest){
+  o <- down_targets_DGE[[reg]]
+  down_targets_DGE_df <- rbind(o, down_targets_DGE_df)
+}
+
+
+# write.table(down_targets_DGE_df %>%
+              # filter(abs(log2FoldChange) > 2), file = glue::glue("{REGULON_DIR}/out/downRegulons_DEG_targets_ntwk.csv"), sep = ",",
+            # quote = F, row.names = F)
+
+# write.table(down_targets_DGE_df , file = glue::glue("{REGULON_DIR}/out/downRegulons_DEG_ALL_targets_ntwk.csv"), sep = ",",
+#             quote = F, row.names = F)
+```

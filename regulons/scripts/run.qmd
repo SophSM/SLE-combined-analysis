@@ -1,0 +1,345 @@
+---
+title: "Regulons revised"
+author: "Sofia Salazar"
+format: html
+editor: visual
+---
+
+# 1. Get counts
+
+```{r}
+# srun -p interactive --pty bash
+
+library(DESeq2)
+outdir = "/Users/sofiasalazar/Desktop/regulons/"
+load("/Users/sofiasalazar/Desktop/regulons/data/vsd2.RData")
+load("/Users/sofiasalazar/Desktop/regulons/data/LRT-dds.RData")
+DGE <- res2
+transcripts <- rownames(vsd2) 
+new <- list()
+for(i in 1:length(transcripts)){
+  new[i] <- gsub("\\..*","", transcripts[i])
+}
+transcripts <- (unlist(new))
+
+df <- as.data.frame(DGE)
+df <- tibble::rownames_to_column(df, "ID")
+
+name_short<-function(table){
+  table$ID <- gsub("\\..*","", table$ID)
+  return(table)
+}
+
+df <- name_short(df)
+
+library("biomaRt")
+mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+genes <- getBM(attributes = c("ensembl_gene_id", "hgnc_symbol","transcript_biotype"),
+               filters = c("ensembl_gene_id"), 
+               values = df$ID,
+               mart = mart)
+names(genes)[1] <- "ID"
+names(genes)[2] <- "gene_name"
+
+keep <- c("lncRNA","miRNA","protein_coding","protein_coding_CDS_not_defined","snoRNA","snRNA")
+new.genes <- subset(genes, transcript_biotype %in% keep)
+
+dim(new.genes[unique(new.genes$ID),])
+info <- new.genes[!duplicated(new.genes$ID),]
+dim(info)
+info <- (info[info$gene_name != "",])
+
+unique_info <- info[!duplicated(info$gene_name), ]
+
+keep.rownames <- unique_info$ID
+length(keep.rownames)
+
+counts <- as.data.frame(assays(vsd2))
+counts <- counts[,-c(1,2)]
+
+rownames(counts) <- transcripts
+
+reduced.vsd <- counts[rownames(counts) %in% keep.rownames,]
+# reduced.vsd$id <- rownames(reduced.vsd)
+merged <- merge(info, reduced.vsd, by.x = "ID", by.y = "row.names")
+rownames(merged) <- merged$gene_name
+
+reduced.counts <- merged[ , !(names(merged) %in% c("ID", "gene_name", "transcript_biotype"))]
+
+
+dim(reduced.counts)
+
+write.table(reduced.counts, file = paste0(outdir, "data/reduced.counts.csv"), sep = ",", eol = "\n", na = "NA", row.names = T, col.names = T, quote = F)
+
+
+```
+
+# 2. Make loompy file
+
+```{python eval = F}
+import loompy
+import pandas as pd
+import numpy as np
+import os
+
+print(loompy.__version__) # 3.0.6
+PRE = "/Users/sofiasalazar/Desktop/regulons/"
+file = os.path.join(PRE, "data/reduced.counts.csv")
+
+# Read counts file
+data = pd.read_csv(file)
+# Define output file
+loomfile = file.replace(".csv", ".loom")
+
+# Create loompy file
+matrix = np.array(data.values)
+row_attrs = {"Gene" : list(data.index)}
+col_attrs = {"CellID" : list(data.columns)}
+loompy.create(loomfile, matrix, row_attrs, col_attrs)
+```
+
+# 3. Set up config file
+
+```{bash eval=FALSE}
+manifest {
+   name = 'vib-singlecell-nf/vsn-pipelines'
+   description = 'A repository of pipelines for single-cell data in Nextflow DSL2'
+   homePage = 'https://github.com/vib-singlecell-nf/vsn-pipelines'
+   version = '0.25.0'
+   mainScript = 'main.nf'
+   defaultBranch = 'master'
+   nextflowVersion = '!>=20.10.0'
+}
+
+params {
+   global {
+      project_name = 'sle'
+      outdir = '/mnt/data/amedina/ssalazar/regulons_SLE/out'
+      seed = 777
+      species = 'human'
+      genome {
+         assembly = 'hg38'
+      }
+   }
+
+   misc {
+      test {
+         enabled = false
+      }
+   }
+
+   utils {
+      container = 'vibsinglecellnf/utils:0.4.0'
+      publish {
+         compressionLevel = 6
+         annotateWithBatchVariableName = false
+         mode = 'copy'
+      }
+   }
+
+   sc {
+      file_converter {
+         off = 'h5ad'
+         tagCellWithSampleId = true
+         remove10xGEMWell = false
+         useFilteredMatrix = true
+         makeVarIndexUnique = false
+         iff = 'loom'
+      }
+
+      scenic {
+         container = 'aertslab/pyscenic:0.10.4'
+         scenicoutdir = '/mnt/data/amedina/ssalazar/regulons_SLE/out/scenic/'
+         filteredLoom = '/mnt/data/amedina/ssalazar/regulons_SLE/data/reduced_counts.loom'
+         scenicOutputLoom = 'SCENIC_output.loom'
+         scenicScopeOutputLoom = 'SCENIC_SCope_output.loom'
+
+         mode = 'dask_multiprocessing'
+         client_or_address = ''
+
+         cell_id_attribute = 'CellID'
+         gene_attribute = 'Gene'
+         report_ipynb = '/src/scenic/bin/reports/scenic_report.ipynb'
+         skipReports = false
+
+         grn {
+            algorithm = 'grnboost2'
+            tfs = '/mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/allTFs_hg38.txt'
+         }
+
+         cistarget {
+            adj = 'adj.tsv'
+            type = ''
+            rank_threshold = 5000
+            auc_threshold = 0.05
+            nes_threshold = 3.0
+            min_orthologous_identity = 0.0
+            max_similarity_fdr = 0.001
+            annotations_fname = ''
+            thresholds = '0.75,0.90'
+            top_n_targets = 50
+            top_n_regulators = '5,10,50'
+            min_genes = 20
+            all_modules = false
+
+            motifsDb = '/mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/hg38__refseq-r80__*feather'
+            motifsAnnotation = '/mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/motifs-v9-nr.hgnc-m0.001-o0.0.tbl'
+            tracksDb = '/mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/encode_20190621__ChIP_seq_transcription_factor.hg38__refseq-r80__*feather'
+            tracksAnnotation = '/mnt/data/amedina/lupus/RNA_lupus/reg_networks/resources/encode_project_20190621__ChIP-seq_transcription_factor.homo_sapiens.hg38.bigwig_signal_pvalue.track_to_tf_in_motif_to_tf_format.tsv'
+         }
+
+         aucell {
+            output = 'aucell_output.loom'
+            rank_threshold = 5000
+            auc_threshold = 0.05
+            nes_threshold = 3.0
+            min_genes_regulon = 10
+            min_regulon_gene_occurrence = 80
+         }
+
+         numRuns = 100
+
+         aggregate_features {
+            use_chunking = true
+            output_format = 'csv'
+            compression = 'gzip'
+         }
+      }
+
+      scope {
+         genome = ''
+         tree {
+            level_1 = ''
+            level_2 = ''
+            level_3 = ''
+         }
+      }
+   }
+
+   data {
+      loom {
+         file_paths = '/mnt/data/amedina/lupus/RNA_lupus/counts/reduced_counts.loom'
+         suffix = '.loom'
+      }
+   }
+}
+
+process {
+   executor = 'slurm'
+
+   // Defaults razonables
+   cpus = 2
+   memory = '8 GB'
+   time = '2h'
+   errorStrategy = 'retry'
+   maxRetries = 2
+
+   // General scenic (no lo dejes en 1, si no se te serializa todo)
+   withLabel:'compute_resources__scenic.*' {
+      time = '24h'
+      maxForks = 4
+   }
+
+   // ARBORETO/GRN = lo pesado, controla el paralelismo por tu QOS (~64 CPUs)
+   withLabel:compute_resources__scenic_grn {
+      cpus = 16
+      memory = '150 GB'
+      time = '24h'
+      maxForks = 4
+   }
+
+   // CISTARGET suele ser pesado, pero no conviene competir con 4 arboretos; mantenlo moderado
+   withLabel:compute_resources__scenic_cistarget {
+      cpus = 8
+      memory = '150 GB'
+      time = '24h'
+      maxForks = 2
+   }
+
+   // AUCELL suele ser más ligero
+   withLabel:compute_resources__scenic_aucell {
+      cpus = 8
+      memory = '80 GB'
+      time = '12h'
+      maxForks = 2
+   }
+
+   // Multiruns aggregation: suele ser IO-heavy, no lo paralelices demasiado
+   withLabel:'compute_resources__scenic_multiruns.*' {
+      cpus = 4
+      memory = '80 GB'
+      time = '12h'
+      maxForks = 1
+   }
+}
+
+timeline {
+   enabled = true
+   file = '/mnt/data/amedina/ssalazar/regulons_SLE/scripts/logs/execution_timeline.html'
+}
+
+report {
+   enabled = true
+   file = '/mnt/data/amedina/ssalazar/regulons_SLE/scripts/logs/execution_report.html'
+}
+
+trace {
+   enabled = true
+   file = '/mnt/data/amedina/ssalazar/regulons_SLE/scripts/logs/execution_trace.txt'
+}
+
+dag {
+   enabled = true
+   file = '/mnt/data/amedina/ssalazar/regulons_SLE/scripts/logs/pipeline_dag.svg'
+}
+
+singularity {
+   enabled = true
+   autoMounts = true
+   cacheDir = '/mnt/data/amedina/ssalazar/regulons_SLE/singularity'
+   runOptions = '--cleanenv --bind /mnt/data/amedina/ssalazar/'
+}
+```
+
+# 4. Install nextflow locally
+
+```{bash eval=FALSE}
+module purge
+module load oracle-java/8u371
+BASE="/mnt/data/amedina/ssalazar/regulons_SLE"
+mkdir -p "${BASE}/bin"
+mkdir -p "${BASE}/scripts/logs" 
+mkdir -p "${BASE}/work" 
+mkdir -p "${BASE}/out" 
+mkdir -p "${BASE}/singularity" 
+mkdir -p "${BASE}/.nextflow_home" 
+mkdir -p "${BASE}/tmp"
+
+cd "${BASE}/bin"
+export NXF_VER=21.04.3
+curl -fsSL https://get.nextflow.io | bash
+chmod +x nextflow
+
+# Verify
+
+./nextflow -version
+
+# Should be: version 21.04.3 build 5560
+```
+
+# 5. Run pipeline
+
+```{bash eval=F}
+sbatch "${BASE}/scripts/run_scenic.sbatch"
+```
+
+# 6. Get differentially activated regulons
+
+```{bash eval=F}
+conda activate regulons
+python3 /Users/sofiasalazar/Desktop/SLE-combined-analysis/regulons/scripts/dif_regulons.py --outdir "/Users/sofiasalazar/Desktop/SLE-combined-analysis/regulons/out" \
+--loompy_file "/Users/sofiasalazar/Desktop/SLE-combined-analysis/regulons/out/multi_runs_looms/multi_runs_regulons_auc_trk.loom" \
+--metadata "/Users/sofiasalazar/Desktop/SLE-combined-analysis/data/all_data.csv"
+
+```
+

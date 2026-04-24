@@ -5,15 +5,20 @@ library(ggplot2)
 library(tidyverse)
 DIR = "/Users/sofiasalazar/Desktop/SLE-combined-analysis"
 FIGDIR = glue::glue("{DIR}/figures_updated")
-load(glue::glue("{DIR}/data/LRT-dds.RData"))
+# load(glue::glue("{DIR}/data/LRT-dds.RData"))
 load(glue::glue("{DIR}/data/vsd2.RData"))
 metadata <- read.table(glue::glue("{DIR}/data/all_data.csv"), header = T, row.names = 1,
                        sep = ",")
-
+DGElist = data.table::fread(glue::glue("{DIR}/out/DGElist_all.csv"))
+DGElist_prot <- DGElist %>%
+  filter(transcript_biotype == "protein_coding")
 ######
 
 mat <- as.matrix(assay(vsd2)) # col = samples, rows  = genes
-pc <- prcomp(t(mat), center = TRUE, scale. = TRUE) # col = genes , rows = samples
+rownames(mat) <- gsub("\\..*","", rownames(mat))
+mat_prot <- mat[DGElist_prot$ID,]
+
+pc <- prcomp(t(mat_prot), center = TRUE, scale. = TRUE) # col = genes , rows = samples
 pca_df <- data.frame(pc$x[,1:2])
 pca_df <- pca_df %>%
   rownames_to_column("sampleID") %>%
@@ -88,8 +93,6 @@ png(filename = glue::glue("{FIGDIR}/pca_study.png"), height = 20, width = 22,
     units = "cm", res = 500)
 print(pca_plot2)
 dev.off()
-ggsave(paste0(outdir,"PCA-studies.png"), width = 3000, height = 3000,
-       units = 'px', dpi = 300, bg = "white", plot = pca_plot2)
 #######
 sessionInfo()
 

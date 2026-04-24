@@ -1,0 +1,36 @@
+term_name,small_term,source,p_values,significant,intersection_sizes,direction
+endopeptidase activity,endopeptidase activity,GO:MF,0.026487579,TRUE,5,Down-regulated
+structural constituent of skin epidermis,skill epidermis structure,GO:MF,0.026487579,TRUE,2,Down-regulated
+sodium,sodium,GO:MF,0.02648758,TRUE,1,Down-regulated
+ferritin receptor activity,ferritin receptor activity,GO:MF,0.026487579,TRUE,1,Down-regulated
+sodium:bicarbonate symporter activity,sodium:bicarbonate symporter,GO:MF,0.026487579,TRUE,1,Down-regulated
+chloride:bicarbonate antiporter activity,chloride:bicarbonate antiporter,GO:MF,0.026743899,TRUE,1,Down-regulated
+channel activator activity,chloride:bicarbonate antiporter,GO:MF,0.026743899,TRUE,1,Down-regulated
+bicarbonate:monoatomic anion antiporter activity,bicarbonate  antiporter activity,GO:MF,0.026743899,TRUE,1,Down-regulated
+potassium channel activator activity,potassium channel  activity,GO:MF,0.026743899,TRUE,1,Down-regulated
+transporter activator activity,transporter activator activity,GO:MF,0.026743899,TRUE,1,Down-regulated
+defense response,defense response,GO:BP,4.8139168407921e-38,TRUE,96,Up-regulated
+response to other organism,response to other organism,GO:BP,4.3319845053792e-37,TRUE,88,Up-regulated
+response to biotic stimulus,response to external stimulus,GO:BP,4.3319845053792e-37,TRUE,89,Up-regulated
+response to external biotic stimulus,response to external stimulus,GO:BP,4.3319845053792e-37,TRUE,88,Up-regulated
+biological process involved in interspecies interaction between organisms,interspecies interaction,GO:BP,4.3319845053792e-37,TRUE,92,Up-regulated
+defense response to other organism,defense response,GO:BP,1.49430848725199e-35,TRUE,78,Up-regulated
+response to external stimulus,response to external stimulus,GO:BP,4.47303853653745e-30,TRUE,98,Up-regulated
+defense response to symbiont,defense response,GO:BP,6.46001088913127e-30,TRUE,67,Up-regulated
+defense response to virus,defense response (virus),GO:BP,3.61791465548277e-28,TRUE,40,Up-regulated
+response to virus,response to virus,GO:BP,5.87319859360238e-26,TRUE,42,Up-regulated
+double-stranded RNA binding,NA,GO:MF,1.32922382706733e-07,TRUE,11,Up-regulated
+glycosaminoglycan binding,NA,GO:MF,7.86256093624064e-07,TRUE,17,Up-regulated
+2'-5'-oligoadenylate synthetase activity,NA,GO:MF,1.42334855402178e-06,TRUE,3,Up-regulated
+sulfur compound binding,heparin binding,GO:MF,6.45853902462196e-06,TRUE,16,Up-regulated
+heparin binding,heparin binding,GO:MF,6.97771939645282e-06,TRUE,13,Up-regulated
+chemokine receptor binding,chemokine activity,GO:MF,6.40730568438517e-05,TRUE,7,Up-regulated
+chemokine activity,chemokine activity,GO:MF,7.51767403511166e-05,TRUE,6,Up-regulated
+serine-type endopeptidase activity,NA,GO:MF,0.000243748,TRUE,13,Up-regulated
+serine-type peptidase activity,serine-type peptidase activity,GO:MF,0.000410341,TRUE,13,Up-regulated
+serine hydrolase activity,serine-type peptidase activity,GO:MF,0.000426383,TRUE,13,Up-regulated
+Influenza A,Influenza A,KEGG,0.001425071,TRUE,7,Up-regulated
+Coronavirus disease - COVID-19,Coronavirus disease - COVID-19,KEGG,0.00210336,TRUE,10,Up-regulated
+Hepatitis C,Hepatitis C,KEGG,0.00329034,TRUE,8,Up-regulated
+NOD-like receptor signaling pathway,NOD-like receptor signaling pathway,KEGG,0.036876346,TRUE,6,Up-regulated
+Staphylococcus aureus infection,Staphylococcus aureus infection,KEGG,0.036876346,TRUE,6,Up-regulated

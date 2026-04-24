@@ -1,0 +1,1182 @@
+term_name,source,p_values,significant,intersection_sizes,direction
+defense response,GO:BP,4.8139168407921e-38,TRUE,96,Up-regulated
+response to other organism,GO:BP,4.3319845053792e-37,TRUE,88,Up-regulated
+response to biotic stimulus,GO:BP,4.3319845053792e-37,TRUE,89,Up-regulated
+biological process involved in interspecies interaction between organisms,GO:BP,4.3319845053792e-37,TRUE,92,Up-regulated
+response to external biotic stimulus,GO:BP,4.3319845053792e-37,TRUE,88,Up-regulated
+defense response to other organism,GO:BP,1.49430848725199e-35,TRUE,78,Up-regulated
+response to external stimulus,GO:BP,4.47303853653745e-30,TRUE,98,Up-regulated
+defense response to symbiont,GO:BP,6.46001088913127e-30,TRUE,67,Up-regulated
+defense response to virus,GO:BP,3.61791465548277e-28,TRUE,40,Up-regulated
+response to virus,GO:BP,5.87319859360238e-26,TRUE,42,Up-regulated
+innate immune response,GO:BP,3.21115512252917e-25,TRUE,59,Up-regulated
+response to stress,GO:BP,4.64296165503162e-25,TRUE,117,Up-regulated
+immune response,GO:BP,4.07680811421257e-22,TRUE,79,Up-regulated
+immune system process,GO:BP,3.40678579287134e-21,TRUE,92,Up-regulated
+negative regulation of viral genome replication,GO:BP,6.44391998057385e-21,TRUE,18,Up-regulated
+viral genome replication,GO:BP,2.63353114725622e-19,TRUE,22,Up-regulated
+regulation of viral life cycle,GO:BP,2.63353114725622e-19,TRUE,22,Up-regulated
+regulation of viral genome replication,GO:BP,8.04874085465404e-19,TRUE,19,Up-regulated
+response to cytokine,GO:BP,2.19403791539133e-18,TRUE,52,Up-regulated
+response to peptide,GO:BP,4.17497021902588e-18,TRUE,52,Up-regulated
+negative regulation of viral process,GO:BP,9.00649521031699e-18,TRUE,18,Up-regulated
+response to bacterium,GO:BP,1.02588318487563e-17,TRUE,43,Up-regulated
+regulation of viral process,GO:BP,1.35782021534452e-17,TRUE,22,Up-regulated
+viral life cycle,GO:BP,1.41954251422376e-17,TRUE,28,Up-regulated
+viral process,GO:BP,5.65972582165094e-17,TRUE,31,Up-regulated
+Interferon alpha/beta signaling,REAC,5.80042223000852e-17,TRUE,14,Up-regulated
+cellular response to cytokine stimulus,GO:BP,4.54418337121306e-15,TRUE,45,Up-regulated
+cytokine-mediated signaling pathway,GO:BP,1.2407101190724e-14,TRUE,35,Up-regulated
+regulation of defense response,GO:BP,1.18483107952529e-13,TRUE,40,Up-regulated
+response to stimulus,GO:BP,6.28684612332008e-13,TRUE,168,Up-regulated
+antiviral innate immune response,GO:BP,6.97556137475412e-13,TRUE,12,Up-regulated
+regulation of response to external stimulus,GO:BP,7.67518438640332e-13,TRUE,45,Up-regulated
+response to chemical,GO:BP,2.17289351614076e-12,TRUE,98,Up-regulated
+defense response to bacterium,GO:BP,3.32644995577317e-12,TRUE,25,Up-regulated
+response to type I interferon,GO:BP,3.8312597369809e-12,TRUE,13,Up-regulated
+interferon-mediated signaling pathway,GO:BP,9.53919638421695e-12,TRUE,15,Up-regulated
+cellular response to type I interferon,GO:BP,4.22194406039533e-11,TRUE,12,Up-regulated
+Interferon Signaling,REAC,7.92732017395503e-11,TRUE,15,Up-regulated
+antimicrobial humoral response,GO:BP,1.4119973632731e-10,TRUE,17,Up-regulated
+type I interferon-mediated signaling pathway,GO:BP,9.26843394430994e-10,TRUE,11,Up-regulated
+positive regulation of defense response,GO:BP,1.11338366885025e-09,TRUE,27,Up-regulated
+inflammatory response,GO:BP,1.8057210114989e-09,TRUE,35,Up-regulated
+response to lipopolysaccharide,GO:BP,1.90191307995129e-09,TRUE,22,Up-regulated
+positive regulation of response to external stimulus,GO:BP,1.90191307995129e-09,TRUE,30,Up-regulated
+regulation of innate immune response,GO:BP,2.27061980790344e-09,TRUE,25,Up-regulated
+regulation of response to cytokine stimulus,GO:BP,2.35280717849888e-09,TRUE,15,Up-regulated
+regulation of response to biotic stimulus,GO:BP,3.8263718717823e-09,TRUE,27,Up-regulated
+regulation of immune system process,GO:BP,4.57416810907294e-09,TRUE,48,Up-regulated
+response to molecule of bacterial origin,GO:BP,4.57416810907294e-09,TRUE,22,Up-regulated
+positive regulation of immune system process,GO:BP,4.57416810907294e-09,TRUE,39,Up-regulated
+antimicrobial humoral immune response mediated by antimicrobial peptide,GO:BP,6.0771163743159e-09,TRUE,12,Up-regulated
+humoral immune response,GO:BP,7.01891185488263e-09,TRUE,17,Up-regulated
+cellular response to lipopolysaccharide,GO:BP,8.48309667855932e-09,TRUE,17,Up-regulated
+cellular response to molecule of bacterial origin,GO:BP,1.69471360599749e-08,TRUE,17,Up-regulated
+interleukin-27-mediated signaling pathway,GO:BP,2.41732529215637e-08,TRUE,4,Up-regulated
+defense response to fungus,GO:BP,5.23988720673105e-08,TRUE,10,Up-regulated
+regulation of immune response,GO:BP,5.98405192028247e-08,TRUE,34,Up-regulated
+regulation of cytokine production,GO:BP,6.53620985466605e-08,TRUE,29,Up-regulated
+cytokine production,GO:BP,7.6498848655841e-08,TRUE,29,Up-regulated
+signaling,GO:BP,7.99483060274952e-08,TRUE,123,Up-regulated
+biological process involved in symbiotic interaction,GO:BP,7.99483060274952e-08,TRUE,17,Up-regulated
+Cytokine Signaling in Immune system,REAC,8.04807059488204e-08,TRUE,23,Up-regulated
+cellular response to biotic stimulus,GO:BP,8.44112861791991e-08,TRUE,17,Up-regulated
+regulation of cytokine-mediated signaling pathway,GO:BP,8.7205779656034e-08,TRUE,15,Up-regulated
+double-stranded RNA binding,GO:MF,1.32922382706733e-07,TRUE,11,Up-regulated
+cellular response to stimulus,GO:BP,1.87393789197953e-07,TRUE,133,Up-regulated
+Antiviral mechanism by IFN-stimulated genes,REAC,2.02729561640198e-07,TRUE,9,Up-regulated
+cell surface receptor signaling pathway,GO:BP,2.28884502648331e-07,TRUE,60,Up-regulated
+response to fungus,GO:BP,2.51702153205927e-07,TRUE,10,Up-regulated
+regulation of response to stress,GO:BP,2.74547666251081e-07,TRUE,41,Up-regulated
+negative regulation of cytokine production,GO:BP,3.48007330290707e-07,TRUE,17,Up-regulated
+signal transduction,GO:BP,3.80995990465011e-07,TRUE,114,Up-regulated
+cell communication,GO:BP,4.19618320400986e-07,TRUE,121,Up-regulated
+positive regulation of response to stimulus,GO:BP,4.59018926807881e-07,TRUE,56,Up-regulated
+positive regulation of biological process,GO:BP,5.3735186970204e-07,TRUE,109,Up-regulated
+regulation of type I interferon-mediated signaling pathway,GO:BP,7.26523871099978e-07,TRUE,7,Up-regulated
+Immune System,REAC,7.53736352709241e-07,TRUE,38,Up-regulated
+glycosaminoglycan binding,GO:MF,7.86256093624064e-07,TRUE,17,Up-regulated
+positive regulation of response to biotic stimulus,GO:BP,9.13288473693751e-07,TRUE,20,Up-regulated
+positive regulation of interferon-beta production,GO:BP,1.19114549103688e-06,TRUE,7,Up-regulated
+cellular response to chemical stimulus,GO:BP,1.33313312000118e-06,TRUE,56,Up-regulated
+response to lipid,GO:BP,1.33394574704272e-06,TRUE,31,Up-regulated
+regulation of tumor necrosis factor production,GO:BP,1.39741273432412e-06,TRUE,12,Up-regulated
+tumor necrosis factor production,GO:BP,1.39741273432412e-06,TRUE,12,Up-regulated
+2'-5'-oligoadenylate synthetase activity,GO:MF,1.42334855402178e-06,TRUE,3,Up-regulated
+positive regulation of innate immune response,GO:BP,1.51809791130934e-06,TRUE,19,Up-regulated
+OAS antiviral response,REAC,1.63737076139497e-06,TRUE,4,Up-regulated
+cellular response to oxygen-containing compound,GO:BP,1.82534446834809e-06,TRUE,37,Up-regulated
+tumor necrosis factor superfamily cytokine production,GO:BP,1.8485139193501e-06,TRUE,12,Up-regulated
+regulation of tumor necrosis factor superfamily cytokine production,GO:BP,1.8485139193501e-06,TRUE,12,Up-regulated
+MDA-5 signaling pathway,GO:BP,1.87162358526796e-06,TRUE,5,Up-regulated
+negative regulation of type I interferon-mediated signaling pathway,GO:BP,1.87162358526796e-06,TRUE,4,Up-regulated
+regulation of type I interferon production,GO:BP,2.03916368168317e-06,TRUE,11,Up-regulated
+type I interferon production,GO:BP,2.03916368168317e-06,TRUE,11,Up-regulated
+negative regulation of cytokine-mediated signaling pathway,GO:BP,2.52692561965821e-06,TRUE,10,Up-regulated
+antibacterial humoral response,GO:BP,2.5955093270624e-06,TRUE,9,Up-regulated
+mucosal immune response,GO:BP,2.9844017182647e-06,TRUE,6,Up-regulated
+positive regulation of immune response,GO:BP,2.9844017182647e-06,TRUE,27,Up-regulated
+response to interferon-alpha,GO:BP,3.08149407754723e-06,TRUE,6,Up-regulated
+regulation of multicellular organismal process,GO:BP,3.10269422871864e-06,TRUE,50,Up-regulated
+positive regulation of response to cytokine stimulus,GO:BP,3.59222789784658e-06,TRUE,8,Up-regulated
+response to interferon-beta,GO:BP,3.63932875112745e-06,TRUE,7,Up-regulated
+negative regulation of response to cytokine stimulus,GO:BP,3.64770429479637e-06,TRUE,10,Up-regulated
+defense response to Gram-negative bacterium,GO:BP,3.99584193966121e-06,TRUE,9,Up-regulated
+cellular response to lipid,GO:BP,4.76886004636238e-06,TRUE,23,Up-regulated
+organ or tissue specific immune response,GO:BP,4.8776113004753e-06,TRUE,6,Up-regulated
+positive regulation of cellular process,GO:BP,6.31390209043047e-06,TRUE,105,Up-regulated
+sulfur compound binding,GO:MF,6.45853902462196e-06,TRUE,16,Up-regulated
+heparin binding,GO:MF,6.97771939645282e-06,TRUE,13,Up-regulated
+regulation of cell cycle,GO:BP,7.21755005446186e-06,TRUE,33,Up-regulated
+negative regulation of cell cycle,GO:BP,7.45463427724901e-06,TRUE,18,Up-regulated
+negative regulation of immune system process,GO:BP,7.45463427724901e-06,TRUE,20,Up-regulated
+negative regulation of biological process,GO:BP,7.95727966565265e-06,TRUE,94,Up-regulated
+cell cycle,GO:BP,8.01834202990806e-06,TRUE,43,Up-regulated
+negative regulation of innate immune response,GO:BP,8.01834202990806e-06,TRUE,9,Up-regulated
+negative regulation of defense response,GO:BP,8.78329555750162e-06,TRUE,14,Up-regulated
+pattern recognition receptor signaling pathway,GO:BP,9.09045407770926e-06,TRUE,15,Up-regulated
+interferon-beta production,GO:BP,9.09045407770926e-06,TRUE,7,Up-regulated
+activation of innate immune response,GO:BP,9.09045407770926e-06,TRUE,16,Up-regulated
+regulation of interferon-beta production,GO:BP,9.09045407770926e-06,TRUE,7,Up-regulated
+killing of cells of another organism,GO:BP,9.4540698499478e-06,TRUE,9,Up-regulated
+disruption of cell in another organism,GO:BP,9.4540698499478e-06,TRUE,9,Up-regulated
+negative regulation of response to external stimulus,GO:BP,1.10031324190467e-05,TRUE,17,Up-regulated
+negative regulation of response to biotic stimulus,GO:BP,1.15558023094092e-05,TRUE,10,Up-regulated
+innate immune response in mucosa,GO:BP,1.30512870604614e-05,TRUE,5,Up-regulated
+disruption of anatomical structure in another organism,GO:BP,1.42613663882242e-05,TRUE,9,Up-regulated
+negative regulation of cell cycle process,GO:BP,1.66365088985314e-05,TRUE,15,Up-regulated
+negative regulation of multicellular organismal process,GO:BP,1.6712881996659e-05,TRUE,30,Up-regulated
+innate immune response-activating signaling pathway,GO:BP,1.84168538338836e-05,TRUE,15,Up-regulated
+granulocyte migration,GO:BP,1.86447478182759e-05,TRUE,9,Up-regulated
+neutrophil mediated immunity,GO:BP,1.89595772703954e-05,TRUE,6,Up-regulated
+regulation of cell cycle process,GO:BP,1.89915354760839e-05,TRUE,25,Up-regulated
+monocyte chemotaxis,GO:BP,2.00763842230322e-05,TRUE,6,Up-regulated
+cytoplasmic pattern recognition receptor signaling pathway,GO:BP,2.10637828933717e-05,TRUE,10,Up-regulated
+regulation of response to stimulus,GO:BP,2.15244148182071e-05,TRUE,63,Up-regulated
+positive regulation of type I interferon production,GO:BP,2.30975758506361e-05,TRUE,8,Up-regulated
+regulation of mitotic cell cycle,GO:BP,2.41187143100668e-05,TRUE,20,Up-regulated
+negative regulation of mitotic cell cycle,GO:BP,2.7157857912597e-05,TRUE,13,Up-regulated
+activation of immune response,GO:BP,2.77976716733305e-05,TRUE,21,Up-regulated
+cell cycle process,GO:BP,2.9276918632333e-05,TRUE,35,Up-regulated
+mitotic cell cycle,GO:BP,2.9276918632333e-05,TRUE,28,Up-regulated
+positive regulation of inflammatory response,GO:BP,2.99325170567297e-05,TRUE,11,Up-regulated
+positive regulation of tumor necrosis factor production,GO:BP,3.01131220192397e-05,TRUE,8,Up-regulated
+positive regulation of multicellular organismal process,GO:BP,3.44743217197272e-05,TRUE,39,Up-regulated
+response to oxygen-containing compound,GO:BP,3.48219297995397e-05,TRUE,43,Up-regulated
+myeloid leukocyte migration,GO:BP,3.72064828653854e-05,TRUE,11,Up-regulated
+positive regulation of tumor necrosis factor superfamily cytokine production,GO:BP,3.89710758758862e-05,TRUE,8,Up-regulated
+regulation of inflammatory response,GO:BP,4.25466893396347e-05,TRUE,17,Up-regulated
+myeloid leukocyte activation,GO:BP,4.79985555763301e-05,TRUE,13,Up-regulated
+positive regulation of cell cycle,GO:BP,4.838551770282e-05,TRUE,16,Up-regulated
+positive regulation of cytokine production,GO:BP,4.99886624598194e-05,TRUE,17,Up-regulated
+biological process involved in interaction with host,GO:BP,4.99886624598194e-05,TRUE,12,Up-regulated
+immune response-regulating signaling pathway,GO:BP,5.57787528743659e-05,TRUE,20,Up-regulated
+Antimicrobial peptides,REAC,5.61775916232996e-05,TRUE,12,Up-regulated
+regulation of signal transduction,GO:BP,5.66752830601524e-05,TRUE,60,Up-regulated
+chemokine receptor binding,GO:MF,6.40730568438517e-05,TRUE,7,Up-regulated
+regulation of chromosome segregation,GO:BP,6.66111703460573e-05,TRUE,10,Up-regulated
+regulation of biological process involved in symbiotic interaction,GO:BP,6.66111703460573e-05,TRUE,6,Up-regulated
+neutrophil-mediated killing of symbiont cell,GO:BP,6.86842081673369e-05,TRUE,4,Up-regulated
+negative regulation of cell cycle phase transition,GO:BP,6.94865747723817e-05,TRUE,13,Up-regulated
+negative regulation of myeloid leukocyte differentiation,GO:BP,7.17267842708521e-05,TRUE,7,Up-regulated
+pyroptotic inflammatory response,GO:BP,7.26769927558339e-05,TRUE,6,Up-regulated
+chemokine activity,GO:MF,7.51767403511166e-05,TRUE,6,Up-regulated
+regulation of cell cycle phase transition,GO:BP,8.6353642249272e-05,TRUE,17,Up-regulated
+cellular response to interleukin-1,GO:BP,8.83388893351284e-05,TRUE,8,Up-regulated
+killing by host of symbiont cells,GO:BP,9.07986000532515e-05,TRUE,5,Up-regulated
+Neutrophil degranulation,REAC,9.93580334260047e-05,TRUE,23,Up-regulated
+positive regulation of gene expression,GO:BP,0.000117650753443868,TRUE,30,Up-regulated
+neutrophil mediated cytotoxicity,GO:BP,0.000122797248832479,TRUE,4,Up-regulated
+proteolysis,GO:BP,0.000134082808302315,TRUE,13,Up-regulated
+intracellular signal transduction,GO:BP,0.000137934864340611,TRUE,61,Up-regulated
+positive regulation of pattern recognition receptor signaling pathway,GO:BP,0.000163085451895174,TRUE,7,Up-regulated
+ISG15 antiviral mechanism,REAC,0.00016922697275469,TRUE,5,Up-regulated
+negative regulation of IP-10 production,GO:BP,0.000171859059020404,TRUE,2,Up-regulated
+regulation of signaling,GO:BP,0.000171859059020404,TRUE,69,Up-regulated
+cellular response to nitrogen compound,GO:BP,0.00017294743501107,TRUE,22,Up-regulated
+chromosome segregation,GO:BP,0.00017294743501107,TRUE,17,Up-regulated
+RIG-I signaling pathway,GO:BP,0.000175997409915895,TRUE,5,Up-regulated
+intracellular receptor signaling pathway,GO:BP,0.000187130611173219,TRUE,13,Up-regulated
+immune effector process,GO:BP,0.000188785000785848,TRUE,22,Up-regulated
+cellular response to exogenous dsRNA,GO:BP,0.000192036169795851,TRUE,4,Up-regulated
+immune response-activating signaling pathway,GO:BP,0.000197692919135793,TRUE,18,Up-regulated
+regulation of myeloid leukocyte differentiation,GO:BP,0.000206704645965133,TRUE,8,Up-regulated
+biological process involved in interaction with symbiont,GO:BP,0.000209217604449039,TRUE,5,Up-regulated
+cell cycle phase transition,GO:BP,0.000236147635161438,TRUE,19,Up-regulated
+regulation of myeloid cell differentiation,GO:BP,0.000239971729632231,TRUE,10,Up-regulated
+positive regulation of cytokine-mediated signaling pathway,GO:BP,0.000241189345674174,TRUE,6,Up-regulated
+serine-type endopeptidase activity,GO:MF,0.000243748339976309,TRUE,13,Up-regulated
+serine-type endopeptidase activity,GO:MF,0.0342506063388234,TRUE,2,Down-regulated
+positive regulation of cell communication,GO:BP,0.000244557214357599,TRUE,41,Up-regulated
+positive regulation of signaling,GO:BP,0.00024584905435891,TRUE,41,Up-regulated
+chemokine-mediated signaling pathway,GO:BP,0.00024584905435891,TRUE,8,Up-regulated
+regulation of mitotic cell cycle phase transition,GO:BP,0.000248156817452793,TRUE,14,Up-regulated
+programmed cell death,GO:BP,0.00026330429824351,TRUE,30,Up-regulated
+negative regulation of myeloid cell differentiation,GO:BP,0.000269135552899463,TRUE,7,Up-regulated
+cell death,GO:BP,0.000270757275486097,TRUE,30,Up-regulated
+mitotic cell cycle process,GO:BP,0.000276133943781369,TRUE,23,Up-regulated
+cell migration,GO:BP,0.000289187890110007,TRUE,33,Up-regulated
+regulation of IP-10 production,GO:BP,0.000297624809165506,TRUE,2,Up-regulated
+negative regulation of chemokine (C-X-C motif) ligand 2 production,GO:BP,0.000297624809165506,TRUE,2,Up-regulated
+IP-10 production,GO:BP,0.000297624809165506,TRUE,2,Up-regulated
+regulation of cell communication,GO:BP,0.000315877955481654,TRUE,68,Up-regulated
+regulation of reproductive process,GO:BP,0.00032244917003801,TRUE,11,Up-regulated
+regulation of molecular function,GO:BP,0.00032244917003801,TRUE,35,Up-regulated
+granulocyte chemotaxis,GO:BP,0.000323577594505768,TRUE,7,Up-regulated
+negative regulation of mitotic cell cycle phase transition,GO:BP,0.00032550983013993,TRUE,10,Up-regulated
+nuclear division,GO:BP,0.00032550983013993,TRUE,17,Up-regulated
+myeloid cell differentiation,GO:BP,0.000354522497985662,TRUE,14,Up-regulated
+positive regulation of signal transduction,GO:BP,0.000360765389424952,TRUE,37,Up-regulated
+biological regulation,GO:BP,0.000382674892246463,TRUE,183,Up-regulated
+regulation of pattern recognition receptor signaling pathway,GO:BP,0.00038636578631332,TRUE,10,Up-regulated
+leukocyte migration,GO:BP,0.000407495122019466,TRUE,16,Up-regulated
+serine-type peptidase activity,GO:MF,0.000410340808518932,TRUE,13,Up-regulated
+serine-type peptidase activity,GO:MF,0.0342506063388234,TRUE,2,Down-regulated
+ISG15-protein conjugation,GO:BP,0.000421914560212205,TRUE,2,Up-regulated
+serine hydrolase activity,GO:MF,0.000426383022081805,TRUE,13,Up-regulated
+serine hydrolase activity,GO:MF,0.0342506063388234,TRUE,2,Down-regulated
+response to chemokine,GO:BP,0.000434905036380995,TRUE,8,Up-regulated
+cellular response to chemokine,GO:BP,0.000434905036380995,TRUE,8,Up-regulated
+eosinophil chemotaxis,GO:BP,0.000435426924620203,TRUE,4,Up-regulated
+regulation of chemokine production,GO:BP,0.0004393978229037,TRUE,7,Up-regulated
+chemokine production,GO:BP,0.0004393978229037,TRUE,7,Up-regulated
+cell motility,GO:BP,0.000443779798695361,TRUE,36,Up-regulated
+negative regulation of immune response,GO:BP,0.000468134077021942,TRUE,6,Up-regulated
+cell population proliferation,GO:BP,0.000468217674355853,TRUE,40,Up-regulated
+response to type II interferon,GO:BP,0.000468217674355853,TRUE,8,Up-regulated
+positive regulation of cell cycle process,GO:BP,0.00047145560336481,TRUE,12,Up-regulated
+regulation of biological process,GO:BP,0.000478602079372521,TRUE,178,Up-regulated
+response to interleukin-1,GO:BP,0.000478602079372521,TRUE,8,Up-regulated
+defense response to Gram-positive bacterium,GO:BP,0.000499394094538564,TRUE,5,Up-regulated
+fibroblast proliferation,GO:BP,0.000501911207104496,TRUE,8,Up-regulated
+cellular response to dsRNA,GO:BP,0.000506324420447398,TRUE,4,Up-regulated
+CCR2 chemokine receptor binding,GO:MF,0.000507270992733672,TRUE,3,Up-regulated
+endopeptidase activity,GO:MF,0.000507270992733672,TRUE,18,Up-regulated
+endopeptidase activity,GO:MF,0.0264875793524896,TRUE,5,Down-regulated
+myeloid leukocyte differentiation,GO:BP,0.000517615253085195,TRUE,9,Up-regulated
+acute inflammatory response,GO:BP,0.000528673013791774,TRUE,8,Up-regulated
+mitotic cell cycle phase transition,GO:BP,0.000554785465519133,TRUE,16,Up-regulated
+positive regulation of defense response to virus by host,GO:BP,0.000585111832067638,TRUE,5,Up-regulated
+cell surface receptor signaling pathway via JAK-STAT,GO:BP,0.000590770069157763,TRUE,8,Up-regulated
+chemotaxis,GO:BP,0.000625620055551884,TRUE,17,Up-regulated
+taxis,GO:BP,0.000656940427734334,TRUE,17,Up-regulated
+negative regulation of cellular process,GO:BP,0.000668066077489621,TRUE,84,Up-regulated
+eosinophil migration,GO:BP,0.000689379092287548,TRUE,4,Up-regulated
+regulation of binding,GO:BP,0.000689379092287548,TRUE,10,Up-regulated
+ERK1 and ERK2 cascade,GO:BP,0.000693251159725317,TRUE,12,Up-regulated
+peptidase activity,GO:MF,0.000703858183019433,TRUE,22,Up-regulated
+peptidase activity,GO:MF,0.0352583840842213,TRUE,5,Down-regulated
+myeloid leukocyte mediated immunity,GO:BP,0.000708414946139698,TRUE,7,Up-regulated
+negative regulation of chemokine production,GO:BP,0.000802023651065963,TRUE,4,Up-regulated
+CCR chemokine receptor binding,GO:MF,0.000817830259464334,TRUE,5,Up-regulated
+regulation of nuclear division,GO:BP,0.000845375252174538,TRUE,9,Up-regulated
+regulation of ribonuclease activity,GO:BP,0.000845375252174538,TRUE,2,Up-regulated
+G protein-coupled receptor binding,GO:MF,0.000845985518903829,TRUE,10,Up-regulated
+leukocyte chemotaxis,GO:BP,0.000879029275354182,TRUE,10,Up-regulated
+cell surface receptor signaling pathway via STAT,GO:BP,0.000958921419620177,TRUE,8,Up-regulated
+organelle fission,GO:BP,0.000958921419620177,TRUE,17,Up-regulated
+collagen catabolic process,GO:BP,0.00101148084698538,TRUE,3,Up-regulated
+positive regulation of mitotic cell cycle phase transition,GO:BP,0.00102907710707628,TRUE,7,Up-regulated
+multicellular organismal process,GO:BP,0.00104933978323462,TRUE,110,Up-regulated
+neutrophil-mediated killing of fungus,GO:BP,0.00106935953590953,TRUE,2,Up-regulated
+adenylyltransferase activity,GO:MF,0.00108879077164476,TRUE,3,Up-regulated
+cytokine activity,GO:MF,0.00108879077164476,TRUE,12,Up-regulated
+leukemia inhibitory factor signaling pathway,GO:BP,0.00110303719188768,TRUE,2,Up-regulated
+regulation of mitotic nuclear division,GO:BP,0.00113376873994082,TRUE,8,Up-regulated
+cell killing,GO:BP,0.00113376873994082,TRUE,10,Up-regulated
+negative regulation of cell development,GO:BP,0.00118868607638814,TRUE,10,Up-regulated
+regulation of cell population proliferation,GO:BP,0.00132457155046193,TRUE,34,Up-regulated
+regulation of defense response to virus,GO:BP,0.00136858499618826,TRUE,6,Up-regulated
+hemopoiesis,GO:BP,0.00140514647784762,TRUE,25,Up-regulated
+regulation of meiotic cell cycle phase transition,GO:BP,0.00141707302872074,TRUE,3,Up-regulated
+mitotic nuclear division,GO:BP,0.00141818615686469,TRUE,12,Up-regulated
+Influenza A,KEGG,0.00142507145558687,TRUE,7,Up-regulated
+secretion,GO:BP,0.00148642884368441,TRUE,21,Up-regulated
+locomotion,GO:BP,0.00156362533897314,TRUE,26,Up-regulated
+cellular response to virus,GO:BP,0.0015738669414977,TRUE,5,Up-regulated
+regulation of programmed cell death,GO:BP,0.00157620877751545,TRUE,33,Up-regulated
+disruption of cellular anatomical structure in another organism,GO:BP,0.00158300321530575,TRUE,2,Up-regulated
+disruption of plasma membrane integrity in another organism,GO:BP,0.00158300321530575,TRUE,2,Up-regulated
+positive regulation of ovulation,GO:BP,0.00159171730821054,TRUE,2,Up-regulated
+neutrophil-mediated killing of bacterium,GO:BP,0.00161318467693042,TRUE,3,Up-regulated
+identical protein binding,GO:MF,0.00163715701692291,TRUE,44,Up-regulated
+signaling receptor binding,GO:MF,0.00163804461551903,TRUE,36,Up-regulated
+positive regulation of DNA endoreduplication,GO:BP,0.00164044716280721,TRUE,2,Up-regulated
+regulation of tyrosine phosphorylation of STAT protein,GO:BP,0.00174082916136223,TRUE,5,Up-regulated
+defense response to protozoan,GO:BP,0.00181709896323315,TRUE,4,Up-regulated
+positive regulation of locomotion,GO:BP,0.00188223739301703,TRUE,14,Up-regulated
+apoptotic process,GO:BP,0.00189473679819397,TRUE,27,Up-regulated
+regulation of transport,GO:BP,0.0018971701371797,TRUE,24,Up-regulated
+negative regulation of cell differentiation,GO:BP,0.00194071940126122,TRUE,16,Up-regulated
+regulation of apoptotic process,GO:BP,0.00197902017304583,TRUE,32,Up-regulated
+positive regulation of NMDA glutamate receptor activity,GO:BP,0.00205589749085728,TRUE,2,Up-regulated
+Coronavirus disease - COVID-19,KEGG,0.00210335965654541,TRUE,10,Up-regulated
+regulation of defense response to virus by host,GO:BP,0.00213980982038845,TRUE,5,Up-regulated
+regulation of interleukin-1-mediated signaling pathway,GO:BP,0.00213980982038845,TRUE,3,Up-regulated
+symbiont entry into host cell,GO:BP,0.00216090314711041,TRUE,7,Up-regulated
+modulation of process of another organism,GO:BP,0.00216441197614403,TRUE,7,Up-regulated
+leukocyte activation,GO:BP,0.00217875325571187,TRUE,21,Up-regulated
+regulation of sister chromatid segregation,GO:BP,0.00217875325571187,TRUE,7,Up-regulated
+positive regulation of RIG-I signaling pathway,GO:BP,0.00220721563388741,TRUE,3,Up-regulated
+cell activation,GO:BP,0.00224722060282989,TRUE,23,Up-regulated
+tyrosine phosphorylation of STAT protein,GO:BP,0.00227722427749084,TRUE,5,Up-regulated
+regulation of meiotic cell cycle,GO:BP,0.00228054441954424,TRUE,5,Up-regulated
+hematopoietic progenitor cell differentiation,GO:BP,0.00232076063420231,TRUE,8,Up-regulated
+Interferon gamma signaling,REAC,0.00236149937380665,TRUE,9,Up-regulated
+cell cycle checkpoint signaling,GO:BP,0.00240086381595088,TRUE,9,Up-regulated
+regulation of chromosome separation,GO:BP,0.00245858374515217,TRUE,6,Up-regulated
+lymphocyte chemotaxis,GO:BP,0.0024707192933671,TRUE,4,Up-regulated
+regulation of osteoblast proliferation,GO:BP,0.00248025145733743,TRUE,4,Up-regulated
+interferon-alpha production,GO:BP,0.00248359745074609,TRUE,4,Up-regulated
+regulation of interferon-alpha production,GO:BP,0.00248359745074609,TRUE,4,Up-regulated
+positive regulation of chemokine production,GO:BP,0.00249354358664051,TRUE,5,Up-regulated
+meiotic cell cycle phase transition,GO:BP,0.00249807236529076,TRUE,3,Up-regulated
+response to protozoan,GO:BP,0.00251592006624359,TRUE,4,Up-regulated
+symbiont entry into host,GO:BP,0.00251665449474779,TRUE,7,Up-regulated
+regulation of cellular process,GO:BP,0.00253261335922305,TRUE,170,Up-regulated
+lipopolysaccharide binding,GO:MF,0.00266312187333146,TRUE,5,Up-regulated
+Innate Immune System,REAC,0.00266372482825477,TRUE,32,Up-regulated
+neutrophil migration,GO:BP,0.00275083702457841,TRUE,5,Up-regulated
+insulin receptor internalization,GO:BP,0.00282011938839851,TRUE,2,Up-regulated
+response to zinc ion,GO:BP,0.0028671454603475,TRUE,5,Up-regulated
+positive regulation of monocyte chemotactic protein-1 production,GO:BP,0.00288111692341526,TRUE,2,Up-regulated
+response to toxic substance,GO:BP,0.00291216040120639,TRUE,11,Up-regulated
+regulation of catalytic activity,GO:BP,0.00291216040120639,TRUE,19,Up-regulated
+trophoblast giant cell differentiation,GO:BP,0.00293595263806394,TRUE,3,Up-regulated
+negative regulation of signaling,GO:BP,0.00293651456664175,TRUE,33,Up-regulated
+positive regulation of cell cycle phase transition,GO:BP,0.00295122950693015,TRUE,7,Up-regulated
+negative regulation of interleukin-1 production,GO:BP,0.00299614394641809,TRUE,4,Up-regulated
+negative regulation of protein binding,GO:BP,0.0031548052355572,TRUE,5,Up-regulated
+meiotic cell cycle process,GO:BP,0.00321257771802894,TRUE,10,Up-regulated
+Hepatitis C,KEGG,0.00329034049083351,TRUE,8,Up-regulated
+mononuclear cell migration,GO:BP,0.00332956617842118,TRUE,8,Up-regulated
+cell adhesion,GO:BP,0.00332956617842118,TRUE,32,Up-regulated
+regulation of locomotion,GO:BP,0.00332956617842118,TRUE,21,Up-regulated
+regulation of type II interferon-mediated signaling pathway,GO:BP,0.00333544870787627,TRUE,3,Up-regulated
+regulation of blood coagulation,GO:BP,0.00333544870787627,TRUE,5,Up-regulated
+neutrophil activation,GO:BP,0.00333544870787627,TRUE,4,Up-regulated
+regulation of response to type II interferon,GO:BP,0.00333544870787627,TRUE,3,Up-regulated
+modulation by symbiont of entry into host,GO:BP,0.00333544870787627,TRUE,4,Up-regulated
+antifungal humoral response,GO:BP,0.00333544870787627,TRUE,2,Up-regulated
+RSV-host interactions,REAC,0.00336461258875073,TRUE,8,Up-regulated
+positive regulation of immune effector process,GO:BP,0.00339706347877651,TRUE,7,Up-regulated
+positive regulation of programmed cell death,GO:BP,0.00341962896150907,TRUE,17,Up-regulated
+collagen metabolic process,GO:BP,0.00343136530996787,TRUE,5,Up-regulated
+CXCR3 chemokine receptor binding,GO:MF,0.00346681579957984,TRUE,2,Up-regulated
+chromosome separation,GO:BP,0.00352283961091642,TRUE,6,Up-regulated
+positive regulation of chromosome segregation,GO:BP,0.00353914721819259,TRUE,4,Up-regulated
+Fibronectin matrix formation,REAC,0.00357931653041077,TRUE,3,Up-regulated
+positive regulation of type I interferon-mediated signaling pathway,GO:BP,0.00367517149416645,TRUE,3,Up-regulated
+negative regulation of cell population proliferation,GO:BP,0.00370286579675491,TRUE,19,Up-regulated
+regulation of hemostasis,GO:BP,0.00371460510549041,TRUE,5,Up-regulated
+nuclear chromosome segregation,GO:BP,0.00372388269436234,TRUE,12,Up-regulated
+clathrin-dependent endocytosis of virus by host cell,GO:BP,0.00372388269436234,TRUE,1,Up-regulated
+regulation of ovulation,GO:BP,0.00374682159122562,TRUE,2,Up-regulated
+regulation of macrophage differentiation,GO:BP,0.00374682159122562,TRUE,3,Up-regulated
+negative regulation of follicle-stimulating hormone secretion,GO:BP,0.00374682159122562,TRUE,2,Up-regulated
+negative regulation of leukocyte differentiation,GO:BP,0.00381493909523154,TRUE,6,Up-regulated
+export from cell,GO:BP,0.00382256947110234,TRUE,19,Up-regulated
+regulation of localization,GO:BP,0.00383842036954474,TRUE,32,Up-regulated
+regulation of DNA endoreduplication,GO:BP,0.00383842036954474,TRUE,2,Up-regulated
+negative regulation of meiotic cell cycle,GO:BP,0.00383842036954474,TRUE,3,Up-regulated
+sister chromatid segregation,GO:BP,0.00385838726760324,TRUE,10,Up-regulated
+secretion by cell,GO:BP,0.00385838726760324,TRUE,18,Up-regulated
+positive regulation of cell motility,GO:BP,0.00385838726760324,TRUE,13,Up-regulated
+cytokinesis,GO:BP,0.00391069121329526,TRUE,9,Up-regulated
+osteoblast proliferation,GO:BP,0.0040159265541755,TRUE,4,Up-regulated
+cellular extravasation,GO:BP,0.00411688031872882,TRUE,5,Up-regulated
+leukocyte mediated immunity,GO:BP,0.00413191372428746,TRUE,13,Up-regulated
+regulation of mitotic sister chromatid segregation,GO:BP,0.00416482861324576,TRUE,5,Up-regulated
+regulation of chemokine (C-X-C motif) ligand 2 production,GO:BP,0.00416564137527323,TRUE,2,Up-regulated
+chemokine (C-X-C motif) ligand 2 production,GO:BP,0.00416564137527323,TRUE,2,Up-regulated
+positive regulation of chromosome separation,GO:BP,0.00423566175498371,TRUE,4,Up-regulated
+positive regulation of extrinsic apoptotic signaling pathway,GO:BP,0.00427915761800861,TRUE,4,Up-regulated
+positive regulation of mitotic cell cycle,GO:BP,0.00430070232799941,TRUE,7,Up-regulated
+response to nitrogen compound,GO:BP,0.00435934381277474,TRUE,26,Up-regulated
+protein binding,GO:MF,0.00438331643347408,TRUE,203,Up-regulated
+stress response to metal ion,GO:BP,0.00448119386806513,TRUE,3,Up-regulated
+negative regulation of hemopoiesis,GO:BP,0.0045466640773085,TRUE,6,Up-regulated
+regulation of coagulation,GO:BP,0.00466372746613793,TRUE,5,Up-regulated
+cellular response to type II interferon,GO:BP,0.00466372746613793,TRUE,6,Up-regulated
+regulation of chemotaxis,GO:BP,0.00466372746613793,TRUE,8,Up-regulated
+chromosome localization,GO:BP,0.00466372746613793,TRUE,7,Up-regulated
+cellular response to angiotensin,GO:BP,0.00473485736675199,TRUE,4,Up-regulated
+positive regulation of myeloid leukocyte mediated immunity,GO:BP,0.00476430447314738,TRUE,3,Up-regulated
+cell chemotaxis,GO:BP,0.0047650213011038,TRUE,12,Up-regulated
+negative regulation of interleukin-8 production,GO:BP,0.00483991779853259,TRUE,3,Up-regulated
+regulation of monocyte chemotactic protein-1 production,GO:BP,0.00492374232385857,TRUE,2,Up-regulated
+monocyte chemotactic protein-1 production,GO:BP,0.00492374232385857,TRUE,2,Up-regulated
+blood circulation,GO:BP,0.00512788547281754,TRUE,14,Up-regulated
+host-mediated perturbation of symbiont process,GO:BP,0.00527529430923831,TRUE,6,Up-regulated
+negative regulation of cell communication,GO:BP,0.00527529430923831,TRUE,32,Up-regulated
+regulation of fibroblast proliferation,GO:BP,0.00527529430923831,TRUE,6,Up-regulated
+regulation of mitotic metaphase/anaphase transition,GO:BP,0.0053065250355748,TRUE,6,Up-regulated
+response to metal ion,GO:BP,0.0053065250355748,TRUE,12,Up-regulated
+angiogenesis,GO:BP,0.00531108520071769,TRUE,15,Up-regulated
+regulation of lymphocyte chemotaxis,GO:BP,0.00539759647452076,TRUE,3,Up-regulated
+granulocyte activation,GO:BP,0.0054863933415951,TRUE,4,Up-regulated
+response to exogenous dsRNA,GO:BP,0.00559932436837865,TRUE,4,Up-regulated
+regulation of mitotic sister chromatid separation,GO:BP,0.00566520551837661,TRUE,5,Up-regulated
+detoxification of inorganic compound,GO:BP,0.0056912852996656,TRUE,3,Up-regulated
+clustering of voltage-gated sodium channels,GO:BP,0.00576886071683932,TRUE,2,Up-regulated
+negative regulation of cell division,GO:BP,0.00579915523761247,TRUE,3,Up-regulated
+positive regulation of apoptotic process,GO:BP,0.00584140293763756,TRUE,16,Up-regulated
+regulation of secretion,GO:BP,0.00584140293763756,TRUE,12,Up-regulated
+regulation of type B pancreatic cell proliferation,GO:BP,0.00586413852462285,TRUE,3,Up-regulated
+type III interferon production,GO:BP,0.00586413852462285,TRUE,2,Up-regulated
+regulation of type III interferon production,GO:BP,0.00586413852462285,TRUE,2,Up-regulated
+mitotic metaphase chromosome alignment,GO:BP,0.00595087257545023,TRUE,5,Up-regulated
+female gamete generation,GO:BP,0.00595992914756939,TRUE,8,Up-regulated
+negative regulation of signal transduction,GO:BP,0.00596441116833783,TRUE,30,Up-regulated
+negative regulation of B cell differentiation,GO:BP,0.0059784866069261,TRUE,2,Up-regulated
+regulation of metaphase/anaphase transition of cell cycle,GO:BP,0.00598045355075541,TRUE,6,Up-regulated
+extracellular matrix organization,GO:BP,0.00604493554323184,TRUE,11,Up-regulated
+meiotic cell cycle,GO:BP,0.00613230524209566,TRUE,11,Up-regulated
+extracellular structure organization,GO:BP,0.00615004999044565,TRUE,11,Up-regulated
+positive regulation of MDA-5 signaling pathway,GO:BP,0.00615004999044565,TRUE,2,Up-regulated
+nucleotidyltransferase activity,GO:MF,0.00621297652900055,TRUE,4,Up-regulated
+negative regulation of cell activation,GO:BP,0.00621831624354462,TRUE,8,Up-regulated
+metaphase/anaphase transition of mitotic cell cycle,GO:BP,0.00621831624354462,TRUE,6,Up-regulated
+regulation of extrinsic apoptotic signaling pathway,GO:BP,0.00625528576264493,TRUE,6,Up-regulated
+external encapsulating structure organization,GO:BP,0.00625528576264493,TRUE,11,Up-regulated
+cellular response to cholesterol,GO:BP,0.00628043482313026,TRUE,3,Up-regulated
+DNA endoreduplication,GO:BP,0.00640638899250481,TRUE,2,Up-regulated
+regulation of cell adhesion,GO:BP,0.00644904403104234,TRUE,18,Up-regulated
+negative regulation of osteoclast differentiation,GO:BP,0.00647612535380214,TRUE,4,Up-regulated
+mitotic cell cycle checkpoint signaling,GO:BP,0.00651587537249923,TRUE,7,Up-regulated
+negative regulation of nuclear division,GO:BP,0.0065177261009729,TRUE,5,Up-regulated
+mitotic sister chromatid separation,GO:BP,0.0065177261009729,TRUE,5,Up-regulated
+regulation of immune effector process,GO:BP,0.0065177261009729,TRUE,8,Up-regulated
+regulation of T-helper 2 cell cytokine production,GO:BP,0.00660831613533451,TRUE,2,Up-regulated
+T-helper 2 cell cytokine production,GO:BP,0.00660831613533451,TRUE,2,Up-regulated
+regulation of single stranded viral RNA replication via double stranded DNA intermediate,GO:BP,0.00660831613533451,TRUE,3,Up-regulated
+single-stranded RNA binding,GO:MF,0.00674695473838303,TRUE,6,Up-regulated
+regulation of receptor signaling pathway via JAK-STAT,GO:BP,0.0067611606901183,TRUE,5,Up-regulated
+positive regulation of tyrosine phosphorylation of STAT protein,GO:BP,0.00678375715779843,TRUE,4,Up-regulated
+regulation of leukocyte activation,GO:BP,0.00684831375754603,TRUE,12,Up-regulated
+negative regulation of apoptotic process,GO:BP,0.00687784705144463,TRUE,19,Up-regulated
+metaphase/anaphase transition of cell cycle,GO:BP,0.0069552752511575,TRUE,6,Up-regulated
+regulation of cell motility,GO:BP,0.0069552752511575,TRUE,19,Up-regulated
+mitotic cytokinesis,GO:BP,0.00696396938385873,TRUE,6,Up-regulated
+positive regulation of cell migration,GO:BP,0.00703826541221818,TRUE,12,Up-regulated
+positive regulation of metabolic process,GO:BP,0.00708470120049788,TRUE,61,Up-regulated
+negative regulation of macromolecule metabolic process,GO:BP,0.00714623082375471,TRUE,50,Up-regulated
+cellular response to alcohol,GO:BP,0.00733559810758637,TRUE,6,Up-regulated
+single stranded viral RNA replication via double stranded DNA intermediate,GO:BP,0.00740400680427479,TRUE,3,Up-regulated
+regulation of phosphorylation,GO:BP,0.00740400680427479,TRUE,19,Up-regulated
+extracellular matrix disassembly,GO:BP,0.00743588542667464,TRUE,3,Up-regulated
+macrophage activation,GO:BP,0.00743588542667464,TRUE,6,Up-regulated
+gland development,GO:BP,0.00743588542667464,TRUE,13,Up-regulated
+regulation of cytoplasmic pattern recognition receptor signaling pathway,GO:BP,0.00746338851604739,TRUE,4,Up-regulated
+negative regulation of chemokine (C-C motif) ligand 5 production,GO:BP,0.00747293286051756,TRUE,2,Up-regulated
+cytokine production involved in immune response,GO:BP,0.00749526544576101,TRUE,6,Up-regulated
+regulation of cytokine production involved in immune response,GO:BP,0.00749526544576101,TRUE,6,Up-regulated
+positive regulation of biosynthetic process,GO:BP,0.00771131808664834,TRUE,44,Up-regulated
+Metal sequestration by antimicrobial proteins,REAC,0.00771912030848505,TRUE,3,Up-regulated
+detection of virus,GO:BP,0.00775206566685063,TRUE,2,Up-regulated
+negative regulation of macrophage differentiation,GO:BP,0.00787629779358607,TRUE,2,Up-regulated
+response to angiotensin,GO:BP,0.00789044501370838,TRUE,4,Up-regulated
+positive regulation of apoptotic signaling pathway,GO:BP,0.00789044501370838,TRUE,7,Up-regulated
+RNA helicase activity,GO:MF,0.00798226032222808,TRUE,6,Up-regulated
+extrinsic apoptotic signaling pathway,GO:BP,0.00807326254486417,TRUE,7,Up-regulated
+negative regulation of osteoclast development,GO:BP,0.00810264655689605,TRUE,2,Up-regulated
+metaphase chromosome alignment,GO:BP,0.00810264655689605,TRUE,6,Up-regulated
+positive regulation of transcription regulatory region DNA binding,GO:BP,0.00821669556412364,TRUE,3,Up-regulated
+regulation of cell migration,GO:BP,0.00825774398568778,TRUE,18,Up-regulated
+negative regulation of transport,GO:BP,0.00831277691099252,TRUE,12,Up-regulated
+response to dsRNA,GO:BP,0.00831277691099252,TRUE,4,Up-regulated
+regulation of secretion by cell,GO:BP,0.00831277691099252,TRUE,11,Up-regulated
+positive regulation of interferon-alpha production,GO:BP,0.00850207695421796,TRUE,3,Up-regulated
+negative regulation of type I interferon production,GO:BP,0.00856507401957955,TRUE,4,Up-regulated
+production of molecular mediator of immune response,GO:BP,0.00857351468233599,TRUE,8,Up-regulated
+regulation of chemokine (C-X-C motif) ligand 9 production,GO:BP,0.00857720262033227,TRUE,1,Up-regulated
+chemokine (C-X-C motif) ligand 9 production,GO:BP,0.00857720262033227,TRUE,1,Up-regulated
+negative regulation of chemokine (C-X-C motif) ligand 9 production,GO:BP,0.00857720262033227,TRUE,1,Up-regulated
+G0 and Early G1,REAC,0.00861564434093616,TRUE,5,Up-regulated
+positive regulation of DNA replication,GO:BP,0.00862847829306623,TRUE,4,Up-regulated
+positive regulation of macromolecule biosynthetic process,GO:BP,0.0086470931190638,TRUE,38,Up-regulated
+ATP-dependent activity, acting on RNA,GO:MF,0.00884194094152813,TRUE,6,Up-regulated
+cellular response to peptide hormone stimulus,GO:BP,0.00887482115779855,TRUE,11,Up-regulated
+regulation of RIG-I signaling pathway,GO:BP,0.00900512731200212,TRUE,2,Up-regulated
+female gonad development,GO:BP,0.00915723590849161,TRUE,6,Up-regulated
+MAPK cascade,GO:BP,0.00917524206239726,TRUE,17,Up-regulated
+negative regulation of endocytosis,GO:BP,0.00923120372694996,TRUE,4,Up-regulated
+negative regulation of programmed cell death,GO:BP,0.00936295712098954,TRUE,19,Up-regulated
+regulation of leukocyte chemotaxis,GO:BP,0.00939737017592374,TRUE,5,Up-regulated
+protein catabolic process,GO:BP,0.00939999665927945,TRUE,8,Up-regulated
+regulation of natural killer cell chemotaxis,GO:BP,0.00944636991432344,TRUE,2,Up-regulated
+protein autoprocessing,GO:BP,0.00949705832845727,TRUE,2,Up-regulated
+cytokine receptor binding,GO:MF,0.00956174704973225,TRUE,6,Up-regulated
+regulation of myeloid dendritic cell activation,GO:BP,0.00956839610024288,TRUE,2,Up-regulated
+intracellular transport of viral protein in host cell,GO:BP,0.00959217431335774,TRUE,1,Up-regulated
+symbiont intracellular protein transport in host,GO:BP,0.00959217431335774,TRUE,1,Up-regulated
+intracellular monoatomic ion homeostasis,GO:BP,0.00962407565643224,TRUE,12,Up-regulated
+G1/S transition of mitotic cell cycle,GO:BP,0.00962407565643224,TRUE,8,Up-regulated
+regulation of receptor signaling pathway via STAT,GO:BP,0.00964433368692455,TRUE,5,Up-regulated
+regulation of cholesterol transport,GO:BP,0.00964786830572234,TRUE,4,Up-regulated
+clearance of foreign intracellular nucleic acids,GO:BP,0.00964786830572234,TRUE,2,Up-regulated
+regulation of sterol transport,GO:BP,0.00964786830572234,TRUE,4,Up-regulated
+clearance of foreign intracellular DNA,GO:BP,0.00964786830572234,TRUE,2,Up-regulated
+response to cadmium ion,GO:BP,0.00971979469726558,TRUE,4,Up-regulated
+G1/S-Specific Transcription,REAC,0.00974104079725532,TRUE,5,Up-regulated
+fatty acyl-[ACP] hydrolase activity,GO:MF,0.00987776259638307,TRUE,1,Up-regulated
+Respiratory Syncytial Virus Infection Pathway,REAC,0.00994781656327498,TRUE,8,Up-regulated
+regulation of vesicle-mediated transport,GO:BP,0.0100408358593205,TRUE,9,Up-regulated
+negative regulation of meiotic cell cycle phase transition,GO:BP,0.010050865948611,TRUE,2,Up-regulated
+medium-chain fatty acid biosynthetic process,GO:BP,0.0101788550901725,TRUE,1,Up-regulated
+modulation by host of viral genome replication,GO:BP,0.0101788550901725,TRUE,2,Up-regulated
+regulation of multicellular organismal development,GO:BP,0.0101788550901725,TRUE,21,Up-regulated
+positive regulation of signaling receptor activity,GO:BP,0.01035880302813,TRUE,3,Up-regulated
+Interleukin-10 signaling,REAC,0.0103708018087785,TRUE,6,Up-regulated
+development of primary female sexual characteristics,GO:BP,0.0105088072751956,TRUE,6,Up-regulated
+negative regulation of bone remodeling,GO:BP,0.0105088072751956,TRUE,3,Up-regulated
+host-mediated suppression of symbiont invasion,GO:BP,0.0105556966064417,TRUE,3,Up-regulated
+signaling receptor regulator activity,GO:MF,0.0105999553537029,TRUE,12,Up-regulated
+DNA replication,GO:BP,0.0106117380498823,TRUE,10,Up-regulated
+gonad development,GO:BP,0.0109156772804002,TRUE,9,Up-regulated
+response to yeast,GO:BP,0.0109887965323427,TRUE,2,Up-regulated
+regulation of interleukin-1 production,GO:BP,0.0111485619626829,TRUE,6,Up-regulated
+interleukin-1 production,GO:BP,0.0111485619626829,TRUE,6,Up-regulated
+cellular response to sterol,GO:BP,0.0111485619626829,TRUE,3,Up-regulated
+cell division,GO:BP,0.0111678802679029,TRUE,17,Up-regulated
+negative regulation of natural killer cell chemotaxis,GO:BP,0.0115538522374964,TRUE,1,Up-regulated
+positive regulation of mitotic sister chromatid separation,GO:BP,0.0116220981934711,TRUE,3,Up-regulated
+regulation of hemopoiesis,GO:BP,0.0116408700286906,TRUE,11,Up-regulated
+CD4-positive, alpha-beta T cell cytokine production,GO:BP,0.0118265943330468,TRUE,2,Up-regulated
+regulation of cell activation,GO:BP,0.0119160515073771,TRUE,14,Up-regulated
+regulation of endocytosis,GO:BP,0.012045541851806,TRUE,8,Up-regulated
+negative regulation of BMP signaling pathway,GO:BP,0.012117989283043,TRUE,4,Up-regulated
+positive regulation of follicle-stimulating hormone secretion,GO:BP,0.012117989283043,TRUE,2,Up-regulated
+positive regulation of production of molecular mediator of immune response,GO:BP,0.012117989283043,TRUE,6,Up-regulated
+regulation of follicle-stimulating hormone secretion,GO:BP,0.012117989283043,TRUE,2,Up-regulated
+negative regulation of low-density lipoprotein particle receptor binding,GO:BP,0.0121233549118892,TRUE,1,Up-regulated
+development of primary sexual characteristics,GO:BP,0.0121553559996067,TRUE,9,Up-regulated
+negative regulation of leukocyte activation,GO:BP,0.0122833124499734,TRUE,7,Up-regulated
+mitotic sister chromatid segregation,GO:BP,0.0124582656493004,TRUE,8,Up-regulated
+type II interferon-mediated signaling pathway,GO:BP,0.0124582656493004,TRUE,3,Up-regulated
+pattern recognition receptor activity,GO:MF,0.0130019461564802,TRUE,4,Up-regulated
+positive regulation of cell population proliferation,GO:BP,0.0130145433763613,TRUE,20,Up-regulated
+positive regulation of macromolecule metabolic process,GO:BP,0.0130452217431308,TRUE,50,Up-regulated
+protein phosphorylation,GO:BP,0.0131258089727424,TRUE,21,Up-regulated
+negative regulation of helicase activity,GO:BP,0.0131258089727424,TRUE,1,Up-regulated
+negative regulation of response to stimulus,GO:BP,0.0132619269549936,TRUE,34,Up-regulated
+pyrimidine deoxyribonucleoside diphosphate biosynthetic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+pyrimidine deoxyribonucleoside diphosphate metabolic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+establishment of chromosome localization,GO:BP,0.0132619269549936,TRUE,6,Up-regulated
+dTDP biosynthetic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+negative regulation of binding,GO:BP,0.0132619269549936,TRUE,3,Up-regulated
+dUDP metabolic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+dUDP biosynthetic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+dTDP metabolic process,GO:BP,0.0132619269549936,TRUE,1,Up-regulated
+natural killer cell chemotaxis,GO:BP,0.01332582494413,TRUE,2,Up-regulated
+regulation of production of molecular mediator of immune response,GO:BP,0.0133626539779511,TRUE,7,Up-regulated
+negative regulation of phosphorylation,GO:BP,0.0135459158972859,TRUE,8,Up-regulated
+phosphorylation,GO:BP,0.0137512344175592,TRUE,25,Up-regulated
+podocyte cell migration,GO:BP,0.0138703942491166,TRUE,2,Up-regulated
+regulation of protein export from nucleus,GO:BP,0.0138788167031296,TRUE,1,Up-regulated
+negative regulation of metabolic process,GO:BP,0.0141499915062316,TRUE,51,Up-regulated
+T cell migration,GO:BP,0.0141499915062316,TRUE,3,Up-regulated
+exocytosis,GO:BP,0.0141499915062316,TRUE,7,Up-regulated
+mitotic spindle assembly checkpoint signaling,GO:BP,0.0141499915062316,TRUE,4,Up-regulated
+spindle assembly checkpoint signaling,GO:BP,0.0141499915062316,TRUE,4,Up-regulated
+mitotic spindle checkpoint signaling,GO:BP,0.0141499915062316,TRUE,4,Up-regulated
+negative regulation of granulocyte differentiation,GO:BP,0.0142247283086127,TRUE,2,Up-regulated
+cytokinetic process,GO:BP,0.0142247283086127,TRUE,4,Up-regulated
+deoxyribose phosphate biosynthetic process,GO:BP,0.0143671623395908,TRUE,2,Up-regulated
+2'-deoxyribonucleotide biosynthetic process,GO:BP,0.0143671623395908,TRUE,2,Up-regulated
+deoxyribonucleotide biosynthetic process,GO:BP,0.0143671623395908,TRUE,2,Up-regulated
+regulation of heterotypic cell-cell adhesion,GO:BP,0.0144716171704175,TRUE,3,Up-regulated
+circulatory system process,GO:BP,0.0145714597597013,TRUE,14,Up-regulated
+acute-phase response,GO:BP,0.0146286578240732,TRUE,4,Up-regulated
+positive regulation of monoatomic ion transmembrane transport,GO:BP,0.0148059594750882,TRUE,6,Up-regulated
+spindle checkpoint signaling,GO:BP,0.0149321389961723,TRUE,4,Up-regulated
+negative regulation of type II interferon-mediated signaling pathway,GO:BP,0.0149321389961723,TRUE,2,Up-regulated
+negative regulation of response to type II interferon,GO:BP,0.0149321389961723,TRUE,2,Up-regulated
+vasculature development,GO:BP,0.0149887492393708,TRUE,17,Up-regulated
+leukocyte cell-cell adhesion,GO:BP,0.0150645815533699,TRUE,12,Up-regulated
+cell-cell signaling,GO:BP,0.0150778591401655,TRUE,22,Up-regulated
+regulation of MDA-5 signaling pathway,GO:BP,0.0150793773143066,TRUE,2,Up-regulated
+macromolecule catabolic process,GO:BP,0.0151363565488774,TRUE,9,Up-regulated
+regulation of viral entry into host cell,GO:BP,0.0152816074473345,TRUE,3,Up-regulated
+positive regulation of gonadotropin secretion,GO:BP,0.0152816074473345,TRUE,2,Up-regulated
+positive regulation of toll-like receptor 7 signaling pathway,GO:BP,0.0153238097101766,TRUE,1,Up-regulated
+helper T cell extravasation,GO:BP,0.0153238097101766,TRUE,1,Up-regulated
+negative regulation of lymphocyte chemotaxis,GO:BP,0.0153238097101766,TRUE,1,Up-regulated
+modulation by host of viral process,GO:BP,0.0153241295424086,TRUE,3,Up-regulated
+positive regulation of reproductive process,GO:BP,0.0153617119143308,TRUE,5,Up-regulated
+endocytosis,GO:BP,0.0153822063654147,TRUE,14,Up-regulated
+chorionic trophoblast cell differentiation,GO:BP,0.0154542475878784,TRUE,2,Up-regulated
+negative regulation of cytokinesis,GO:BP,0.0154542475878784,TRUE,2,Up-regulated
+blood vessel morphogenesis,GO:BP,0.0154542475878784,TRUE,15,Up-regulated
+negative regulation of mitotic sister chromatid segregation,GO:BP,0.0154542475878784,TRUE,4,Up-regulated
+negative regulation of mitotic metaphase/anaphase transition,GO:BP,0.0154542475878784,TRUE,4,Up-regulated
+negative regulation of sister chromatid segregation,GO:BP,0.0154542475878784,TRUE,4,Up-regulated
+astrocyte cell migration,GO:BP,0.0154542475878784,TRUE,2,Up-regulated
+negative regulation of mitotic sister chromatid separation,GO:BP,0.0154542475878784,TRUE,4,Up-regulated
+negative regulation of membrane protein ectodomain proteolysis,GO:BP,0.0154618460996483,TRUE,2,Up-regulated
+meiotic nuclear division,GO:BP,0.0155499873958487,TRUE,8,Up-regulated
+intracellular zinc ion homeostasis,GO:BP,0.0156899735800313,TRUE,3,Up-regulated
+regulation of osteoblast differentiation,GO:BP,0.0156899735800313,TRUE,6,Up-regulated
+nucleoside diphosphate metabolic process,GO:BP,0.0156976416433743,TRUE,5,Up-regulated
+localization,GO:BP,0.0157323686045076,TRUE,82,Up-regulated
+regulation of DNA replication,GO:BP,0.0157823021195673,TRUE,6,Up-regulated
+negative regulation of tissue remodeling,GO:BP,0.0160335820965875,TRUE,3,Up-regulated
+lipid transporter activity,GO:MF,0.0160488418293768,TRUE,8,Up-regulated
+phospholipid transporter activity,GO:MF,0.0160488418293768,TRUE,5,Up-regulated
+ISG15-specific peptidase activity,GO:MF,0.0160488418293768,TRUE,1,Up-regulated
+lamin binding,GO:MF,0.0160488418293768,TRUE,1,Up-regulated
+phospholipid scramblase activity,GO:MF,0.0160488418293768,TRUE,3,Up-regulated
+regulation of membrane repolarization during action potential,GO:BP,0.0160624289497608,TRUE,2,Up-regulated
+regulation of MAPK cascade,GO:BP,0.0161197329814974,TRUE,13,Up-regulated
+neuronal ion channel clustering,GO:BP,0.0161433083078535,TRUE,2,Up-regulated
+positive regulation of transmembrane transport,GO:BP,0.0161527358016375,TRUE,6,Up-regulated
+regulation of NMDA receptor activity,GO:BP,0.0162287575338279,TRUE,2,Up-regulated
+cell differentiation involved in embryonic placenta development,GO:BP,0.0162287575338279,TRUE,3,Up-regulated
+spindle organization,GO:BP,0.0162702883860416,TRUE,8,Up-regulated
+negative regulation of macromolecule biosynthetic process,GO:BP,0.0162827921611581,TRUE,43,Up-regulated
+negative regulation of reproductive process,GO:BP,0.0163135151502499,TRUE,4,Up-regulated
+phospholipid translocation,GO:BP,0.0163135151502499,TRUE,4,Up-regulated
+attachment of mitotic spindle microtubules to kinetochore,GO:BP,0.0163410197695518,TRUE,3,Up-regulated
+regulation of nitric oxide biosynthetic process,GO:BP,0.0163450345835795,TRUE,4,Up-regulated
+synapse pruning,GO:BP,0.0163450345835795,TRUE,2,Up-regulated
+receptor-mediated endocytosis of virus by host cell,GO:BP,0.0163465132246206,TRUE,2,Up-regulated
+response to copper ion,GO:BP,0.0164727764065621,TRUE,3,Up-regulated
+regulation of protein phosphorylation,GO:BP,0.0165335974752413,TRUE,17,Up-regulated
+female sex differentiation,GO:BP,0.0165654469530256,TRUE,6,Up-regulated
+negative regulation of interleukin-1-mediated signaling pathway,GO:BP,0.0165768556120879,TRUE,2,Up-regulated
+negative regulation of osteoblast proliferation,GO:BP,0.0166396100568241,TRUE,2,Up-regulated
+positive regulation of toll-like receptor 9 signaling pathway,GO:BP,0.0166396100568241,TRUE,1,Up-regulated
+regulation of toll-like receptor 7 signaling pathway,GO:BP,0.0166396100568241,TRUE,1,Up-regulated
+response to cholesterol,GO:BP,0.0166870938230667,TRUE,3,Up-regulated
+neutrophil extravasation,GO:BP,0.0166965912176147,TRUE,2,Up-regulated
+negative regulation of chromosome separation,GO:BP,0.0167119151336498,TRUE,4,Up-regulated
+negative regulation of chromosome segregation,GO:BP,0.0167119151336498,TRUE,4,Up-regulated
+negative regulation of metaphase/anaphase transition of cell cycle,GO:BP,0.0167119151336498,TRUE,4,Up-regulated
+regulation of attachment of mitotic spindle microtubules to kinetochore,GO:BP,0.0167727660655137,TRUE,2,Up-regulated
+cell cycle G1/S phase transition,GO:BP,0.0167727660655137,TRUE,8,Up-regulated
+PKR/eIFalpha signaling,GO:BP,0.0167727660655137,TRUE,1,Up-regulated
+regulation of protein binding,GO:BP,0.0167727660655137,TRUE,3,Up-regulated
+negative regulation of tumor necrosis factor superfamily cytokine production,GO:BP,0.016797750904717,TRUE,4,Up-regulated
+positive regulation of sterol transport,GO:BP,0.0168839078727619,TRUE,3,Up-regulated
+positive regulation of cholesterol transport,GO:BP,0.0168839078727619,TRUE,3,Up-regulated
+positive regulation of G2/M transition of mitotic cell cycle,GO:BP,0.0169610804345258,TRUE,3,Up-regulated
+negative regulation of tyrosine phosphorylation of STAT protein,GO:BP,0.0169928499009157,TRUE,2,Up-regulated
+positive regulation of protein oligomerization,GO:BP,0.0171784072068901,TRUE,1,Up-regulated
+fibrinolysis,GO:BP,0.0174271935888503,TRUE,2,Up-regulated
+endolysosomal toll-like receptor signaling pathway,GO:BP,0.0174846807260484,TRUE,2,Up-regulated
+negative regulation of leukocyte chemotaxis,GO:BP,0.017500674456378,TRUE,2,Up-regulated
+attachment of spindle microtubules to kinetochore,GO:BP,0.017500674456378,TRUE,4,Up-regulated
+regulation of leukocyte migration,GO:BP,0.0175205740600834,TRUE,7,Up-regulated
+regulation of nitric oxide metabolic process,GO:BP,0.0175282893944766,TRUE,4,Up-regulated
+plasma membrane phospholipid scrambling,GO:BP,0.0175282893944766,TRUE,3,Up-regulated
+viral RNA genome replication,GO:BP,0.0175282893944766,TRUE,3,Up-regulated
+regulation of leukocyte differentiation,GO:BP,0.0176379023144594,TRUE,9,Up-regulated
+ovarian follicle development,GO:BP,0.0177740605242955,TRUE,4,Up-regulated
+negative regulation of protein metabolic process,GO:BP,0.0177830844404805,TRUE,14,Up-regulated
+follicle-stimulating hormone secretion,GO:BP,0.0178314175216549,TRUE,2,Up-regulated
+negative regulation of gonadotropin secretion,GO:BP,0.0178314175216549,TRUE,2,Up-regulated
+immunoglobulin receptor binding,GO:MF,0.0180364216602395,TRUE,3,Up-regulated
+response to stilbenoid,GO:BP,0.0180634146414023,TRUE,1,Up-regulated
+Chemokine receptors bind chemokines,REAC,0.018094346713282,TRUE,5,Up-regulated
+cytoskeleton-dependent cytokinesis,GO:BP,0.0181146869651253,TRUE,6,Up-regulated
+cellular response to cadmium ion,GO:BP,0.0181478365622218,TRUE,3,Up-regulated
+signaling receptor inhibitor activity,GO:MF,0.0181804962044542,TRUE,2,Up-regulated
+negative regulation of B cell activation,GO:BP,0.0183277959668629,TRUE,3,Up-regulated
+response to hormone,GO:BP,0.0189994801676393,TRUE,21,Up-regulated
+biofilm matrix disassembly,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+negative regulation of intracellular sterol transport,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+negative regulation of receptor-mediated endocytosis involved in cholesterol transport,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+negative regulation by host of viral process,GO:BP,0.0189994801676393,TRUE,2,Up-regulated
+medium-chain fatty acid metabolic process,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+negative regulation of intracellular lipid transport,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+biofilm matrix organization,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+negative regulation of intracellular cholesterol transport,GO:BP,0.0189994801676393,TRUE,1,Up-regulated
+cellular response to interferon-beta,GO:BP,0.01902639717391,TRUE,2,Up-regulated
+blood coagulation,GO:BP,0.0191146613144606,TRUE,7,Up-regulated
+regulation of neutrophil mediated killing of fungus,GO:BP,0.0191146613144606,TRUE,1,Up-regulated
+actomyosin contractile ring assembly,GO:BP,0.0191146613144606,TRUE,2,Up-regulated
+assembly of actomyosin apparatus involved in cytokinesis,GO:BP,0.0191146613144606,TRUE,2,Up-regulated
+positive regulation of neutrophil mediated killing of fungus,GO:BP,0.0191146613144606,TRUE,1,Up-regulated
+microtubule cytoskeleton organization involved in mitosis,GO:BP,0.0191146613144606,TRUE,7,Up-regulated
+intracellular monoatomic cation homeostasis,GO:BP,0.0191227037534051,TRUE,11,Up-regulated
+bone mineralization involved in bone maturation,GO:BP,0.0191227037534051,TRUE,2,Up-regulated
+protein export from nucleus,GO:BP,0.0193072750761541,TRUE,1,Up-regulated
+regulation of glial cell differentiation,GO:BP,0.0194113051773346,TRUE,4,Up-regulated
+positive regulation of transport,GO:BP,0.0194293249695564,TRUE,15,Up-regulated
+animal organ regeneration,GO:BP,0.0194704815274283,TRUE,4,Up-regulated
+positive regulation of T-helper 2 cell cytokine production,GO:BP,0.0194704815274283,TRUE,1,Up-regulated
+T cell chemotaxis,GO:BP,0.0195127817995814,TRUE,2,Up-regulated
+signal release,GO:BP,0.0195517861763371,TRUE,13,Up-regulated
+cytolysis,GO:BP,0.0196894182347399,TRUE,2,Up-regulated
+monoatomic cation homeostasis,GO:BP,0.0197578123188548,TRUE,12,Up-regulated
+maintenance of cell number,GO:BP,0.019815686595126,TRUE,6,Up-regulated
+phagocytosis,GO:BP,0.0199164565191184,TRUE,7,Up-regulated
+negative regulation of molecular function,GO:BP,0.0199164565191184,TRUE,14,Up-regulated
+lipid translocation,GO:BP,0.0200782710155107,TRUE,4,Up-regulated
+positive regulation of flagellated sperm motility involved in capacitation,GO:BP,0.0200782710155107,TRUE,1,Up-regulated
+DNA cytosine deamination,GO:BP,0.0200782710155107,TRUE,2,Up-regulated
+blood vessel development,GO:BP,0.0202584826302933,TRUE,16,Up-regulated
+endocytosis involved in viral entry into host cell,GO:BP,0.0203053473491415,TRUE,2,Up-regulated
+negative regulation of ATP-dependent activity,GO:BP,0.0203860391146791,TRUE,2,Up-regulated
+regulation of filopodium assembly,GO:BP,0.0203981299462263,TRUE,3,Up-regulated
+dTTP metabolic process,GO:BP,0.0204093187435712,TRUE,1,Up-regulated
+regulation of cell development,GO:BP,0.0204093187435712,TRUE,16,Up-regulated
+pyrimidine deoxyribonucleoside triphosphate biosynthetic process,GO:BP,0.0204093187435712,TRUE,1,Up-regulated
+deoxyribonucleoside diphosphate biosynthetic process,GO:BP,0.0204093187435712,TRUE,1,Up-regulated
+dTTP biosynthetic process,GO:BP,0.0204093187435712,TRUE,1,Up-regulated
+myeloid dendritic cell activation,GO:BP,0.0204545754282138,TRUE,3,Up-regulated
+positive regulation of cytokine production involved in immune response,GO:BP,0.0204545754282138,TRUE,4,Up-regulated
+negative regulation of lymphocyte activation,GO:BP,0.020491014388911,TRUE,6,Up-regulated
+positive regulation of cell cycle G2/M phase transition,GO:BP,0.020491014388911,TRUE,3,Up-regulated
+negative regulation of receptor binding,GO:BP,0.0205022111338443,TRUE,2,Up-regulated
+negative regulation of vascular endothelial cell proliferation,GO:BP,0.0207740891562934,TRUE,1,Up-regulated
+melanocyte apoptotic process,GO:BP,0.0207740891562934,TRUE,1,Up-regulated
+inorganic ion homeostasis,GO:BP,0.0209602110102901,TRUE,11,Up-regulated
+regulation of protein metabolic process,GO:BP,0.020969788101388,TRUE,31,Up-regulated
+cell-cell junction maintenance,GO:BP,0.0210688266933383,TRUE,2,Up-regulated
+hemostasis,GO:BP,0.0210982010462751,TRUE,7,Up-regulated
+coagulation,GO:BP,0.0210982010462751,TRUE,7,Up-regulated
+positive regulation of endocytosis,GO:BP,0.0211079484593281,TRUE,3,Up-regulated
+enzyme-linked receptor protein signaling pathway,GO:BP,0.0215014872123831,TRUE,21,Up-regulated
+monoatomic ion homeostasis,GO:BP,0.0215014872123831,TRUE,12,Up-regulated
+carbohydrate derivative binding,GO:MF,0.0215098596452677,TRUE,47,Up-regulated
+negative regulation of mitotic nuclear division,GO:BP,0.0215346359427719,TRUE,4,Up-regulated
+regulation of B cell differentiation,GO:BP,0.021600648576267,TRUE,3,Up-regulated
+regulation of ATP-dependent activity,GO:BP,0.0216437426881127,TRUE,3,Up-regulated
+negative regulation of biosynthetic process,GO:BP,0.0216437426881127,TRUE,43,Up-regulated
+cellular response to tumor necrosis factor,GO:BP,0.021646044148012,TRUE,8,Up-regulated
+cellular response to prostaglandin D stimulus,GO:BP,0.0217437641871421,TRUE,1,Up-regulated
+response to prostaglandin D,GO:BP,0.0217437641871421,TRUE,1,Up-regulated
+import into cell,GO:BP,0.0217533928302927,TRUE,16,Up-regulated
+negative regulation of secretion by cell,GO:BP,0.0218361693199404,TRUE,6,Up-regulated
+actomyosin contractile ring organization,GO:BP,0.0218361693199404,TRUE,2,Up-regulated
+regulation of phosphate metabolic process,GO:BP,0.0220879856584334,TRUE,19,Up-regulated
+positive regulation of molecular function,GO:BP,0.0221554323725295,TRUE,19,Up-regulated
+negative regulation of developmental process,GO:BP,0.022245605323175,TRUE,16,Up-regulated
+regulation of phosphorus metabolic process,GO:BP,0.022245605323175,TRUE,19,Up-regulated
+neutrophil degranulation,GO:BP,0.0225879488692438,TRUE,2,Up-regulated
+response to steroid hormone,GO:BP,0.0226816071607553,TRUE,10,Up-regulated
+type B pancreatic cell proliferation,GO:BP,0.0227327686099352,TRUE,3,Up-regulated
+regulation of generation of precursor metabolites and energy,GO:BP,0.0227889005824769,TRUE,6,Up-regulated
+positive regulation of intracellular signal transduction,GO:BP,0.0227965810019589,TRUE,23,Up-regulated
+positive regulation of mitotic sister chromatid segregation,GO:BP,0.0227965810019589,TRUE,2,Up-regulated
+liver development,GO:BP,0.0227993207231325,TRUE,6,Up-regulated
+response to sterol,GO:BP,0.0228682493901665,TRUE,3,Up-regulated
+negative regulation of ion transmembrane transporter activity,GO:BP,0.0229825161914677,TRUE,3,Up-regulated
+tube development,GO:BP,0.0230024240934279,TRUE,21,Up-regulated
+negative regulation of MAPK cascade,GO:BP,0.0230851997722142,TRUE,6,Up-regulated
+regulation of response to wounding,GO:BP,0.0230851997722142,TRUE,6,Up-regulated
+protein processing,GO:BP,0.0230913241391327,TRUE,4,Up-regulated
+positive regulation of cell adhesion,GO:BP,0.0231408178073082,TRUE,11,Up-regulated
+mitotic spindle organization,GO:BP,0.023166933545057,TRUE,6,Up-regulated
+cargo receptor activity,GO:MF,0.0231892075317886,TRUE,5,Up-regulated
+negative regulation of epithelial cell proliferation,GO:BP,0.0232082847960531,TRUE,6,Up-regulated
+peptidyl-tyrosine modification,GO:BP,0.0234211326035025,TRUE,8,Up-regulated
+toll-like receptor 7 signaling pathway,GO:BP,0.0234638007495845,TRUE,1,Up-regulated
+hemoglobin binding,GO:MF,0.0235110906614536,TRUE,2,Up-regulated
+intramembrane lipid transporter activity,GO:MF,0.0235110906614536,TRUE,4,Up-regulated
+nicotinamide metabolic process,GO:BP,0.0236431661809768,TRUE,1,Up-regulated
+deoxyribonucleoside diphosphate metabolic process,GO:BP,0.0236431661809768,TRUE,1,Up-regulated
+regulation of transcription regulatory region DNA binding,GO:BP,0.0236431661809768,TRUE,3,Up-regulated
+neutrophil chemotaxis,GO:BP,0.0236431661809768,TRUE,3,Up-regulated
+heterotypic cell-cell adhesion,GO:BP,0.0241546823982898,TRUE,4,Up-regulated
+regulation by virus of viral protein levels in host cell,GO:BP,0.0243665961304977,TRUE,1,Up-regulated
+reproductive process,GO:BP,0.0244053424699148,TRUE,30,Up-regulated
+hepaticobiliary system development,GO:BP,0.0244053424699148,TRUE,6,Up-regulated
+cellular response to hormone stimulus,GO:BP,0.0244053424699148,TRUE,16,Up-regulated
+peptidyl-tyrosine phosphorylation,GO:BP,0.0244053424699148,TRUE,7,Up-regulated
+regulation of membrane lipid distribution,GO:BP,0.0245984277814339,TRUE,4,Up-regulated
+prostaglandin F receptor activity,GO:MF,0.0246876972146056,TRUE,1,Up-regulated
+positive regulation of low-density lipoprotein particle receptor catabolic process,GO:BP,0.024714126259009,TRUE,1,Up-regulated
+cellular homeostasis,GO:BP,0.0247726205799175,TRUE,15,Up-regulated
+negative regulation of phosphorus metabolic process,GO:BP,0.0247888969694646,TRUE,8,Up-regulated
+regulation of protein oligomerization,GO:BP,0.0247888969694646,TRUE,1,Up-regulated
+regulation of toll-like receptor 9 signaling pathway,GO:BP,0.0247888969694646,TRUE,1,Up-regulated
+chorion development,GO:BP,0.0247888969694646,TRUE,2,Up-regulated
+negative regulation of phosphate metabolic process,GO:BP,0.0247888969694646,TRUE,8,Up-regulated
+regulation of sodium ion transport,GO:BP,0.0249067102921964,TRUE,2,Up-regulated
+interleukin-1-mediated signaling pathway,GO:BP,0.024908965570316,TRUE,3,Up-regulated
+regulation of type 2 immune response,GO:BP,0.0249761513990696,TRUE,2,Up-regulated
+response to peptide hormone,GO:BP,0.0250666223492009,TRUE,12,Up-regulated
+germline cell cycle switching, mitotic to meiotic cell cycle,GO:BP,0.0251421873589415,TRUE,1,Up-regulated
+CXCR chemokine receptor binding,GO:MF,0.0252049394283447,TRUE,2,Up-regulated
+negative regulation of cell adhesion,GO:BP,0.0252822624733754,TRUE,9,Up-regulated
+protease binding,GO:MF,0.0253320923041468,TRUE,6,Up-regulated
+dTMP kinase activity,GO:MF,0.0253320923041468,TRUE,1,Up-regulated
+UMP/dUMP kinase activity,GO:MF,0.0253320923041468,TRUE,1,Up-regulated
+UMP kinase activity,GO:MF,0.0253320923041468,TRUE,1,Up-regulated
+positive regulation of monocyte chemotaxis,GO:BP,0.0255914768937785,TRUE,2,Up-regulated
+regulation of wound healing,GO:BP,0.0256568073962863,TRUE,5,Up-regulated
+regulation of ERK1 and ERK2 cascade,GO:BP,0.0257666598669366,TRUE,8,Up-regulated
+regulation of protein modification process,GO:BP,0.0257666598669366,TRUE,20,Up-regulated
+negative regulation of phagocytosis,GO:BP,0.0259872173381338,TRUE,2,Up-regulated
+negative regulation of peptidyl-tyrosine phosphorylation,GO:BP,0.0259872173381338,TRUE,3,Up-regulated
+phospholipid transport,GO:BP,0.0261632972895432,TRUE,5,Up-regulated
+cell-cell adhesion,GO:BP,0.0262412117482151,TRUE,20,Up-regulated
+hemoglobin metabolic process,GO:BP,0.0263357355236384,TRUE,2,Up-regulated
+protein K48-linked ubiquitination,GO:BP,0.0263947067314008,TRUE,1,Up-regulated
+chemokine (C-C motif) ligand 5 production,GO:BP,0.0264184566964044,TRUE,2,Up-regulated
+lymphocyte migration,GO:BP,0.0264184566964044,TRUE,4,Up-regulated
+positive regulation of DNA binding,GO:BP,0.0264184566964044,TRUE,3,Up-regulated
+hematopoietic stem cell differentiation,GO:BP,0.0264184566964044,TRUE,3,Up-regulated
+regulation of chemokine (C-C motif) ligand 5 production,GO:BP,0.0264184566964044,TRUE,2,Up-regulated
+structural constituent of skin epidermis,GO:MF,0.0264875793524896,TRUE,2,Down-regulated
+ferritin receptor activity,GO:MF,0.0264875793524896,TRUE,1,Down-regulated
+sodium:bicarbonate symporter activity,GO:MF,0.0264875793524896,TRUE,1,Down-regulated
+sodium,bicarbonate:chloride antiporter activity,GO:MF,0.0264875793524896,TRUE,1,Down-regulated
+detoxification of copper ion,GO:BP,0.0266391486572487,TRUE,2,Up-regulated
+pyrimidine deoxyribonucleoside triphosphate metabolic process,GO:BP,0.0266391486572487,TRUE,1,Up-regulated
+regulation of cell-cell adhesion involved in gastrulation,GO:BP,0.0266391486572487,TRUE,2,Up-regulated
+negative regulation of protein phosphorylation,GO:BP,0.0266391486572487,TRUE,7,Up-regulated
+pyrimidine nucleoside diphosphate biosynthetic process,GO:BP,0.0266391486572487,TRUE,1,Up-regulated
+negative regulation of heterotypic cell-cell adhesion,GO:BP,0.0266391486572487,TRUE,2,Up-regulated
+regulation of DNA binding,GO:BP,0.0266391486572487,TRUE,4,Up-regulated
+stress response to copper ion,GO:BP,0.0266391486572487,TRUE,2,Up-regulated
+lipid transport,GO:BP,0.0266391486572487,TRUE,10,Up-regulated
+pyrimidine deoxyribonucleotide biosynthetic process,GO:BP,0.0266391486572487,TRUE,1,Up-regulated
+potassium channel activator activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+chloride:bicarbonate antiporter activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+monoatomic cation:bicarbonate symporter activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+channel activator activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+bicarbonate:monoatomic anion antiporter activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+transporter activator activity,GO:MF,0.0267438988276365,TRUE,1,Down-regulated
+metalloendopeptidase activity,GO:MF,0.0267576706992772,TRUE,3,Up-regulated
+metalloendopeptidase activity,GO:MF,0.0474299591197886,TRUE,2,Down-regulated
+lipid binding,GO:MF,0.0267916535276886,TRUE,21,Up-regulated
+cell cycle comprising mitosis without cytokinesis,GO:BP,0.026830295052972,TRUE,1,Up-regulated
+regulation of epithelial cell proliferation,GO:BP,0.026830295052972,TRUE,9,Up-regulated
+nitric oxide biosynthetic process,GO:BP,0.0270037389229885,TRUE,4,Up-regulated
+negative regulation of chemotaxis,GO:BP,0.0271163708579865,TRUE,3,Up-regulated
+negative regulation of tumor necrosis factor (ligand) superfamily member 11 production,GO:BP,0.0272408358349873,TRUE,1,Up-regulated
+regulation of programmed necrotic cell death,GO:BP,0.0272587349220955,TRUE,3,Up-regulated
+positive regulation of fibroblast apoptotic process,GO:BP,0.0272587349220955,TRUE,2,Up-regulated
+proteolysis involved in protein catabolic process,GO:BP,0.0272587349220955,TRUE,6,Up-regulated
+sex differentiation,GO:BP,0.0276352004024258,TRUE,9,Up-regulated
+homeostatic process,GO:BP,0.0285305096395077,TRUE,33,Up-regulated
+negative regulation of cell-cell adhesion,GO:BP,0.0285305096395077,TRUE,7,Up-regulated
+positive regulation of apoptotic cell clearance,GO:BP,0.0286852231619836,TRUE,1,Up-regulated
+macrophage differentiation,GO:BP,0.0286852231619836,TRUE,3,Up-regulated
+cytidine to uridine editing,GO:BP,0.0287963357185265,TRUE,2,Up-regulated
+protein localization to condensed chromosome,GO:BP,0.0289416759057057,TRUE,2,Up-regulated
+protein localization to kinetochore,GO:BP,0.0289416759057057,TRUE,2,Up-regulated
+positive regulation of osteoblast differentiation,GO:BP,0.0289416759057057,TRUE,4,Up-regulated
+regulation of lactation,GO:BP,0.0289522965919492,TRUE,1,Up-regulated
+androst-4-ene-3,17-dione biosynthetic process,GO:BP,0.0289522965919492,TRUE,1,Up-regulated
+gastrulation,GO:BP,0.0289522965919492,TRUE,7,Up-regulated
+detoxification,GO:BP,0.0289522965919492,TRUE,5,Up-regulated
+regulation of complement activation, lectin pathway,GO:BP,0.029305787417413,TRUE,1,Up-regulated
+regulation of nucleocytoplasmic transport,GO:BP,0.029305787417413,TRUE,1,Up-regulated
+negative regulation of complement activation, lectin pathway,GO:BP,0.029305787417413,TRUE,1,Up-regulated
+muscle structure development,GO:BP,0.029305787417413,TRUE,16,Up-regulated
+urea cycle,GO:BP,0.0296045031790386,TRUE,2,Up-regulated
+mitotic cytokinetic process,GO:BP,0.0297132122134492,TRUE,3,Up-regulated
+positive regulation of DNA-binding transcription factor activity,GO:BP,0.0297132122134492,TRUE,7,Up-regulated
+negative regulation of transporter activity,GO:BP,0.0297132122134492,TRUE,3,Up-regulated
+epithelial cell proliferation,GO:BP,0.0297132122134492,TRUE,10,Up-regulated
+circulatory system development,GO:BP,0.0297132122134492,TRUE,19,Up-regulated
+karyogamy,GO:BP,0.0297132122134492,TRUE,1,Up-regulated
+pronuclear fusion,GO:BP,0.0297132122134492,TRUE,1,Up-regulated
+hydrogen peroxide catabolic process,GO:BP,0.0297132122134492,TRUE,3,Up-regulated
+positive regulation of viral process,GO:BP,0.0297255023057016,TRUE,2,Up-regulated
+regulation of phagocytosis,GO:BP,0.0297255023057016,TRUE,4,Up-regulated
+neutrophil-mediated killing of gram-positive bacterium,GO:BP,0.0297666311266839,TRUE,1,Up-regulated
+regulation of receptor-mediated endocytosis involved in cholesterol transport,GO:BP,0.0297666311266839,TRUE,1,Up-regulated
+NAD+-protein mono-ADP-ribosyltransferase activity,GO:MF,0.0298067274557937,TRUE,3,Up-regulated
+CD4 receptor binding,GO:MF,0.0298067274557937,TRUE,2,Up-regulated
+regulation of protein kinase activity,GO:BP,0.0300351269434583,TRUE,9,Up-regulated
+arginine catabolic process to ornithine,GO:BP,0.0300999985949127,TRUE,1,Up-regulated
+positive regulation of cell junction assembly,GO:BP,0.0300999985949127,TRUE,4,Up-regulated
+positive regulation of neutrophil mediated cytotoxicity,GO:BP,0.0300999985949127,TRUE,1,Up-regulated
+positive regulation of neutrophil mediated killing of symbiont cell,GO:BP,0.0300999985949127,TRUE,1,Up-regulated
+positive regulation of acute inflammatory response,GO:BP,0.0300999985949127,TRUE,2,Up-regulated
+positive regulation of calcium ion transport,GO:BP,0.0301056716963677,TRUE,3,Up-regulated
+tissue remodeling,GO:BP,0.0302681409056039,TRUE,7,Up-regulated
+cell cycle switching, mitotic to meiotic cell cycle,GO:BP,0.0302681409056039,TRUE,1,Up-regulated
+cell-cell adhesion involved in gastrulation,GO:BP,0.0302681409056039,TRUE,2,Up-regulated
+cell cycle switching,GO:BP,0.0302681409056039,TRUE,1,Up-regulated
+regulation of metaphase plate congression,GO:BP,0.0302681409056039,TRUE,2,Up-regulated
+positive regulation of synaptic assembly at neuromuscular junction,GO:BP,0.0302945583577672,TRUE,1,Up-regulated
+negative regulation of hormone secretion,GO:BP,0.0304489694702332,TRUE,4,Up-regulated
+regulation of osteoclast development,GO:BP,0.0304489694702332,TRUE,2,Up-regulated
+DNA replication initiation,GO:BP,0.0304489694702332,TRUE,3,Up-regulated
+negative regulation of oligodendrocyte differentiation,GO:BP,0.0305152255289454,TRUE,1,Up-regulated
+positive regulation of type 2 immune response,GO:BP,0.0305152255289454,TRUE,1,Up-regulated
+myoblast differentiation,GO:BP,0.0305432277420786,TRUE,4,Up-regulated
+complement activation, classical pathway,GO:BP,0.0305432277420786,TRUE,2,Up-regulated
+T cell cytokine production,GO:BP,0.0305459834010415,TRUE,2,Up-regulated
+regulation of T cell cytokine production,GO:BP,0.0305459834010415,TRUE,2,Up-regulated
+regulation of gonadotropin secretion,GO:BP,0.0305459834010415,TRUE,2,Up-regulated
+positive regulation of microglial cell activation,GO:BP,0.0307649026392472,TRUE,1,Up-regulated
+convergent extension involved in somitogenesis,GO:BP,0.0307649026392472,TRUE,1,Up-regulated
+stromal-epithelial cell signaling involved in prostate gland development,GO:BP,0.0307649026392472,TRUE,1,Up-regulated
+response to alcohol,GO:BP,0.0307889464322137,TRUE,9,Up-regulated
+axon target recognition,GO:BP,0.030866383405826,TRUE,1,Up-regulated
+DNA deamination,GO:BP,0.0312080136156481,TRUE,2,Up-regulated
+positive regulation of trophectodermal cell proliferation,GO:BP,0.031451788985254,TRUE,1,Up-regulated
+regulation of trophectodermal cell proliferation,GO:BP,0.031451788985254,TRUE,1,Up-regulated
+response to tumor necrosis factor,GO:BP,0.031451788985254,TRUE,8,Up-regulated
+negative regulation of oocyte development,GO:BP,0.031451788985254,TRUE,1,Up-regulated
+type 2 immune response,GO:BP,0.0314867003977504,TRUE,3,Up-regulated
+leukocyte mediated cytotoxicity,GO:BP,0.0315484688498434,TRUE,5,Up-regulated
+hypochlorous acid metabolic process,GO:BP,0.0315484688498434,TRUE,1,Up-regulated
+hypochlorous acid biosynthetic process,GO:BP,0.0315484688498434,TRUE,1,Up-regulated
+mitotic spindle midzone assembly,GO:BP,0.0315720282781004,TRUE,2,Up-regulated
+interleukin-8 production,GO:BP,0.0315720282781004,TRUE,4,Up-regulated
+regulation of interleukin-8 production,GO:BP,0.0315720282781004,TRUE,4,Up-regulated
+negative regulation of RNA biosynthetic process,GO:BP,0.0316407862090563,TRUE,23,Up-regulated
+regulation of metal ion transport,GO:BP,0.0316407862090563,TRUE,5,Up-regulated
+modification-dependent protein catabolic process,GO:BP,0.0316551785366605,TRUE,4,Up-regulated
+positive regulation of MHC class II biosynthetic process,GO:BP,0.0317369870875768,TRUE,2,Up-regulated
+negative regulation of fibroblast proliferation,GO:BP,0.0317369870875768,TRUE,3,Up-regulated
+regulation of receptor binding,GO:BP,0.0317369870875768,TRUE,2,Up-regulated
+negative regulation of nitric oxide metabolic process,GO:BP,0.0317369870875768,TRUE,2,Up-regulated
+negative regulation of nitric oxide biosynthetic process,GO:BP,0.0317369870875768,TRUE,2,Up-regulated
+positive regulation of heterotypic cell-cell adhesion,GO:BP,0.0317369870875768,TRUE,2,Up-regulated
+regulation of neuroinflammatory response,GO:BP,0.0317369870875768,TRUE,3,Up-regulated
+male gonad development,GO:BP,0.0318123790390458,TRUE,6,Up-regulated
+regulation of lymphocyte activation,GO:BP,0.0318393134021626,TRUE,9,Up-regulated
+regulation of signaling receptor activity,GO:BP,0.0319152530536748,TRUE,2,Up-regulated
+lipid localization,GO:BP,0.0319224638695815,TRUE,10,Up-regulated
+negative regulation of peptidyl-tyrosine autophosphorylation,GO:BP,0.0319724343120986,TRUE,1,Up-regulated
+negative regulation of inward rectifier potassium channel activity,GO:BP,0.0319724343120986,TRUE,1,Up-regulated
+modification-dependent macromolecule catabolic process,GO:BP,0.0319843274689149,TRUE,4,Up-regulated
+CMP kinase activity,GO:MF,0.0320348734157593,TRUE,1,Up-regulated
+NAD+ poly-ADP-ribosyltransferase activity,GO:MF,0.0320348734157593,TRUE,3,Up-regulated
+dCMP kinase activity,GO:MF,0.0320348734157593,TRUE,1,Up-regulated
+CH domain binding,GO:MF,0.0320348734157593,TRUE,1,Up-regulated
+negative regulation of cell proliferation involved in contact inhibition,GO:BP,0.0320872414548816,TRUE,1,Up-regulated
+regulation of apoptotic cell clearance,GO:BP,0.0320872414548816,TRUE,1,Up-regulated
+regulation of collagen catabolic process,GO:BP,0.0320872414548816,TRUE,1,Up-regulated
+negative regulation of secretion,GO:BP,0.0320872414548816,TRUE,6,Up-regulated
+negative regulation of glial cell apoptotic process,GO:BP,0.0320872414548816,TRUE,1,Up-regulated
+negative regulation of extracellular matrix disassembly,GO:BP,0.0320872414548816,TRUE,1,Up-regulated
+manganese ion export across plasma membrane,GO:BP,0.0321268905165054,TRUE,1,Up-regulated
+chemical homeostasis,GO:BP,0.0322329581794194,TRUE,17,Up-regulated
+development of primary male sexual characteristics,GO:BP,0.0322329581794194,TRUE,6,Up-regulated
+regulation of peptidyl-tyrosine phosphorylation,GO:BP,0.0322870251242139,TRUE,6,Up-regulated
+positive regulation of exocytosis,GO:BP,0.0324804729268199,TRUE,3,Up-regulated
+negative regulation of anoikis,GO:BP,0.0326020414240987,TRUE,2,Up-regulated
+transition metal ion binding,GO:MF,0.0328802074507469,TRUE,21,Up-regulated
+regulation of angiogenesis,GO:BP,0.0332896886310394,TRUE,8,Up-regulated
+toll-like receptor 9 signaling pathway,GO:BP,0.0333591211701436,TRUE,1,Up-regulated
+positive regulation of toll-like receptor 4 signaling pathway,GO:BP,0.0334801370591567,TRUE,2,Up-regulated
+Alpha-defensins,REAC,0.0336113807869828,TRUE,2,Up-regulated
+TRAF3-dependent IRF activation pathway,REAC,0.0336113807869828,TRUE,3,Up-regulated
+adhesion of symbiont to host,GO:BP,0.0337536127900437,TRUE,2,Up-regulated
+negative regulation of asymmetric cell division,GO:BP,0.0337899295550046,TRUE,1,Up-regulated
+receptor-mediated endocytosis involved in cholesterol transport,GO:BP,0.033803686180479,TRUE,1,Up-regulated
+negative regulation of low-density lipoprotein receptor activity,GO:BP,0.033803686180479,TRUE,1,Up-regulated
+negative regulation of receptor recycling,GO:BP,0.033803686180479,TRUE,1,Up-regulated
+regulation of cell-cell adhesion,GO:BP,0.0340479103142957,TRUE,12,Up-regulated
+regulation of intracellular signal transduction,GO:BP,0.0340560461773029,TRUE,34,Up-regulated
+regulation of intracellular protein transport,GO:BP,0.0342286497091722,TRUE,1,Up-regulated
+pyrimidine nucleoside diphosphate metabolic process,GO:BP,0.0343090546249138,TRUE,1,Up-regulated
+positive regulation of osteoblast proliferation,GO:BP,0.0343364210043611,TRUE,2,Up-regulated
+regulation of granulocyte differentiation,GO:BP,0.0345046460825478,TRUE,2,Up-regulated
+regulation of morphogenesis of an epithelium,GO:BP,0.0345046460825478,TRUE,3,Up-regulated
+extraembryonic membrane development,GO:BP,0.0345306293539411,TRUE,2,Up-regulated
+response to corticosteroid,GO:BP,0.034723752336544,TRUE,6,Up-regulated
+negative regulation of mitochondrial depolarization,GO:BP,0.034723752336544,TRUE,1,Up-regulated
+regulation of vascular permeability,GO:BP,0.034723752336544,TRUE,3,Up-regulated
+protein localization to meiotic spindle midzone,GO:BP,0.034723752336544,TRUE,1,Up-regulated
+protein localization to meiotic spindle,GO:BP,0.034723752336544,TRUE,1,Up-regulated
+receptor ligand activity,GO:MF,0.0347512864283081,TRUE,10,Up-regulated
+nitric oxide metabolic process,GO:BP,0.0349280232395143,TRUE,4,Up-regulated
+response to endogenous stimulus,GO:BP,0.0349280232395143,TRUE,25,Up-regulated
+fibronectin fibril organization,GO:BP,0.0349825060752456,TRUE,1,Up-regulated
+Attachment and Entry,REAC,0.0352062332986844,TRUE,3,Up-regulated
+mitotic spindle elongation,GO:BP,0.0352324051416223,TRUE,2,Up-regulated
+MHC class II receptor activity,GO:MF,0.0352583840842213,TRUE,1,Down-regulated
+bicarbonate transmembrane transporter activity,GO:MF,0.0352583840842213,TRUE,1,Down-regulated
+voltage-gated monoatomic cation channel activity,GO:MF,0.0352583840842213,TRUE,2,Down-regulated
+metal ion transmembrane transporter activity,GO:MF,0.0352583840842213,TRUE,2,Down-regulated
+solute:inorganic anion antiporter activity,GO:MF,0.0352583840842213,TRUE,1,Down-regulated
+nitrogen cycle metabolic process,GO:BP,0.0353187408124753,TRUE,2,Up-regulated
+urea metabolic process,GO:BP,0.0353187408124753,TRUE,2,Up-regulated
+peptide secretion,GO:BP,0.0354380766243176,TRUE,8,Up-regulated
+virion binding,GO:MF,0.0357272329625373,TRUE,1,Up-regulated
+reproductive structure development,GO:BP,0.0357846437491249,TRUE,9,Up-regulated
+positive regulation of chemotaxis,GO:BP,0.0359594352206872,TRUE,5,Up-regulated
+reactive nitrogen species metabolic process,GO:BP,0.0360519806701889,TRUE,4,Up-regulated
+cell junction disassembly,GO:BP,0.0360519806701889,TRUE,2,Up-regulated
+regulation of vasculature development,GO:BP,0.0360519806701889,TRUE,8,Up-regulated
+negative regulation of blood coagulation,GO:BP,0.0361009581935058,TRUE,3,Up-regulated
+biosynthetic process of antibacterial peptides active against Gram-negative bacteria,GO:BP,0.0361427518310662,TRUE,1,Up-regulated
+regulation of neurotransmitter secretion,GO:BP,0.0362496983033776,TRUE,1,Up-regulated
+ion channel regulator activity,GO:MF,0.0362906722077419,TRUE,2,Down-regulated
+DNA integrity checkpoint signaling,GO:BP,0.0363578477162751,TRUE,5,Up-regulated
+regulation of glial cell apoptotic process,GO:BP,0.0365485705443182,TRUE,1,Up-regulated
+metal ion transport,GO:BP,0.0365485705443182,TRUE,9,Up-regulated
+insulin-like growth factor II binding,GO:MF,0.0365889766141097,TRUE,1,Down-regulated
+channel regulator activity,GO:MF,0.0365889766141097,TRUE,2,Down-regulated
+voltage-gated monoatomic ion channel activity,GO:MF,0.0365889766141097,TRUE,2,Down-regulated
+metal cation:monoatomic cation antiporter activity,GO:MF,0.0365889766141097,TRUE,1,Down-regulated
+transporter regulator activity,GO:MF,0.0365889766141097,TRUE,2,Down-regulated
+inorganic cation transmembrane transporter activity,GO:MF,0.0365889766141097,TRUE,2,Down-regulated
+voltage-gated channel activity,GO:MF,0.0365889766141097,TRUE,2,Down-regulated
+sexual reproduction,GO:BP,0.0366086238886052,TRUE,22,Up-regulated
+nuclear export,GO:BP,0.0367682471599716,TRUE,1,Up-regulated
+signaling receptor activator activity,GO:MF,0.0368066278273789,TRUE,10,Up-regulated
+membrane protein ectodomain proteolysis,GO:BP,0.0368131349593211,TRUE,3,Up-regulated
+positive regulation of release of sequestered calcium ion into cytosol,GO:BP,0.0368131349593211,TRUE,2,Up-regulated
+Staphylococcus aureus infection,KEGG,0.0368763457088897,TRUE,6,Up-regulated
+NOD-like receptor signaling pathway,KEGG,0.0368763457088897,TRUE,6,Up-regulated
+regulation of monocyte chemotaxis,GO:BP,0.0371093836355094,TRUE,2,Up-regulated
+negative regulation of protein catabolic process,GO:BP,0.0372098565700345,TRUE,3,Up-regulated
+filopodium assembly,GO:BP,0.0373587193607072,TRUE,3,Up-regulated
+intracellular chemical homeostasis,GO:BP,0.0373587193607072,TRUE,13,Up-regulated
+negative regulation of hemostasis,GO:BP,0.0375336559587688,TRUE,3,Up-regulated
+melanocyte proliferation,GO:BP,0.0376110789895295,TRUE,1,Up-regulated
+regulation of stress-activated MAPK cascade,GO:BP,0.0376939689622569,TRUE,2,Up-regulated
+reproductive system development,GO:BP,0.0377558429220101,TRUE,9,Up-regulated
+leukocyte differentiation,GO:BP,0.0380441263914274,TRUE,10,Up-regulated
+positive regulation of acute inflammatory response to non-antigenic stimulus,GO:BP,0.0380441263914274,TRUE,1,Up-regulated
+acute inflammatory response to non-antigenic stimulus,GO:BP,0.0380441263914274,TRUE,1,Up-regulated
+regulation of acute inflammatory response to non-antigenic stimulus,GO:BP,0.0380441263914274,TRUE,1,Up-regulated
+positive regulation of DNA-templated DNA replication,GO:BP,0.0382007711661725,TRUE,2,Up-regulated
+dorsal spinal cord development,GO:BP,0.0382007711661725,TRUE,2,Up-regulated
+regulation of low-density lipoprotein particle receptor catabolic process,GO:BP,0.0382073028078006,TRUE,1,Up-regulated
+low-density lipoprotein receptor particle metabolic process,GO:BP,0.0382073028078006,TRUE,1,Up-regulated
+low-density lipoprotein particle receptor catabolic process,GO:BP,0.0382073028078006,TRUE,1,Up-regulated
+cellular response to prostaglandin stimulus,GO:BP,0.0382780151119133,TRUE,2,Up-regulated
+protein heterotrimerization,GO:BP,0.0384672581046556,TRUE,1,Up-regulated
+regulation of protein transport,GO:BP,0.0384943191223936,TRUE,2,Up-regulated
+negative regulation of membrane depolarization,GO:BP,0.0384943191223936,TRUE,1,Up-regulated
+regulation of neutrophil mediated killing of symbiont cell,GO:BP,0.038653574891305,TRUE,1,Up-regulated
+response to laminar fluid shear stress,GO:BP,0.0387225964351744,TRUE,2,Up-regulated
+negative regulation of proteolysis,GO:BP,0.0387225964351744,TRUE,4,Up-regulated
+deoxynucleoside-phosphate kinase activity, ATP as phosphate donor,GO:MF,0.0387539410925846,TRUE,1,Up-regulated
+deaminase activity,GO:MF,0.0387539410925846,TRUE,3,Up-regulated
+negative regulation of chronic inflammatory response to antigenic stimulus,GO:BP,0.0388053469696053,TRUE,1,Up-regulated
+regulation of body fluid levels,GO:BP,0.0388053469696053,TRUE,6,Up-regulated
+negative regulation of cytokine production involved in inflammatory response,GO:BP,0.0390140927068,TRUE,2,Up-regulated
+mitotic DNA replication preinitiation complex assembly,GO:BP,0.0390140927068,TRUE,1,Up-regulated
+regeneration,GO:BP,0.0390140927068,TRUE,6,Up-regulated
+establishment of localization,GO:BP,0.0390140927068,TRUE,71,Up-regulated
+neutrophil activation involved in immune response,GO:BP,0.0390140927068,TRUE,2,Up-regulated
+Negative regulators of DDX58/IFIH1 signaling,REAC,0.0391252581301651,TRUE,4,Up-regulated
+regulation of kinase activity,GO:BP,0.0391961720867904,TRUE,9,Up-regulated
+monoatomic cation transmembrane transporter activity,GO:MF,0.039261419085768,TRUE,2,Down-regulated
+regulation of apoptotic signaling pathway,GO:BP,0.0398683946507827,TRUE,10,Up-regulated
+negative regulation of single stranded viral RNA replication via double stranded DNA intermediate,GO:BP,0.0400423146739546,TRUE,2,Up-regulated
+establishment of localization in cell,GO:BP,0.0401105144628536,TRUE,2,Up-regulated
+regulation of stress-activated protein kinase signaling cascade,GO:BP,0.0401326205157629,TRUE,2,Up-regulated
+septin ring assembly,GO:BP,0.0401326205157629,TRUE,1,Up-regulated
+regulation of cellular component organization,GO:BP,0.0401326205157629,TRUE,40,Up-regulated
+regulation of lymphocyte migration,GO:BP,0.0401326205157629,TRUE,3,Up-regulated
+regulation of myeloid leukocyte mediated immunity,GO:BP,0.0405123451040925,TRUE,3,Up-regulated
+positive regulation of T cell cytokine production,GO:BP,0.0405123451040925,TRUE,1,Up-regulated
+negative regulation of NMDA glutamate receptor activity,GO:BP,0.0407130044455607,TRUE,1,Up-regulated
+synaptic vesicle exocytosis,GO:BP,0.0407130044455607,TRUE,1,Up-regulated
+cholesterol transport,GO:BP,0.0407130044455607,TRUE,4,Up-regulated
+neuron projection retraction,GO:BP,0.0407130044455607,TRUE,1,Up-regulated
+positive regulation of peptidyl-serine phosphorylation,GO:BP,0.0407130044455607,TRUE,3,Up-regulated
+negative regulation of myoblast fusion,GO:BP,0.0407130044455607,TRUE,1,Up-regulated
+blood vessel remodeling,GO:BP,0.0407130044455607,TRUE,3,Up-regulated
+positive regulation of hematopoietic stem cell differentiation,GO:BP,0.0409386417040609,TRUE,1,Up-regulated
+regulation of neurotransmitter transport,GO:BP,0.0409669517265925,TRUE,1,Up-regulated
+bone mineralization,GO:BP,0.0409669517265925,TRUE,5,Up-regulated
+argininosuccinate metabolic process,GO:BP,0.0410130517231977,TRUE,1,Up-regulated
+transepithelial transport,GO:BP,0.0412601265567605,TRUE,3,Up-regulated
+negative regulation of protein modification process,GO:BP,0.0414391495027934,TRUE,8,Up-regulated
+nucleoside monophosphate phosphorylation,GO:BP,0.0414927568571487,TRUE,1,Up-regulated
+regulation of osteoclast differentiation,GO:BP,0.0414927568571487,TRUE,3,Up-regulated
+peptidyl-cysteine S-nitrosylation,GO:BP,0.0414927568571487,TRUE,2,Up-regulated
+protein nitrosylation,GO:BP,0.0414927568571487,TRUE,2,Up-regulated
+negative regulation of coagulation,GO:BP,0.0414927568571487,TRUE,3,Up-regulated
+positive regulation of bone mineralization,GO:BP,0.0415998037451255,TRUE,3,Up-regulated
+hepatocyte differentiation,GO:BP,0.0415998037451255,TRUE,2,Up-regulated
+regulation of systemic arterial blood pressure by circulatory renin-angiotensin,GO:BP,0.0415998037451255,TRUE,2,Up-regulated
+vesicle-mediated transport,GO:BP,0.0415998037451255,TRUE,15,Up-regulated
+negative regulation of lymphocyte migration,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+hepatocyte growth factor production,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+regulation of single-species biofilm formation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+negative regulation of single-species biofilm formation in or on host organism,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+spongiotrophoblast differentiation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+T cell extravasation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+regulation of single-species biofilm formation in or on host organism,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+biofilm formation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+negative regulation of single-species biofilm formation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+positive regulation of tumor necrosis factor-mediated signaling pathway,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+single-species biofilm formation in or on host organism,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+female meiotic nuclear division,GO:BP,0.041610493042141,TRUE,3,Up-regulated
+regulation of hepatocyte growth factor production,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+collagen fibril organization,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+negative regulation of sodium ion transmembrane transporter activity,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+aggregation of unicellular organisms,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+positive regulation of receptor catabolic process,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+single-species biofilm formation,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+negative regulation of hepatocyte growth factor production,GO:BP,0.041610493042141,TRUE,1,Up-regulated
+stem cell differentiation,GO:BP,0.041610493042141,TRUE,4,Up-regulated
+positive regulation of NF-kappaB transcription factor activity,GO:BP,0.041645025907496,TRUE,5,Up-regulated
+positive regulation of monoatomic ion transport,GO:BP,0.0417161522880023,TRUE,6,Up-regulated
+hydrolase activity,GO:MF,0.0426557171328673,TRUE,43,Up-regulated
+toxic substance binding,GO:MF,0.0426557171328673,TRUE,2,Up-regulated
+cyclic pyranopterin monophosphate synthase activity,GO:MF,0.0426557171328673,TRUE,1,Up-regulated
+GTP 3',8'-cyclase activity,GO:MF,0.0426557171328673,TRUE,1,Up-regulated
+nucleic acid conformation isomerase activity,GO:MF,0.0426557171328673,TRUE,7,Up-regulated
+interleukin-1 binding,GO:MF,0.0426557171328673,TRUE,2,Up-regulated
+pyridine N-methyltransferase activity,GO:MF,0.0426557171328673,TRUE,1,Up-regulated
+nicotinamide N-methyltransferase activity,GO:MF,0.0426557171328673,TRUE,1,Up-regulated
+spindle elongation,GO:BP,0.0426733105164891,TRUE,2,Up-regulated
+negative regulation of catalytic activity,GO:BP,0.0426733105164891,TRUE,7,Up-regulated
+spindle midzone assembly,GO:BP,0.0426733105164891,TRUE,2,Up-regulated
+regulation of leukocyte cell-cell adhesion,GO:BP,0.0426808650870198,TRUE,9,Up-regulated
+amide transport,GO:BP,0.0426808650870198,TRUE,9,Up-regulated
+intracellular calcium ion homeostasis,GO:BP,0.0427220034020401,TRUE,7,Up-regulated
+myoblast development,GO:BP,0.0430625816670772,TRUE,1,Up-regulated
+positive regulation of extracellular exosome assembly,GO:BP,0.0430625816670772,TRUE,1,Up-regulated
+humoral immune response mediated by circulating immunoglobulin,GO:BP,0.0432038983637704,TRUE,2,Up-regulated
+cell cycle DNA replication,GO:BP,0.0433169621706669,TRUE,3,Up-regulated
+enzyme binding,GO:MF,0.0433590425605257,TRUE,33,Up-regulated
+zinc ion binding,GO:MF,0.0433590425605257,TRUE,16,Up-regulated
+ribonucleoside diphosphate metabolic process,GO:BP,0.0435705956582801,TRUE,4,Up-regulated
+regulation of MHC class II biosynthetic process,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+meiotic spindle assembly,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+positive regulation of nucleotide catabolic process,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+positive regulation of purine nucleotide catabolic process,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+ovulation,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+positive regulation of glycolytic process,GO:BP,0.0437093580466453,TRUE,2,Up-regulated
+nitric-oxide synthase binding,GO:MF,0.0438548764007548,TRUE,2,Up-regulated
+regulation of non-canonical Wnt signaling pathway,GO:BP,0.044422697026394,TRUE,2,Up-regulated
+neuroinflammatory response,GO:BP,0.0445150985252474,TRUE,4,Up-regulated
+negative regulation of interleukin-1 alpha production,GO:BP,0.0445266000497188,TRUE,1,Up-regulated
+sprouting angiogenesis,GO:BP,0.0446649288887975,TRUE,5,Up-regulated
+sterol transport,GO:BP,0.0447123197033753,TRUE,4,Up-regulated
+cellular response to endogenous stimulus,GO:BP,0.0447593870670871,TRUE,21,Up-regulated
+regulation of hematopoietic stem cell differentiation,GO:BP,0.0448787014476313,TRUE,2,Up-regulated
+negative regulation of glial cell differentiation,GO:BP,0.0449821532862646,TRUE,1,Up-regulated
+response to wounding,GO:BP,0.0449866322865198,TRUE,13,Up-regulated
+release of cytochrome c from mitochondria,GO:BP,0.0450157763412896,TRUE,3,Up-regulated
+negative regulation of cellular response to growth factor stimulus,GO:BP,0.0450157763412896,TRUE,4,Up-regulated
+regulation of neurotransmitter receptor activity,GO:BP,0.0451505157514122,TRUE,2,Up-regulated
+transepithelial ammonium transport,GO:BP,0.0451682707490838,TRUE,1,Up-regulated
+nucleoside diphosphate biosynthetic process,GO:BP,0.0454237959146466,TRUE,1,Up-regulated
+glial cell apoptotic process,GO:BP,0.0454237959146466,TRUE,1,Up-regulated
+regulation of intracellular cholesterol transport,GO:BP,0.0454491401733653,TRUE,1,Up-regulated
+positive regulation of cellular respiration,GO:BP,0.0454491401733653,TRUE,2,Up-regulated
+base conversion or substitution editing,GO:BP,0.0454491401733653,TRUE,2,Up-regulated
+regulation of exocytosis,GO:BP,0.0454491401733653,TRUE,4,Up-regulated
+positive regulation of neuroinflammatory response,GO:BP,0.0454491401733653,TRUE,2,Up-regulated
+regulation of intracellular sterol transport,GO:BP,0.0454491401733653,TRUE,1,Up-regulated
+negative regulation of low-density lipoprotein particle clearance,GO:BP,0.0454491401733653,TRUE,1,Up-regulated
+parturition,GO:BP,0.0454491401733653,TRUE,1,Up-regulated
+siderophore transport,GO:BP,0.0454527695254274,TRUE,1,Up-regulated
+transport,GO:BP,0.0456557898982885,TRUE,64,Up-regulated
+positive regulation of erythrocyte differentiation,GO:BP,0.0457523489048821,TRUE,2,Up-regulated
+myoblast differentiation involved in skeletal muscle regeneration,GO:BP,0.0457523489048821,TRUE,1,Up-regulated
+peptidase regulator activity,GO:MF,0.0458121089442134,TRUE,8,Up-regulated
+ossification involved in bone maturation,GO:BP,0.0458616971971475,TRUE,2,Up-regulated
+negative regulation of T-helper 2 cell cytokine production,GO:BP,0.045959578527557,TRUE,1,Up-regulated
+negative regulation of leukocyte cell-cell adhesion,GO:BP,0.0461265377657589,TRUE,5,Up-regulated
+regulation of anoikis,GO:BP,0.0461265377657589,TRUE,2,Up-regulated
+toll-like receptor 3 signaling pathway,GO:BP,0.0461265377657589,TRUE,2,Up-regulated
+positive regulation of synaptic vesicle endocytosis,GO:BP,0.046133245196217,TRUE,1,Up-regulated
+regulation of mononuclear cell migration,GO:BP,0.0464369874442404,TRUE,4,Up-regulated
+ISG15 transferase activity,GO:MF,0.0466395891855005,TRUE,1,Up-regulated
+MHC class II biosynthetic process,GO:BP,0.0467015391263352,TRUE,2,Up-regulated
+molecular sequestering activity,GO:MF,0.0468027063140668,TRUE,3,Up-regulated
+(d)CMP kinase activity,GO:MF,0.0468027063140668,TRUE,1,Up-regulated
+regulation of BMP signaling pathway,GO:BP,0.0468212903118765,TRUE,4,Up-regulated
+inorganic molecular entity transmembrane transporter activity,GO:MF,0.0470069325608562,TRUE,2,Down-regulated
+regulated exocytosis,GO:BP,0.0470758238215865,TRUE,6,Up-regulated
+insulin-like growth factor I binding,GO:MF,0.0474299591197886,TRUE,1,Down-regulated
+monoatomic ion transmembrane transporter activity,GO:MF,0.0474299591197886,TRUE,2,Down-regulated
+potassium channel regulator activity,GO:MF,0.0474299591197886,TRUE,1,Down-regulated
+negative regulation of hydrogen peroxide catabolic process,GO:BP,0.0474850891613446,TRUE,1,Up-regulated
+embryonic placenta development,GO:BP,0.0477516965243408,TRUE,4,Up-regulated
+glial cell migration,GO:BP,0.0479347663149137,TRUE,3,Up-regulated
+kidney development,GO:BP,0.0479425822012061,TRUE,8,Up-regulated
+regulation of adaptive immune response,GO:BP,0.0482664956527942,TRUE,6,Up-regulated
+chromosome organization,GO:BP,0.0487282500653512,TRUE,13,Up-regulated
+negative regulation of syncytium formation by plasma membrane fusion,GO:BP,0.0489878953097633,TRUE,1,Up-regulated
+regulation of establishment of protein localization,GO:BP,0.0491707723986671,TRUE,2,Up-regulated
+response to transition metal nanoparticle,GO:BP,0.0492898364482425,TRUE,1,Up-regulated
+response to gold nanoparticle,GO:BP,0.0492898364482425,TRUE,1,Up-regulated
+regulation of intracellular transport,GO:BP,0.0493974154762428,TRUE,1,Up-regulated
+negative regulation of sodium ion transmembrane transport,GO:BP,0.0497685628051436,TRUE,1,Up-regulated
+regulation of intracellular lipid transport,GO:BP,0.0497685628051436,TRUE,1,Up-regulated
+cellular response to zinc ion,GO:BP,0.0498369094096237,TRUE,2,Up-regulated
+male sex differentiation,GO:BP,0.0498583852066516,TRUE,6,Up-regulated
+regulation of tissue remodeling,GO:BP,0.0498792998298668,TRUE,4,Up-regulated

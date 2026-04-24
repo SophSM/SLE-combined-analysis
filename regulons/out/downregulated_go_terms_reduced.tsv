@@ -1,0 +1,233 @@
+term_name	small_Term	source	p_values	significant	intersection_sizes	regulon	include
+lymphocyte activation	lymphocyte activation	GO:BP	4.8182854346986e-14	TRUE	102	BCL11A	yes
+leukocyte activation	leukocyte activation	GO:BP	6.84260840778691e-14	TRUE	114	BCL11A	yes
+cell activation	NA	GO:BP	6.98741346255162e-12	TRUE	120	BCL11A	no
+mononuclear cell differentiation	NA	GO:BP	2.82493903641106e-11	TRUE	72	BCL11A	no
+lymphocyte differentiation	lymphocyte differentiation	GO:BP	6.10294126153743e-11	TRUE	70	BCL11A	no
+B cell activation	B cell activation	GO:BP	1.15960699609479e-10	TRUE	53	BCL11A	yes
+regulation of leukocyte activation	leukocyte activation	GO:BP	2.75535114316298e-10	TRUE	78	BCL11A	yes
+immune response	immune response	GO:BP	2.75535114316298e-10	TRUE	88	BCL11A	yes
+positive regulation of lymphocyte activation	lymphocyte activation	GO:BP	2.75535114316298e-10	TRUE	55	BCL11A	yes
+cell surface receptor signaling pathway	cell surface receptor signaling	GO:BP	3.56475383161374e-10	TRUE	117	BCL11A	yes
+mitotic cell cycle process	cell cycle process	GO:BP	8.13974020637381e-45	TRUE	141	E2F8	yes
+cell cycle process	cell cycle process	GO:BP	2.36718274733459e-44	TRUE	264	E2F8	yes
+mitotic cell cycle	cell cycle process	GO:BP	2.4208554260885e-43	TRUE	202	E2F8	yes
+cell cycle	cell cycle process	GO:BP	6.57497996978135e-40	TRUE	302	E2F8	yes
+regulation of cell cycle process	cell cycle process	GO:BP	7.26212892895662e-35	TRUE	123	E2F8	yes
+chromosome segregation	chromosome segregation	GO:BP	9.944602822532e-34	TRUE	77	E2F8	yes
+DNA damage response	DNA damage response	GO:BP	1.10810780572448e-34	TRUE	192	E2F8	yes
+DNA metabolic process	DNA metabolic process	GO:BP	2.73283034915219e-38	TRUE	211	E2F8	yes
+DNA replication	DNA replication	GO:BP	1.76520441514484e-35	TRUE	98	E2F8	yes
+DNA-templated DNA replication	DNA replication	GO:BP	8.10417903281421e-35	TRUE	72	E2F8	yes
+leukocyte activation	leukocyte activation	GO:BP	3.18916005250618e-07	TRUE	114	EBF1	yes
+lymphocyte activation	lymphocyte activation	GO:BP	3.18916005250618e-07	TRUE	100	EBF1	yes
+regulation of RNA metabolic process	RNA metabolic process	GO:BP	3.18916005250618e-07	TRUE	457	EBF1	yes
+cell surface receptor signaling pathway	cell surface receptor signaling	GO:BP	3.18916005250618e-07	TRUE	137	EBF1	yes
+regulation of DNA-templated transcription	DNA transcription	GO:BP	4.54850304108238e-07	TRUE	426	EBF1	yes
+regulation of RNA biosynthetic process	RNA metabolic process	GO:BP	5.57750857381779e-07	TRUE	427	EBF1	yes
+regulation of nucleobase-containing compound metabolic process	NA	GO:BP	7.42943077856599e-07	TRUE	485	EBF1	no
+cell activation	NA	GO:BP	7.92524949679262e-07	TRUE	124	EBF1	no
+lymphocyte differentiation	lymphocyte differentiation	GO:BP	7.92524949679262e-07	TRUE	73	EBF1	yes
+negative regulation of nucleobase-containing compound metabolic process	NA	GO:BP	8.51551686546277e-07	TRUE	240	EBF1	no
+autophagy	autophagy	GO:BP	1.83447531335706e-08	TRUE	91	ESRRA	yes
+process utilizing autophagic mechanism	autophagy	GO:BP	1.83447531335706e-08	TRUE	91	ESRRA	yes
+establishment of localization in cell	cell localization	GO:BP	3.11617891971798e-10	TRUE	234	ESRRA	no
+electron transport chain	electron transport chain	GO:BP	1.83447531335706e-08	TRUE	34	ESRRA	yes
+generation of precursor metabolites and energy	generation of precursor metabolites	GO:BP	1.92022121691778e-08	TRUE	78	ESRRA	no
+intracellular transport	intracellular transport	GO:BP	1.02968682388364e-12	TRUE	188	ESRRA	no
+catabolic process	metabolic process	GO:BP	1.02968682388364e-12	TRUE	304	ESRRA	no
+organophosphate metabolic process	metabolic process	GO:BP	7.03621073246291e-09	TRUE	142	ESRRA	no
+organelle organization	organelle organization	GO:BP	1.87742098270064e-09	TRUE	377	ESRRA	yes
+protein transport	protein transport	GO:BP	4.85503280631946e-09	TRUE	180	ESRRA	yes
+DNA repair	DNA damage response	GO:BP	9.80366087830677e-06	TRUE	28	GABPA	yes
+DNA damage response	DNA damage response	GO:BP	7.46194637396998e-05	TRUE	36	GABPA	yes
+DNA metabolic process	DNA metabolic process	GO:BP	3.66753731998581e-05	TRUE	35	GABPA	no
+intracellular transport	intracellular transport	GO:BP	0.000119679	TRUE	42	GABPA	yes
+zinc ion import into Golgi lumen	intracellular transport	GO:BP	0.000189406	TRUE	3	GABPA	yes
+macromolecule modification	macromolecule modification	GO:BP	7.73371578423656e-05	TRUE	32	GABPA	no
+protein prenylation	prenylation	GO:BP	0.000189406	TRUE	5	GABPA	no
+prenylation	prenylation	GO:BP	0.000189406	TRUE	5	GABPA	no
+cellular response to stress	response to stress	GO:BP	1.59349857024048e-05	TRUE	59	GABPA	yes
+vesicle targeting	vesicle targeting	GO:BP	9.80366087830677e-06	TRUE	10	GABPA	no
+catabolic process	metabolic process	GO:BP	2.05037304123774e-20	TRUE	446	GATA1	yes
+positive regulation of biological process	NA	GO:BP	4.62660376503745e-17	TRUE	884	GATA1	no
+positive regulation of cellular process	NA	GO:BP	3.23845225810468e-16	TRUE	838	GATA1	no
+transport	intracellular transport	GO:BP	3.03729892610758e-14	TRUE	655	GATA1	yes
+protein metabolic process	metabolic process	GO:BP	2.12188855385342e-13	TRUE	699	GATA1	yes
+myeloid cell homeostasis	myeloid cell homeostasis	GO:BP	9.23568860722215e-13	TRUE	57	GATA1	yes
+localization	cell localization	GO:BP	1.57261920907144e-12	TRUE	784	GATA1	no
+erythrocyte differentiation	erythrocyte differentiation	GO:BP	4.64762150273754e-12	TRUE	47	GATA1	yes
+vesicle-mediated transport	intracellular transport	GO:BP	4.98035918983703e-12	TRUE	274	GATA1	no
+erythrocyte homeostasis	myeloid cell homeostasis	GO:BP	4.98035918983703e-12	TRUE	49	GATA1	yes
+regulation of neuron projection development	neuron projection development	GO:BP	0.000118642	TRUE	10	GATA2	yes
+locomotion	locomotion	GO:BP	0.000118642	TRUE	14	GATA2	yes
+regulation of plasma membrane bounded cell projection organization	regulation of cell projection organization	GO:BP	0.000118642	TRUE	14	GATA2	no
+regulation of cell motility	locomotion	GO:BP	0.000118642	TRUE	13	GATA2	yes
+regulation of locomotion	locomotion	GO:BP	0.000118642	TRUE	13	GATA2	yes
+regulation of cell migration	cell migration	GO:BP	0.000118642	TRUE	13	GATA2	yes
+regulation of cell projection organization	regulation of cell projection organization	GO:BP	0.000118642	TRUE	14	GATA2	no
+cell migration	cell migration	GO:BP	0.000165424	TRUE	15	GATA2	yes
+positive regulation of biological process	NA	GO:BP	0.000256613	TRUE	40	GATA2	no
+positive regulation of developmental process	developmental process	GO:BP	0.000722883	TRUE	15	GATA2	no
+cytokine production involved in immune response	cytokine production	GO:BP	0.038838772	TRUE	2	HIC1	yes
+regulation of cytokine production involved in immune response	cytokine production	GO:BP	0.038838772	TRUE	2	HIC1	yes
+positive regulation of cell development	developmental process	GO:BP	0.038838772	TRUE	3	HIC1	yes
+transcription by RNA polymerase III	DNA transcription	GO:BP	0.038838772	TRUE	4	HIC1	no
+production of molecular mediator of immune response	immune response	GO:BP	0.038838772	TRUE	3	HIC1	yes
+catabolic process	metabolic process	GO:BP	0.038838772	TRUE	13	HIC1	no
+organophosphate metabolic process	metabolic process	GO:BP	0.038838772	TRUE	12	HIC1	no
+negative regulation of nucleobase-containing compound metabolic process	metabolic process	GO:BP	0.038838772	TRUE	9	HIC1	no
+nucleobase-containing compound catabolic process	metabolic process	GO:BP	0.038838772	TRUE	6	HIC1	no
+negative regulation of RNA biosynthetic process	NA	GO:BP	0.038838772	TRUE	6	HIC1	no
+nucleoside phosphate metabolic process	NA	GO:BP	0.038838772	TRUE	6	HIC1	no
+organophosphate catabolic process	NA	GO:BP	0.038838772	TRUE	4	HIC1	no
+animal organ development	NA	GO:BP	0.038838772	TRUE	6	HIC1	no
+regulation of production of molecular mediator of immune response	NA	GO:BP	0.038838772	TRUE	3	HIC1	no
+central nervous system development	NA	GO:BP	0.038838772	TRUE	9	HIC1	no
+spinal cord oligodendrocyte cell differentiation	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+pyrimidine nucleobase transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+ossification	NA	GO:BP	0.038838772	TRUE	4	HIC1	no
+regulation of transcription by RNA polymerase III	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+cardiac septum development	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+pyrimidine nucleoside transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+uridine transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+cardiac chamber morphogenesis	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+brain development	NA	GO:BP	0.038838772	TRUE	3	HIC1	no
+purine nucleoside transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+response to laminar fluid shear stress	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+cardiac septum morphogenesis	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+guanine transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+guanine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+glycerolipid catabolic process	NA	GO:BP	0.038838772	TRUE	3	HIC1	no
+monoacylglycerol catabolic process	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+positive regulation of chondrocyte hypertrophy	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+regulation of chondrocyte hypertrophy	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+positive regulation of signal transduction by p53 class mediator	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+pyrimidine nucleobase transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+uracil transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+uracil transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+thymine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+"base-excision repair, gap-filling"	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+tRNA transcription	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+regulation of ossification	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+positive regulation of chondrocyte development	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+brassinosteroid metabolic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phytosteroid metabolic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+brassinosteroid biosynthetic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phytosteroid biosynthetic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+futile creatine cycle	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+adenine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+"positive regulation of DNA damage response, signal transduction by p53 class mediator"	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+tricarboxylic acid transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+oligodendrocyte cell fate specification	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+spinal cord oligodendrocyte cell fate specification	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+adenosine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+inosine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+hypoxanthine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+cytidine transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phosphagen biosynthetic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+glial cell fate specification	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phosphocreatine biosynthetic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+adenine salvage	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+mitochondrial tricarboxylic acid transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+transcription initiation at RNA polymerase III promoter	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+monoacylglycerol metabolic process	NA	GO:BP	0.038838772	TRUE	2	HIC1	no
+oligodendrocyte cell fate commitment	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phosphocreatine metabolic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+phosphagen metabolic process	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+"regulation of trans-synaptic signaling by endocannabinoid, modulating synaptic transmission"	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+mitochondrial citrate transmembrane transport	NA	GO:BP	0.038838772	TRUE	1	HIC1	no
+negative regulation of transcription by RNA polymerase II	negative regulation of DNA transcription	GO:BP	0.038838772	TRUE	4	HIC1	yes
+negative regulation of DNA-templated transcription	negative regulation of DNA transcription	GO:BP	0.038838772	TRUE	6	HIC1	yes
+tRNA metabolic process	RNA metabolic process	GO:BP	0.038838772	TRUE	5	HIC1	yes
+negative regulation of RNA metabolic process	RNA metabolic process	GO:BP	0.038838772	TRUE	9	HIC1	yes
+regulation of primary metabolic process	metabolic process	GO:BP	4.17720216866348e-10	TRUE	252	MAZ	yes
+regulation of nucleobase-containing compound metabolic process	metabolic process	GO:BP	4.17720216866348e-10	TRUE	203	MAZ	yes
+negative regulation of nucleobase-containing compound metabolic process	metabolic process	GO:BP	3.52254215446209e-06	TRUE	89	MAZ	yes
+positive regulation of nucleobase-containing compound metabolic process	NA	GO:BP	1.3748881898613e-05	TRUE	103	MAZ	no
+regulation of DNA-templated transcription	negative regulation of DNA transcription	GO:BP	2.511464649554e-08	TRUE	173	MAZ	yes
+DNA-templated transcription	negative regulation of DNA transcription	GO:BP	3.81787280030022e-08	TRUE	177	MAZ	yes
+negative regulation of DNA-templated transcription	negative regulation of DNA transcription	GO:BP	2.60530723385974e-06	TRUE	79	MAZ	yes
+regulation of RNA metabolic process	negative regulation of RNA metabolic process	GO:BP	1.29156769353844e-08	TRUE	185	MAZ	yes
+regulation of RNA biosynthetic process	negative regulation of RNA metabolic process	GO:BP	3.19011789106137e-08	TRUE	173	MAZ	yes
+negative regulation of RNA biosynthetic process	negative regulation of RNA metabolic process	GO:BP	3.52254215446209e-06	TRUE	79	MAZ	yes
+ribosome biogenesis	ribosome biogenesis	GO:BP	2.26755296469795e-41	TRUE	158	MYC	yes
+rRNA processing	ribosome biogenesis	GO:BP	1.39525073816741e-32	TRUE	112	MYC	yes
+rRNA metabolic process	RNA metabolic process	GO:BP	2.22710667614421e-31	TRUE	122	MYC	yes
+translation	translation	GO:BP	4.75624457134909e-23	TRUE	216	MYC	yes
+cytoplasmic translation	translation	GO:BP	1.62471820724196e-20	TRUE	78	MYC	yes
+ribosomal small subunit biogenesis	ribosome biogenesis	GO:BP	5.90004566206999e-18	TRUE	56	MYC	yes
+RNA modification	NA	GO:BP	1.33734775491501e-15	TRUE	72	MYC	no
+tRNA metabolic process	RNA metabolic process	GO:BP	8.09448629345411e-14	TRUE	76	MYC	yes
+ribosomal large subunit biogenesis	ribosome biogenesis	GO:BP	3.57029800922317e-13	TRUE	40	MYC	yes
+tRNA modification	tRNA modification	GO:BP	1.27817012509569e-12	TRUE	46	MYC	yes
+leukocyte activation	leukocyte activation	GO:BP	2.48076300675501e-06	TRUE	29	PAX5	yes
+lymphocyte activation	lymphocyte activation	GO:BP	4.63864578084078e-06	TRUE	52	PAX5	yes
+cell activation	NA	GO:BP	5.30234638302541e-06	TRUE	30	PAX5	no
+mononuclear cell differentiation	NA	GO:BP	1.16229392401965e-05	TRUE	38	PAX5	no
+lymphocyte differentiation	lymphocyte differentiation	GO:BP	1.16229392401965e-05	TRUE	34	PAX5	yes
+potassium ion transmembrane transport	intracellular transport	GO:BP	4.54658214569464e-05	TRUE	5	PAX5	yes
+potassium ion transport	intracellular transport	GO:BP	7.54373987009864e-05	TRUE	5	PAX5	yes
+positive regulation of lymphocyte activation	lymphocyte activation	GO:BP	7.80613105941745e-05	TRUE	38	PAX5	yes
+regulation of lymphocyte activation	lymphocyte activation	GO:BP	0.000108509	TRUE	50	PAX5	yes
+rRNA metabolic process	RNA metabolic process	GO:BP	0.000131527	TRUE	31	PAX5	yes
+B cell activation	B cell activation	GO:BP	0.000131527	TRUE	24	PAX5	yes
+leukocyte differentiation	leukocyte differentiation	GO:BP	0.000131527	TRUE	39	PAX5	yes
+transcription by RNA polymerase II	DNA transcription	GO:BP	0.000131527	TRUE	130	PAX5	yes
+cell communication	signaling	GO:BP	0.000131527	TRUE	65	PAX5	yes
+signaling	signaling	GO:BP	0.000131527	TRUE	65	PAX5	yes
+positive regulation of T cell activation	Tcell activation	GO:BP	0.000131527	TRUE	22	PAX5	yes
+positive regulation of leukocyte cell-cell adhesion	leukocyte activation	GO:BP	0.000131527	TRUE	23	PAX5	yes
+regulation of transcription by RNA polymerase II	DNA transcription	GO:BP	0.000131527	TRUE	125	PAX5	yes
+negative regulation of mast cell activation	NA	GO:BP	0.000131527	TRUE	3	PAX5	no
+positive regulation of T cell differentiation	Tcell differentiation	GO:BP	0.000131527	TRUE	20	PAX5	yes
+cellular response to stress	response to stress	GO:BP	3.92245994575061e-08	TRUE	179	RFX5	yes
+peptide antigen assembly with MHC class II protein complex	assembly of MCH class II complex	GO:BP	3.92245994575061e-08	TRUE	10	RFX5	yes
+MHC class II protein complex assembly	assembly of MCH class II complex	GO:BP	3.92245994575061e-08	TRUE	10	RFX5	yes
+MHC protein complex assembly	assembly of MCH class II complex	GO:BP	4.66470020383258e-08	TRUE	12	RFX5	yes
+peptide antigen assembly with MHC protein complex	assembly of MCH class II complex	GO:BP	4.66470020383258e-08	TRUE	12	RFX5	yes
+double-strand break repair via homologous recombination	DNA damage response	GO:BP	5.97267905769117e-08	TRUE	32	RFX5	yes
+DNA damage response	DNA damage response	GO:BP	7.75740570158778e-08	TRUE	86	RFX5	yes
+DNA recombination	DNA recombination	GO:BP	7.75740570158778e-08	TRUE	46	RFX5	yes
+recombinational repair	DNA damage response	GO:BP	8.05830167540398e-08	TRUE	32	RFX5	yes
+double-strand break repair	DNA damage response	GO:BP	3.11386469485335e-07	TRUE	43	RFX5	yes
+porphyrin-containing compound biosynthetic process	metabolic process	GO:BP	3.37397957558137e-12	TRUE	18	SOX6	yes
+tetrapyrrole biosynthetic process	metabolic process	GO:BP	3.37397957558137e-12	TRUE	18	SOX6	yes
+porphyrin-containing compound metabolic process	metabolic process	GO:BP	8.14320660175064e-12	TRUE	21	SOX6	yes
+heme biosynthetic process	metabolic process	GO:BP	5.41599755354465e-11	TRUE	16	SOX6	yes
+heme metabolic process	metabolic process	GO:BP	5.41599755354465e-11	TRUE	19	SOX6	yes
+tetrapyrrole metabolic process	metabolic process	GO:BP	1.94910690918899e-10	TRUE	21	SOX6	yes
+erythrocyte development	erythrocyte development	GO:BP	5.07048100789267e-10	TRUE	17	SOX6	yes
+homeostatic process	myeloid cell homeostasis	GO:BP	5.07048100789267e-10	TRUE	132	SOX6	yes
+erythrocyte differentiation	erythrocyte differentiation	GO:BP	1.08712352039697e-09	TRUE	28	SOX6	yes
+myeloid cell homeostasis	myeloid cell homeostasis	GO:BP	1.14757687533118e-09	TRUE	24	SOX6	yes
+regulation of cell cycle	negative regulation of cell cycle	GO:BP	1.13174080754115e-08	TRUE	37	SREBF2	yes
+regulation of mitotic cell cycle	negative regulation of cell cycle	GO:BP	1.13174080754115e-08	TRUE	13	SREBF2	yes
+mitotic cell cycle	negative regulation of mitotic cell cycle	GO:BP	3.83549213589353e-08	TRUE	20	SREBF2	yes
+cell cycle	cell cycle	GO:BP	3.98762567750398e-08	TRUE	49	SREBF2	no
+regulation of cell cycle process	cell cycle	GO:BP	3.98762567750398e-08	TRUE	14	SREBF2	no
+mitotic cell cycle process	negative regulation of mitotic cell cycle	GO:BP	4.24526122713569e-08	TRUE	14	SREBF2	yes
+negative regulation of mitotic cell cycle	cell cycle	GO:BP	1.2721927995033e-07	TRUE	9	SREBF2	no
+regulation of mitotic cell cycle phase transition	cell cycle	GO:BP	2.99546078969035e-07	TRUE	10	SREBF2	no
+negative regulation of cell cycle	negative regulation of cell cycle	GO:BP	3.09707085136348e-07	TRUE	15	SREBF2	yes
+negative regulation of mitotic cell cycle phase transition	cell cycle	GO:BP	3.18141426401876e-07	TRUE	8	SREBF2	no
+leukocyte activation	leukocyte activation	GO:BP	2.77652128645751e-16	TRUE	88	TBX21	yes
+cell activation	NA	GO:BP	3.10300748843387e-16	TRUE	93	TBX21	no
+lymphocyte activation	lymphocyte activation	GO:BP	3.48220949304202e-16	TRUE	78	TBX21	yes
+regulation of leukocyte activation	leukocyte activation	GO:BP	2.76071809893608e-14	TRUE	61	TBX21	yes
+regulation of cell activation	NA	GO:BP	3.19835088669695e-14	TRUE	64	TBX21	no
+regulation of immune system process	immune response	GO:BP	2.71933809364595e-13	TRUE	112	TBX21	yes
+immune response	immune response	GO:BP	1.06775525988666e-12	TRUE	57	TBX21	yes
+immune system process	immune response	GO:BP	1.98740469786451e-12	TRUE	166	TBX21	yes
+regulation of lymphocyte activation	lymphocyte activation	GO:BP	3.56973550631989e-12	TRUE	53	TBX21	yes
+T cell activation	Tcell activation	GO:BP	1.57554083263462e-11	TRUE	56	TBX21	yes
+regulation of primary metabolic process	metabolic process	GO:BP	2.6055437550247e-11	TRUE	104	ZHX2	yes
+regulation of nucleobase-containing compound metabolic process	metabolic process	GO:BP	2.6055437550247e-11	TRUE	87	ZHX2	yes
+regulation of RNA metabolic process	metabolic process	GO:BP	1.20670302497843e-10	TRUE	81	ZHX2	yes
+DNA-templated transcription	DNA transcription	GO:BP	1.03234911062776e-09	TRUE	77	ZHX2	yes
+chromatin organization	chromatin organization	GO:BP	7.01117053354152e-09	TRUE	32	ZHX2	yes
+positive regulation of metabolic process	metabolic process	GO:BP	9.12798265194609e-09	TRUE	75	ZHX2	yes
+positive regulation of RNA metabolic process	RNA metabolic process	GO:BP	9.12798265194609e-09	TRUE	50	ZHX2	yes
+positive regulation of nucleobase-containing compound metabolic process	metabolic process	GO:BP	9.12798265194609e-09	TRUE	53	ZHX2	yes
+transcription by RNA polymerase II	DNA transcription	GO:BP	9.12798265194609e-09	TRUE	62	ZHX2	yes
+regulation of DNA-templated transcription	DNA transcription	GO:BP	1.21946500160063e-08	TRUE	72	ZHX2	yes

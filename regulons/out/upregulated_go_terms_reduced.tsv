@@ -1,0 +1,81 @@
+term_name	small_Term	source	p_values	significant	intersection_sizes	regulon
+response to external biotic stimulus	response to stimulus	GO:BP	7.23292368900681e-49	TRUE	226	ETV6
+regulation of response to stimulus	regulation of response to stimulus	GO:BP	7.23292368900681e-49	TRUE	695	ETV6
+response to other organism	response to other organism	GO:BP	7.23292368900681e-49	TRUE	226	ETV6
+defense response	defense response	GO:BP	1.18910057542797e-48	TRUE	238	ETV6
+response to biotic stimulus	response to stimulus	GO:BP	2.54972467204506e-48	TRUE	228	ETV6
+biological process involved in interspecies interaction between organisms	interpecies interaction	GO:BP	6.53668306297669e-48	TRUE	237	ETV6
+defense response to other organism	defense response	GO:BP	7.02127633943374e-47	TRUE	170	ETV6
+regulation of immune system process	regulation of immune system process	GO:BP	3.70229213804042e-46	TRUE	358	ETV6
+response to stress	response to stress	GO:BP	3.87151841082574e-46	TRUE	685	ETV6
+immune system process	immune system process	GO:BP	2.52102283157457e-45	TRUE	484	ETV6
+biological process involved in interspecies interaction between organisms	interpecies interaction	GO:BP	1.15144606414143e-46	TRUE	243	IRF1
+response to biotic stimulus	response to stimulus	GO:BP	1.90286877846644e-45	TRUE	230	IRF1
+response to other organism	response to other organism	GO:BP	2.43999638473573e-45	TRUE	226	IRF1
+response to external biotic stimulus	response to stimulus	GO:BP	2.54069206675934e-45	TRUE	226	IRF1
+defense response to other organism	defense response	GO:BP	5.5286083119817e-44	TRUE	195	IRF1
+response to stress	response to stress	GO:BP	4.13145942318819e-43	TRUE	592	IRF1
+innate immune response	immune response	GO:BP	2.18930454465318e-42	TRUE	160	IRF1
+defense response	defense response	GO:BP	2.27585063802784e-42	TRUE	241	IRF1
+defense response to virus	defense response (virus)	GO:BP	5.75553713427413e-42	TRUE	61	IRF1
+response to virus	defense response (virus)	GO:BP	8.08365616501993e-41	TRUE	102	IRF1
+defense response to virus	defense response (virus)	GO:BP	6.95358395951052e-41	TRUE	48	IRF2
+response to virus	response to virus	GO:BP	9.83335723917692e-38	TRUE	50	IRF2
+response to external biotic stimulus	response to stimulus	GO:BP	7.88920550769271e-34	TRUE	133	IRF2
+response to other organism	response to other organism	GO:BP	7.88920550769271e-34	TRUE	133	IRF2
+response to biotic stimulus	response to stimulus	GO:BP	1.88503411725945e-33	TRUE	134	IRF2
+biological process involved in interspecies interaction between organisms	interpecies interaction	GO:BP	3.05646512763767e-33	TRUE	139	IRF2
+defense response to other organism	defense response	GO:BP	2.77353697511445e-32	TRUE	115	IRF2
+innate immune response	innate immune response	GO:BP	1.14738534006797e-28	TRUE	96	IRF2
+defense response	defense response	GO:BP	7.56531212615178e-27	TRUE	132	IRF2
+defense response to symbiont	defense response	GO:BP	1.6350783162192e-25	TRUE	96	IRF2
+immune system process	immune system process	GO:BP	8.59092098321146e-10	TRUE	53	IRF4
+mitotic nuclear division	mitotic nuclear division	GO:BP	8.59092098321146e-10	TRUE	14	IRF4
+biological process involved in interspecies interaction between organisms	interpecies interaction	GO:BP	1.07531277961362e-09	TRUE	41	IRF4
+immune response	immune response	GO:BP	2.3593751599106e-09	TRUE	51	IRF4
+response to external biotic stimulus	response to stimulus	GO:BP	2.50092855736479e-09	TRUE	38	IRF4
+response to other organism	response to other organism	GO:BP	2.50092855736479e-09	TRUE	38	IRF4
+response to virus	response to virus	GO:BP	2.97813592232544e-09	TRUE	10	IRF4
+response to biotic stimulus	response to stimulus	GO:BP	3.88585326340925e-09	TRUE	38	IRF4
+defense response to virus	defense response (virus)	GO:BP	8.95527079618514e-09	TRUE	9	IRF4
+mitotic sister chromatid segregation	mitotic sister chromatid segregation	GO:BP	1.21739548178542e-08	TRUE	11	IRF4
+response to stress	response to stress	GO:BP	1.43212881079911e-09	TRUE	79	NFIL3
+positive regulation of metabolic process	regulation of metabolic process	GO:BP	1.43212881079911e-09	TRUE	85	NFIL3
+positive regulation of macromolecule metabolic process	regulation of metabolic process	GO:BP	4.15797938011678e-09	TRUE	79	NFIL3
+catabolic process	catabolic process	GO:BP	4.54203242059723e-09	TRUE	70	NFIL3
+response to external biotic stimulus	response to stimulus	GO:BP	1.3694890891261e-07	TRUE	38	NFIL3
+response to other organism	response to other organism	GO:BP	1.3694890891261e-07	TRUE	38	NFIL3
+cellular response to stress	response to stress	GO:BP	1.3694890891261e-07	TRUE	46	NFIL3
+response to biotic stimulus	response to stimulus	GO:BP	2.38855811982803e-07	TRUE	38	NFIL3
+biological process involved in interspecies interaction between organisms	interpecies interaction	GO:BP	4.68155940778964e-07	TRUE	39	NFIL3
+defense response	defense response	GO:BP	4.8347460129316e-07	TRUE	41	NFIL3
+intracellular signal transduction	intracellular signal transduction	GO:BP	2.54697789771365e-19	TRUE	152	STAT3
+regulation of response to stimulus	regulation of response to stimulus	GO:BP	2.5543987342282e-16	TRUE	176	STAT3
+regulation of signal transduction	regulation of signal transduction	GO:BP	9.97240379844686e-16	TRUE	145	STAT3
+regulation of signaling	regulation of signaling	GO:BP	3.2576307205499e-15	TRUE	157	STAT3
+positive regulation of biological process	NA	GO:BP	6.85252519530585e-15	TRUE	235	STAT3
+regulation of cell communication	regulation of cell communication	GO:BP	6.85252519530585e-15	TRUE	156	STAT3
+cellular response to stimulus	response to stimulus	GO:BP	1.12748003478169e-14	TRUE	277	STAT3
+positive regulation of cellular process	NA	GO:BP	5.21057209749238e-14	TRUE	235	STAT3
+immune system process	immune system process	GO:BP	1.10170530505983e-13	TRUE	135	STAT3
+regulation of intracellular signal transduction	regulation of signal transduction	GO:BP	1.1345947357609e-13	TRUE	104	STAT3
+regulation of primary metabolic process	regulation of metabolic process	GO:BP	1.74014554825615e-53	TRUE	717	VEZF1
+positive regulation of cellular process	NA	GO:BP	3.64250545910819e-39	TRUE	718	VEZF1
+positive regulation of biological process	NA	GO:BP	2.28879975127175e-38	TRUE	734	VEZF1
+regulation of metabolic process	regulation of metabolic process	GO:BP	3.62616043877129e-37	TRUE	813	VEZF1
+positive regulation of macromolecule metabolic process	regulation of metabolic process	GO:BP	3.62616043877129e-37	TRUE	467	VEZF1
+regulation of RNA metabolic process	regulation of metabolic process (RNA)	GO:BP	1.31768973167276e-36	TRUE	505	VEZF1
+regulation of nucleobase-containing compound metabolic process	regulation of metabolic process	GO:BP	1.91089830643502e-36	TRUE	534	VEZF1
+positive regulation of metabolic process	regulation of metabolic process	GO:BP	2.31188363439956e-36	TRUE	491	VEZF1
+protein modification process	protein modification process	GO:BP	4.01623194594864e-35	TRUE	412	VEZF1
+regulation of macromolecule metabolic process	regulation of metabolic process	GO:BP	5.71243426688432e-34	TRUE	754	VEZF1
+regulation of primary metabolic process	regulation of metabolic process	GO:BP	1.60155500406948e-30	TRUE	368	ZNF148
+regulation of RNA metabolic process	regulation of metabolic process (RNA)	GO:BP	4.67180970918961e-24	TRUE	259	ZNF148
+regulation of nucleobase-containing compound metabolic process	regulation of metabolic process	GO:BP	2.17194599893767e-23	TRUE	271	ZNF148
+regulation of metabolic process	regulation of metabolic process	GO:BP	1.23154457259258e-22	TRUE	412	ZNF148
+regulation of macromolecule metabolic process	regulation of metabolic process	GO:BP	1.23154457259258e-22	TRUE	389	ZNF148
+positive regulation of macromolecule metabolic process	regulation of metabolic process	GO:BP	9.7328992215283e-21	TRUE	239	ZNF148
+regulation of RNA biosynthetic process	regulation of metabolic process (RNA)	GO:BP	3.64961937602853e-20	TRUE	235	ZNF148
+regulation of DNA-templated transcription	regulation of DNA-templated transcription	GO:BP	3.64961937602853e-20	TRUE	234	ZNF148
+DNA-templated transcription	DNA-templated transcription	GO:BP	5.34984211484491e-20	TRUE	240	ZNF148
+protein modification by small protein conjugation or removal	protein modification process	GO:BP	6.43299640008328e-20	TRUE	106	ZNF148
