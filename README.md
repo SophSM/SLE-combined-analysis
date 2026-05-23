@@ -1,6 +1,6 @@
 # Differential gene expression in Peripheral Blood Mononuclear Cells from people with Systemic Lupus Erythematosus
 
-This is a meta-analysis on expression data conducted on different SLE patients versus control experiments that were found in the Gene Expression Omnibus (GEO) database. This repository consists of three parts: **Monorail pipeline, Differential expression and analysis & WGCNA co-expression analysis**
+This is an analysis of bulk RNA-seq data conducted on different SLE patients versus control experiments that were found in the Gene Expression Omnibus (GEO) database. This repository consists of three parts: **Monorail pipeline, Differential expression analysis & gene regulatory network analysis**
 
 ### 1- Monorail pipeline
 
@@ -38,7 +38,7 @@ The scripts used for this part are in the `scripts/` folder and follow this orde
 
 Some data that was used or output from these scripts can be found in the `data/` folder.
 
-**The next scripts are used for data analysis, they were roughly used in this order but can be used in any order, their input is some of the past output files**
+**The next scripts are used for data analysis, they were roughly used in this order but can be used in any order, their inputs are some or part of the previous scripts' output files**
 
 -   `5-plot_PCA.R`
 
@@ -54,10 +54,8 @@ Some data that was used or output from these scripts can be found in the `data/`
 
 -   `11-plot_HeatmapGO.R`
 
--   `12-plot_AcyclicGraph.R`
+-   `12-prevAsso_Heatmap.R`
 
--   `plot_figures.R`: This script generates the final figures used in the manuscript, the figures are in the `final_figs/` folder
+### Gene regulatory network analysis
 
-### WGCNA co-expression analysis
-
-The scripts used for the co-expression analysis can be found in the `WGCNA/` folder.
+The scripts used for the regulatory network analysis can be found in the `regulons/scripts` folder.
