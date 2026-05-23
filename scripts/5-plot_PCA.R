@@ -53,6 +53,9 @@ png(filename = glue::glue("{FIGDIR}/pca.png"), height = 20, width = 22,
 print(pca_plot)
 dev.off()
 
+ggsave(filename =glue::glue("{FIGDIR}/pca.svg"), height = 20, width = 22,
+       units = "cm", dpi = 500, plot = pca_plot)
+
 # Color by study
 pca_df <- pca_df %>%
   mutate(study =  case_when(

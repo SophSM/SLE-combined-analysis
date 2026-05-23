@@ -128,6 +128,9 @@ p_inferferon <- ggplot(violin_df, aes(x = DISEASE, y = value, fill = DISEASE)) +
     # height = 20, width = 25, units = "cm", res = 500)
 print(p_inferferon)
 # dev.off()
+
+ggsave(filename = glue::glue("{DIR}/figures_updated/violinplot_interferonSign.svg"),
+       height = 20, width = 25, units = "cm", dpi = 500, plot = p_inferferon)
 ######
 #######
 
@@ -242,6 +245,8 @@ p_prev <- ggplot(violin_prev_df, aes(x = DISEASE, y = value, fill = DISEASE)) +
 print(p_prev)
 # dev.off()
 
+ggsave(filename = glue::glue("{DIR}/figures_updated/violinplot_prevAssociated.svg"),
+       height = 20, width = 25, units = "cm", dpi = 500, plot = p_prev)
 
 #############
 ## Reporductive genes

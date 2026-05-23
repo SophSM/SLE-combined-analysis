@@ -100,7 +100,8 @@ png(filename = glue::glue("{FIGDIR}/volcanoplot.png"), height = 22, width = 25, 
   print(volcanoplot_names)
 dev.off()
 
-
+ggsave(plot = volcanoplot_names,filename = glue::glue("{FIGDIR}/volcanoplot.svg"),
+       height = 22, width = 25, dpi = 500, units = "cm")
 ######
 sessionInfo()
 

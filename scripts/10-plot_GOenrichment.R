@@ -134,7 +134,10 @@ png(filename = glue::glue("{FIGDIR}/heatmap_protein_coding_terms.png"), height =
 draw(ht_terms)
 dev.off()
 
-
+pdf(glue::glue("{FIGDIR}/heatmap_protein_coding_terms.pdf"), height = (15 / 2.54),
+    width = (14/2.54))
+draw(ht_terms)
+dev.off()
 category_annot_h <- HeatmapAnnotation("Category" = mat_small_meta_2$source,
                                 col = list("Category" = c("GO:BP" = "#a61b52",
                                                           "GO:MF" = "#DD7230",
@@ -156,6 +159,11 @@ png(filename = glue::glue("{FIGDIR}/heatmap_horizontal_protein_coding_terms.png"
 draw(ht_terms_horizontal)
 dev.off()
 
+pdf(glue::glue("{FIGDIR}/heatmap_horizontal_protein_coding_terms.pdf"),
+    height = (8 / 2.54),
+    width = (30 / 2.54))
+draw(ht_terms_horizontal)
+dev.off()
 
 #####
 sessionInfo()

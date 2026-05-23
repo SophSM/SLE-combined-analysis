@@ -106,7 +106,7 @@ lfc_anno = rowAnnotation("log2FC" = meta_DA_regulons$log2FC, col = list("log2FC"
 # png(filename = glue::glue("{REGULON_DIR}/figures/AUC_heatmap.png"), width = 20, height = 15, units = "cm", res = 500)
 ht <- Heatmap(auc_mat_heatmap, name = "AUC\nz-score", show_column_names = F, row_split = split,
         col = col_fun, top_annotation = sample_ha, right_annotation = lfc_anno,
-        show_column_dend = T, show_row_dend = T,
+        show_column_dend = F, show_row_dend = F,
         row_gap = unit(2, "mm"),
         cluster_rows = F,
         cluster_row_slices = FALSE,
@@ -115,6 +115,11 @@ ht <- Heatmap(auc_mat_heatmap, name = "AUC\nz-score", show_column_names = F, row
         )
 draw(ht)
 # dev.off()
+
+pdf(glue::glue("{REGULON_DIR}/figures/AUC_heatmap.pdf"),
+    width = (20 / 2.54), height = (15/2.54))
+draw(ht)
+dev.off()
 ```
 
 # Enrichment analysis regulons and gene targets
@@ -256,7 +261,7 @@ col_fun <- colorRamp2(c(0, 2, 3, 6, 9, 12, 24, 36, 48),
                       RColorBrewer::brewer.pal(9, "YlOrRd"))
 
 # png(filename = glue::glue("{FIGDIR}/up_regulons_terms_ht.png"), width = 26, height = 12, units = "cm", res = 500)
-Heatmap(t(up_go_mat), name = "-log10(p-value)",
+ht_up = Heatmap(t(up_go_mat), name = "-log10(p-value)",
         show_row_dend = F, show_column_dend = F,
         show_column_names = T, show_row_names = T,col = col_fun,
         rect_gp = gpar(col = "lightgray", lwd = 2),
@@ -266,6 +271,9 @@ Heatmap(t(up_go_mat), name = "-log10(p-value)",
         column_names_max_height = unit(20,"cm"),
         column_names_gp = gpar(fontsize = 10))
 # dev.off()
+pdf(glue::glue("{FIGDIR}/up_regulons_terms_ht.pdf"), width = (26/2.54), height = (12/2.54))
+draw(ht_up)
+dev.off()
 ```
 
 ## Down-regulated
@@ -310,7 +318,7 @@ col_fun <- colorRamp2(c(0, 2, 4, 6, 8, 10, 20, 30, 40),
                       RColorBrewer::brewer.pal(9, "YlGnBu"))
 
 # png(filename = glue::glue("{FIGDIR}/down_regulons_terms_ht.png"), width = 26, height = 12, units = "cm", res = 500)
-Heatmap(t(down_go_mat), name = "-log10(p-value)",
+ht_down = Heatmap(t(down_go_mat), name = "-log10(p-value)",
         show_row_dend = F, show_column_dend = F,
         show_column_names = T, show_row_names = T,col = col_fun,
         rect_gp = gpar(col = "lightgray", lwd = 2),
@@ -320,6 +328,10 @@ Heatmap(t(down_go_mat), name = "-log10(p-value)",
         column_names_max_height = unit(20,"cm"),
         column_names_gp = gpar(fontsize = 10))
 # dev.off()
+
+pdf(glue::glue("{FIGDIR}/down_regulons_terms_ht.pdf"), width = (26/2.54), height = (12/2.54))
+draw(ht_down)
+dev.off()
 ```
 
 ## Network upregulated regulons

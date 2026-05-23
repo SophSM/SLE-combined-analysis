@@ -121,9 +121,15 @@ png(filename = glue::glue("{FIGDIR}/heatmap_protein_coding.png"), height = 20, w
   draw(ht_list)
 dev.off()
 
+pdf(glue::glue("{FIGDIR}/heatmap_protein_coding.pdf"), height = (20 / 2.54), width = (30 / 2.54))
+draw(ht_list)
+dev.off()
+
 save(ht_list, file = glue::glue("{FIGDIR}/heatmap_protein_coding.RData"))
 
-
+svg(filename = glue::glue("{FIGDIR}/heatmap_protein_coding.svg"),height = 8, width = 12)
+draw(ht_list)
+dev.off()
 ###########
 
 # CLUSTERIZED FOR TOP GENES ONLY
@@ -161,9 +167,14 @@ h1 <-Heatmap(mat_top, cluster_columns = T, cluster_rows = F, name = 'Z-score', l
 
 h1_list <- study_ha %v% ha %v% h1
 
-png(filename = glue::glue("{FIGDIR}/heatmapTOP.png"), height = 15, width = 15, units = "cm", res = 500)
+png(filename = glue::glue("{FIGDIR}/heatmapTOP.png"), height = 15, width = 15, units = "cm", res = 600)
 draw(h1_list)
 dev.off()
+
+pdf(glue::glue("{FIGDIR}/heatmapTOP.pdf"), height = (15 / 2.54), width = (17 / 2.54))
+draw(h1_list)
+dev.off()
+
 save(h1_list, file = glue::glue("{FIGDIR}/heatmapTOP.RData"))
 
 
@@ -174,7 +185,7 @@ h2 <-Heatmap(mat_top, cluster_rows = T, name = 'Z-score', left_annotation = row_
              col = col_exp, column_km = 2, show_column_names = F)
 
 h2_list <- study_ha %v% ha %v% h2
-png(filename = glue::glue("{FIGDIR}/heatmapTOP_clusterRows.png"), height = 15, width = 15, units = "cm", res = 500)
+png(filename = glue::glue("{FIGDIR}/heatmapTOP_clusterRows.png"), height = 15, width = 15, units = "cm", res = 600)
 draw(h2_list)
 dev.off()
 

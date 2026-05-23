@@ -39,13 +39,12 @@ metadata <- metadata %>%
 
 ordered_samples <- metadata[order(metadata$DISEASE),] # reorder all_data
 
-associated_genes <- read.csv(glue::glue("{DIR}/data/FIG2A-genes-pvals.csv"), header = T,
-                             row.names = "X")
+associated_genes <- read.csv(glue::glue("{DIR}/data/FIG2A-genes-pvals.csv"), header = T)
 
 associated_genes <- associated_genes %>%
-  arrange(p.value) %>% head(20)
+  arrange(pval) %>% head(20)
 DGElist_interest <- DGElist %>%
-  filter(gene_name %in% associated_genes$Gene)
+  filter(gene_name %in% associated_genes$gene_name)
 
 norm_counts <- as.data.frame(assay(vsd2))
 norm_counts <- tibble::rownames_to_column(norm_counts, "ID")
@@ -91,11 +90,7 @@ split = data.frame(Samples = ordered_samples$DISEASE) # make block split
 col_exp <- colorRamp2(c(-4, -3,-1, 0,  1, 3, 4), 
                       c("#02487d","#4575B4", "#91BFDB", "#FFFFBF", "#FC8D59", "#D73027", 'darkred'))
 
-[1] "#4575B4" "#91BFDB" "#E0F3F8" "#FFFFBF" "#FEE090" "#FC8D59" "#D73027"
-                      c('blue', "lightblue1", 'white', 'red','darkred'))
 
-"#4575B4" "#74ADD1" "#ABD9E9" "#E0F3F8" "#FFFFBF" "#FEE090" "#FDAE61"
-[8] "#F46D43" "#D73027"-
 
 Rsplit <- data.frame(Direction = ordered_genes$direction)
 
@@ -129,3 +124,7 @@ png(glue::glue("{FIGDIR}/prevAsso_heatmapClust.png"), height = 15, width = 17, u
 draw(heat_list2)
 dev.off()
 
+pdf(glue::glue("{FIGDIR}/prevAsso_heatmapClust.pdf"), height = (15 / 2.54), width = (17 / 2.54),
+    bg = "white")
+draw(heat_list2)
+dev.off()
